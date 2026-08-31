@@ -1,0 +1,5 @@
+{
+  "slice_level_accuracy": 0.5146780303030303,
+  "subject_level_accuracy": 0.5454545454545454,
+  "subject_level_macro_f1": 0.51484425349087
+}

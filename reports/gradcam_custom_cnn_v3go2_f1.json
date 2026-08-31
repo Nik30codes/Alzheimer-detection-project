@@ -1,0 +1,11 @@
+{
+  "tag": "custom_cnn_v3go2_f1",
+  "mean_gradcam_mass_outside_brain": 0.6108163073658943,
+  "by_class": {
+    "CN": 0.5308778360486031,
+    "AD": 0.6840387582778931,
+    "EMCI": 0.5932068601250648,
+    "LMCI": 0.6351417750120163
+  },
+  "interpretation": "Fraction of Grad-CAM attention falling outside the brain mask. Near 0 = the model is reading anatomy. Large = it is reading skull/scalp/background, i.e. scanner-protocol cues."
+}

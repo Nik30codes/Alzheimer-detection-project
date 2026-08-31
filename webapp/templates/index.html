@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ brand }}</title>
+<style>
+  :root{
+    --bg0:#0B0518; --bg1:#120A29; --panel:#1A1035; --panel2:#221545;
+    --line:#2A1D4D; --accent:#8B5CF6; --accent2:#C084FC; --accent3:#E879F9;
+    --ok:#22C55E; --warn:#F59E0B; --danger:#EF4444;
+    --text:#F5F3FF; --muted:#A79FC4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--text);
+    background:radial-gradient(1100px 600px at 15% -10%,#2A1055 0%,transparent 60%),
+               linear-gradient(160deg,var(--bg0),var(--bg1));
+    background-attachment:fixed;min-height:100vh;
+    font:15px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:34px 20px 70px}
+  .brandrow{display:flex;align-items:center;gap:13px;margin-bottom:26px}
+  .logo{width:42px;height:42px;border-radius:12px;flex:none;
+    background:linear-gradient(135deg,var(--accent),var(--accent3));
+    display:grid;place-items:center;font-size:21px;
+    box-shadow:0 0 22px rgba(139,92,246,.5)}
+  .brandname{font-size:19px;font-weight:700;letter-spacing:.2px}
+  .brandsub{font-size:11.5px;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase}
+  h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:0 0 12px;font-weight:800}
+  h1 .g{background:linear-gradient(100deg,var(--accent2),var(--accent3));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{color:var(--muted);max-width:620px;margin:0 0 24px;font-size:16px}
+  .banner{background:linear-gradient(90deg,rgba(245,158,11,.14),rgba(245,158,11,.05));
+    border:1px solid rgba(245,158,11,.35);color:#FCD34D;padding:13px 15px;
+    border-radius:12px;margin:0 0 24px;font-size:13.5px}
+  .card{background:linear-gradient(180deg,var(--panel),rgba(26,16,53,.72));
+    border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:20px;
+    box-shadow:0 10px 34px rgba(0,0,0,.32)}
+  h2{font-size:19px;margin:0 0 4px}
+  .row{display:flex;gap:16px;flex-wrap:wrap}
+  .col{flex:1 1 300px;min-width:270px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px}
+  .tile{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:14px}
+  .tile .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.9px}
+  .tile .v{font-size:25px;font-weight:800;margin:5px 0 2px;
+    background:linear-gradient(100deg,var(--accent2),var(--accent3));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .tile .s{font-size:12px;color:var(--muted)}
+  label.drop{display:block;border:2px dashed var(--line);border-radius:14px;padding:30px;
+    text-align:center;cursor:pointer;color:var(--muted);transition:.15s;background:rgba(34,21,69,.35)}
+  label.drop:hover,label.drop.over{border-color:var(--accent);color:var(--text);
+    background:rgba(139,92,246,.09)}
+  input[type=file]{display:none}
+  button{background:linear-gradient(100deg,var(--accent),var(--accent3));color:#12052b;
+    border:0;border-radius:11px;padding:12px 24px;font-weight:700;font-size:15px;cursor:pointer;
+    box-shadow:0 6px 20px rgba(139,92,246,.4)}
+  button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .pill{display:inline-block;font-size:10.5px;padding:3px 10px;border-radius:20px;
+    background:rgba(34,197,94,.14);color:var(--ok);border:1px solid rgba(34,197,94,.4);
+    text-transform:uppercase;letter-spacing:.8px;font-weight:700}
+  .progwrap{display:none;margin-top:18px}
+  .pbar{height:9px;background:var(--panel2);border-radius:6px;overflow:hidden;
+    border:1px solid var(--line)}
+  .pbar>i{display:block;height:100%;width:0;transition:width .35s ease;
+    background:linear-gradient(90deg,var(--accent),var(--accent3))}
+  .steps{margin-top:14px;font-size:13.5px}
+  .step{display:flex;gap:10px;align-items:flex-start;padding:4px 0;color:var(--muted)}
+  .step.active{color:var(--text)}
+  .step.done{color:var(--ok)}
+  .dot{width:16px;flex:none;text-align:center}
+  .cls{margin-bottom:13px}
+  .cls .top{display:flex;justify-content:space-between;font-size:14px;margin-bottom:5px}
+  .cbar{height:11px;background:var(--panel2);border-radius:6px;overflow:hidden}
+  .cbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3))}
+  img.out{width:100%;border-radius:12px;border:1px solid var(--line);background:#000;display:block}
+  .err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#FCA5A5;
+    padding:13px;border-radius:12px;margin-top:15px;font-size:14px}
+  .muted{color:var(--muted);font-size:13px}
+  .note{background:rgba(139,92,246,.09);border:1px solid rgba(139,92,246,.32);
+    border-radius:11px;padding:12px 14px;font-size:13px;color:#DDD6FE;margin-top:14px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+  code{background:var(--panel2);padding:2px 7px;border-radius:6px;font-size:12.5px;color:#DDD6FE}
+  footer{color:var(--muted);font-size:12.5px;margin-top:30px;line-height:1.8;
+    border-top:1px solid var(--line);padding-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brandrow">
+    <div class="logo">🧠</div>
+    <div>
+      <div class="brandname">{{ brand }}</div>
+      <div class="brandsub">Deep learning on ADNI structural MRI</div>
+    </div>
+  </div>
+
+  <h1>Smarter insights.<br><span class="g">Honestly measured.</span></h1>
+  <p class="lede">Upload an axial brain MRI slice. The model returns a prediction, the
+    probability behind it, and a heat-map showing exactly which region drove the
+    decision.</p>
+
+  <div class="banner"><b>Research demonstration only.</b> {{ disclaimer }}</div>
+
+  {% for t in tasks %}
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <h2>{{ t.label }}</h2>
+      {% if t.status == 'validated' %}<span class="pill">validated</span>{% endif %}
+    </div>
+    <p class="muted" style="margin:6px 0 16px">{{ t.description }}</p>
+    {% if t.metrics %}
+    <div class="tiles">
+      {% if t.metrics.auc %}
+      <div class="tile"><div class="k">ROC AUC</div>
+        <div class="v">{{ '%.3f'|format(t.metrics.auc) }}</div>
+        <div class="s">95% CI {{ '%.3f'|format(t.metrics.auc_ci[0]) }}–{{ '%.3f'|format(t.metrics.auc_ci[1]) }}</div></div>
+      {% endif %}
+      {% if t.metrics.accuracy %}
+      <div class="tile"><div class="k">Accuracy</div>
+        <div class="v">{{ '%.1f%%'|format(t.metrics.accuracy*100) }}</div>
+        <div class="s">vs {{ '%.1f%%'|format(t.metrics.baseline*100) }} baseline</div></div>
+      {% endif %}
+      {% if t.metrics.n_test %}
+      <div class="tile"><div class="k">Test subjects</div>
+        <div class="v">{{ t.metrics.n_test }}</div>
+        <div class="s">never seen in training</div></div>
+      {% endif %}
+      <div class="tile"><div class="k">Cross-scanner</div>
+        <div class="v">0.68–0.79</div>
+        <div class="s">AUC on an unseen scanner generation</div></div>
+    </div>
+    <p class="muted" style="margin-top:12px">Figures are read directly from
+      <code>{{ t.metrics.source_file }}</code> at page load, not written into this page,
+      so they cannot drift from the recorded experiment.</p>
+    <div class="note" style="margin-top:12px">{{ single_slice_note }}</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <div class="card">
+    <h2>Analyse a scan</h2>
+    <form id="f" style="margin-top:14px">
+      <input type="hidden" name="task" value="{{ tasks[0].id }}">
+      <label class="drop" for="file" id="droplabel">
+        <b>Choose a file</b> — or drag it here<br>
+        <span class="muted">PNG, JPEG or DICOM (.dcm) · single axial slice · max 8&nbsp;MB</span>
+      </label>
+      <input id="file" type="file" name="image" accept="image/*,.dcm">
+      <div style="margin-top:15px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <button id="go" type="submit" disabled>Analyse scan</button>
+        <span class="muted" id="fname"></span>
+      </div>
+    </form>
+
+    <div class="note">{{ dicom_note }}</div>
+
+    <div class="progwrap" id="progwrap">
+      <div class="pbar"><i id="pfill"></i></div>
+      <div class="steps" id="steps"></div>
+    </div>
+    <div id="err"></div>
+  </div>
+
+  <div class="card" id="result" style="display:none">
+    <h2>Result</h2>
+    <div class="tiles" id="rtiles" style="margin:14px 0 20px"></div>
+    <div class="row">
+      <div class="col"><div id="classes"></div>
+        <div id="thr" class="muted" style="margin-top:12px"></div></div>
+      <div class="col">
+        <div class="row" style="gap:12px">
+          <div class="col" style="min-width:140px">
+            <div class="muted" style="margin-bottom:6px">Input (as the model sees it)</div>
+            <img class="out" id="inimg"></div>
+          <div class="col" style="min-width:140px">
+            <div class="muted" style="margin-bottom:6px">Where the model looked</div>
+            <img class="out" id="camimg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>How this was validated</h2>
+    <p class="muted" style="margin:6px 0 14px">The accuracy number matters less than
+      whether it means anything. Three problems were found and measured in this dataset.</p>
+    <table>
+      <tr><th>Problem</th><th>What was found</th><th>Status</th></tr>
+      <tr><td><b>Subject leakage</b></td>
+          <td>Slices from one person appearing in both training and test data inflates
+              accuracy by <b>36.9 points</b> — measured directly here.</td>
+          <td>Avoided by splitting per person before any image is created</td></tr>
+      <tr><td><b>Scanner confound</b></td>
+          <td>Every healthy/Alzheimer's subject came from one scanner era and every MCI
+              subject from another, so "diagnosis" and "scanner" were the same variable.
+              Models scored 98–100% at identifying the <i>scanner</i> while at chance on
+              the disease.</td>
+          <td>Fixed by rebuilding the dataset so every class spans both eras; scanner era
+              now gives <b>+0.0%</b> over baseline</td></tr>
+      <tr><td><b>Slice misalignment</b></td>
+          <td>Slices were taken at a fixed fraction of image height, landing on different
+              anatomy per subject — sometimes missing the hippocampus entirely.</td>
+          <td>Re-extracted anchored in millimetres below the top of the skull</td></tr>
+    </table>
+    <p class="muted" style="margin-top:16px">The model was then trained on one scanner
+      generation and tested on a completely different one — different machines, years and
+      vendors, no shared subjects. It still ranked Alzheimer's above healthy
+      (AUC 0.68–0.79), which is difficult to explain if it were reading scanner artefacts.</p>
+  </div>
+
+  <footer>
+    Trained on the ADNI dataset with a strict subject-wise split — no person appears in
+    both training and test data. Uploaded images are processed in memory and are never
+    stored or logged.<br>
+    Four-stage classification (CN / EMCI / LMCI / AD) is deliberately not offered here:
+    it is not yet reliably better than guessing the most common class, and presenting it
+    would look authoritative without being so.<br>
+    <b>This tool cannot diagnose anyone.</b> If you have concerns about memory or
+    cognition, speak to a doctor.
+  </footer>
+</div>
+
+<script>
+const f=document.getElementById('f'),file=document.getElementById('file'),
+ go=document.getElementById('go'),err=document.getElementById('err'),
+ res=document.getElementById('result'),fname=document.getElementById('fname'),
+ drop=document.getElementById('droplabel'),pw=document.getElementById('progwrap'),
+ pfill=document.getElementById('pfill'),steps=document.getElementById('steps');
+
+const STAGES=['Reading file','Validating axial slice','Harmonising resolution',
+ 'Running model + TTA','Computing Grad-CAM','Complete'];
+
+file.onchange=()=>{go.disabled=!file.files.length;
+ fname.textContent=file.files.length?file.files[0].name:'';};
+['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{
+ ev.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{
+ ev.preventDefault();drop.classList.remove('over');}));
+drop.addEventListener('drop',ev=>{if(ev.dataTransfer.files.length){
+ file.files=ev.dataTransfer.files;file.onchange();}});
+
+function renderSteps(cur,labels){
+ steps.innerHTML=STAGES.map((s,i)=>{
+  const n=i+1;const cls=n<cur?'done':(n===cur?'active':'');
+  const dot=n<cur?'✓':(n===cur?'▸':'·');
+  return `<div class="step ${cls}"><span class="dot">${dot}</span>
+   <span>${labels[n]||s}</span></div>`;}).join('');
+}
+
+f.onsubmit=async ev=>{
+ ev.preventDefault();err.innerHTML='';res.style.display='none';
+ go.disabled=true;go.textContent='Analysing…';pw.style.display='block';
+ pfill.style.width='0%';const labels={};renderSteps(1,labels);
+ try{
+  const r=await fetch('/predict-stream',{method:'POST',body:new FormData(f)});
+  if(!r.ok){const d=await r.json().catch(()=>({}));
+   throw new Error(d.error||'Request failed');}
+  const reader=r.body.getReader(),dec=new TextDecoder();let buf='';
+  while(true){
+   const {value,done}=await reader.read(); if(done) break;
+   buf+=dec.decode(value,{stream:true});
+   const lines=buf.split('\n'); buf=lines.pop();
+   for(const line of lines){
+    if(!line.trim()) continue;
+    const e=JSON.parse(line);
+    if(e.error){err.innerHTML='<div class="err">'+e.error+'</div>';
+     pw.style.display='none';go.disabled=false;go.textContent='Analyse scan';return;}
+    if(e.pct!==undefined) pfill.style.width=e.pct+'%';
+    if(e.stage){labels[e.stage]=e.label;renderSteps(e.done_stage?e.stage+1:e.stage,labels);}
+    if(e.result) show(e.result);
+   }
+  }
+ }catch(e){err.innerHTML='<div class="err">'+(e.message||'Network error')+'</div>';
+  pw.style.display='none';}
+ go.disabled=false;go.textContent='Analyse scan';
+};
+
+function show(d){
+ const p=d.prediction;
+ const conf=(p.prob*100).toFixed(1)+'%';
+ document.getElementById('rtiles').innerHTML=`
+  <div class="tile"><div class="k">Prediction</div><div class="v">${p.code}</div>
+   <div class="s">${p.label}</div></div>
+  <div class="tile"><div class="k">Confidence</div><div class="v">${conf}</div>
+   <div class="s">model probability</div></div>
+  <div class="tile"><div class="k">Input</div><div class="v">${d.source_kind}</div>
+   <div class="s">processed in memory</div></div>
+  <div class="tile"><div class="k">Time</div><div class="v">${d.elapsed}s</div>
+   <div class="s">end to end</div></div>`;
+ document.getElementById('classes').innerHTML=d.ranked.map(c=>
+  `<div class="cls"><div class="top"><span>${c.label}</span>
+   <b>${(c.prob*100).toFixed(1)}%</b></div>
+   <div class="cbar"><i style="width:${(c.prob*100).toFixed(1)}%"></i></div></div>`).join('');
+ document.getElementById('thr').textContent=d.threshold_note||'';
+ document.getElementById('inimg').src=d.input_image;
+ document.getElementById('camimg').src=d.gradcam||'';
+ res.style.display='';res.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+</script>
+</body>
+</html>

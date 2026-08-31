@@ -1,0 +1,13 @@
+data/
+models/
+webapp/frontend/node_modules/
+webapp/frontend/dist/
+notebooks/
+demo/
+report_assets/
+reference_papers/
+.git/
+__pycache__/
+*.pyc
+CLAUDE.md
+claudereaserch.md

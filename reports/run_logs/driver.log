@@ -1,0 +1,22 @@
+[03:23:18] driver pid 10476 starting, 10 jobs
+[03:23:18] START custom_cnn_leaky
+[03:59:43] OK    custom_cnn_leaky in 36.4 min
+[03:59:43] START mobilenetv2_leaky
+[04:33:11] OK    mobilenetv2_leaky in 33.5 min
+[04:33:11] START efficientnet_b0_leaky
+[11:13:51] OK    efficientnet_b0_leaky in 400.7 min
+[11:13:51] START custom_cnn_25d
+[11:33:54] OK    custom_cnn_25d in 20.1 min
+[11:33:54] START mobilenetv2_25d
+[11:52:41] OK    mobilenetv2_25d in 18.8 min
+[11:52:41] START efficientnet_b0_25d
+[12:14:06] OK    efficientnet_b0_25d in 21.4 min
+[12:14:06] START ADvsCN_custom_cnn
+[12:21:51] OK    ADvsCN_custom_cnn in 7.8 min
+[12:21:51] START ADvsCN_mobilenetv2
+[12:29:02] OK    ADvsCN_mobilenetv2 in 7.2 min
+[12:29:02] START final_eval
+[12:30:12] OK    final_eval in 1.2 min
+[12:30:12] START within_era
+[12:30:13] OK    within_era in 0.0 min
+[12:30:13] ALL REMAINING JOBS COMPLETE

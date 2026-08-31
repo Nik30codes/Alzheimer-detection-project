@@ -1,0 +1,28 @@
+{
+  "task": "AD vs CN, trained on GO2, tested on ADNI1 (external cohort, zero subject overlap)",
+  "arch": "mobilenetv2",
+  "direction": "go2->adni1",
+  "select_by": "val_loss",
+  "train_cohort": "GO2",
+  "test_cohort": "ADNI1",
+  "n_train_subjects": 226,
+  "n_val_subjects": 40,
+  "n_test_subjects": 235,
+  "accuracy": 0.7021276595744681,
+  "accuracy_95CI": [
+    0.640786036199666,
+    0.7569671190295737
+  ],
+  "majority_baseline": 0.5404255319148936,
+  "roc_auc": 0.7695392242636337,
+  "roc_auc_95CI": [
+    0.7081639908410038,
+    0.8309144576862637
+  ],
+  "decision_threshold": 0.4657000005245209,
+  "verdict": "TRANSFERS - significantly above baseline on a cohort never trained on",
+  "macro_f1": 0.7021222656815878,
+  "epochs_run": 16,
+  "best_epoch": 9,
+  "train_minutes": 10.3
+}

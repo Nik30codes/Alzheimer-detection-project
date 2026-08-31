@@ -1,0 +1,74 @@
+manifest: manifest_v4_adcn.csv
+===== AD vs CN within ADNI1 (no cohort confound) (mobilenetv2) =====
+subjects by class x era:
+class  era  
+AD     ADNI1    108
+       GO2      108
+CN     ADNI1    127
+       GO2      158
+subjects  train 351  val 75  test 75
+slices    train 11232  val 2400  test 2400
+class balance (test subjects): {'AD': 32, 'CN': 43}
+Epoch  1/40 - train_loss 0.6748 train_acc 0.5940 - val_loss 0.6669 val_acc 0.6504 val_macro_f1 0.6134
+Epoch  2/40 - train_loss 0.6103 train_acc 0.6720 - val_loss 0.6187 val_acc 0.6837 val_macro_f1 0.6732
+Epoch  3/40 - train_loss 0.5888 train_acc 0.6897 - val_loss 0.6797 val_acc 0.6754 val_macro_f1 0.6545
+Epoch  4/40 - train_loss 0.5685 train_acc 0.7032 - val_loss 0.6499 val_acc 0.6946 val_macro_f1 0.6919
+Epoch  5/40 - train_loss 0.5490 train_acc 0.7208 - val_loss 0.7084 val_acc 0.6637 val_macro_f1 0.6611
+Epoch  6/40 - train_loss 0.5072 train_acc 0.7471 - val_loss 0.5414 val_acc 0.7175 val_macro_f1 0.7121
+Epoch  7/40 - train_loss 0.4812 train_acc 0.7633 - val_loss 0.5730 val_acc 0.7121 val_macro_f1 0.7091
+Epoch  8/40 - train_loss 0.4654 train_acc 0.7743 - val_loss 0.5935 val_acc 0.6963 val_macro_f1 0.6731
+Epoch  9/40 - train_loss 0.4420 train_acc 0.7886 - val_loss 0.5724 val_acc 0.7375 val_macro_f1 0.7355
+Epoch 10/40 - train_loss 0.3768 train_acc 0.8284 - val_loss 0.5635 val_acc 0.7438 val_macro_f1 0.7427
+Epoch 11/40 - train_loss 0.3409 train_acc 0.8488 - val_loss 0.6781 val_acc 0.7408 val_macro_f1 0.7395
+Epoch 12/40 - train_loss 0.3195 train_acc 0.8587 - val_loss 0.7698 val_acc 0.7125 val_macro_f1 0.6859
+Epoch 13/40 - train_loss 0.2588 train_acc 0.8894 - val_loss 0.6811 val_acc 0.7196 val_macro_f1 0.7119
+Early stopping at epoch 13 (no val_loss improvement for 7 epochs)
+restoring best checkpoint from epoch 6 (selected by val_loss)
+
+threshold chosen on validation: 0.481 (Youden's J = 0.642); default 0.5 would have been used otherwise
+
+trained 13 epochs in 21.3 min
+
+===== SUBJECT LEVEL, AD vs CN =====
+              precision    recall  f1-score   support
+
+          CN       0.85      0.77      0.80        43
+          AD       0.72      0.81      0.76        32
+
+    accuracy                           0.79        75
+   macro avg       0.78      0.79      0.78        75
+weighted avg       0.79      0.79      0.79        75
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+[[33 10]
+ [ 6 26]]
+
+accuracy    78.7%  (59/75)   95% CI [68.1%, 86.4%]
+majority baseline 57.3%  <- must be beaten to mean anything
+ROC AUC     0.894   95% CI [0.815, 0.973]   (0.5 = no signal; robust to the class imbalance)
+            ^ interval excludes 0.5 -> genuine ranking signal
+verdict: REAL SIGNAL - significantly above the trivial baseline
+
+{
+  "task": "AD vs CN within ADNI1 (no cohort confound)",
+  "arch": "mobilenetv2",
+  "manifest": "manifest_v4_adcn.csv",
+  "n_test_subjects": 75,
+  "accuracy": 0.7866666666666666,
+  "accuracy_95CI": [
+    0.6811982171013853,
+    0.86419913657992
+  ],
+  "decision_threshold": 0.48069998621940613,
+  "accuracy_at_default_0.5": 0.76,
+  "majority_baseline": 0.5733333333333334,
+  "roc_auc": 0.8938953488372092,
+  "roc_auc_95CI": [
+    0.8145136548681815,
+    0.973277042806237
+  ],
+  "verdict": "REAL SIGNAL - significantly above the trivial baseline",
+  "macro_f1": 0.7847919655667145,
+  "epochs_run": 13,
+  "train_minutes": 21.3
+}

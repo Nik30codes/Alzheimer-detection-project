@@ -1,0 +1,66 @@
+manifest: manifest_v2_masked.csv
+===== AD vs CN within ADNI1 (efficientnet_b0) =====
+subjects  train 122  val 26  test 26
+slices    train 3904  val 832  test 832
+class balance (test subjects): {'AD': 11, 'CN': 15}
+Epoch  1/40 - train_loss 0.6895 train_acc 0.5861 - val_loss 0.8829 val_acc 0.5901
+Epoch  2/40 - train_loss 0.6047 train_acc 0.6755 - val_loss 0.7610 val_acc 0.5697
+Epoch  3/40 - train_loss 0.5581 train_acc 0.7126 - val_loss 0.5790 val_acc 0.6671
+Epoch  4/40 - train_loss 0.5087 train_acc 0.7387 - val_loss 1.1678 val_acc 0.6623
+Epoch  5/40 - train_loss 0.4853 train_acc 0.7520 - val_loss 0.5701 val_acc 0.6707
+Epoch  6/40 - train_loss 0.4561 train_acc 0.7766 - val_loss 0.7221 val_acc 0.6010
+Epoch  7/40 - train_loss 0.4146 train_acc 0.8040 - val_loss 1.8144 val_acc 0.5529
+Epoch  8/40 - train_loss 0.3992 train_acc 0.8138 - val_loss 1.1632 val_acc 0.5745
+Epoch  9/40 - train_loss 0.3514 train_acc 0.8384 - val_loss 0.6699 val_acc 0.6827
+Epoch 10/40 - train_loss 0.3217 train_acc 0.8540 - val_loss 0.7002 val_acc 0.6971
+Epoch 11/40 - train_loss 0.2897 train_acc 0.8745 - val_loss 0.6749 val_acc 0.7272
+Epoch 12/40 - train_loss 0.2507 train_acc 0.8896 - val_loss 0.9836 val_acc 0.6394
+Early stopping at epoch 12 (no val_loss improvement for 7 epochs)
+
+threshold chosen on validation: 0.398 (Youden's J = 0.500); default 0.5 would have been used otherwise
+
+trained 12 epochs in 10.6 min
+
+===== SUBJECT LEVEL, AD vs CN =====
+              precision    recall  f1-score   support
+
+          CN       0.75      0.40      0.52        15
+          AD       0.50      0.82      0.62        11
+
+    accuracy                           0.58        26
+   macro avg       0.62      0.61      0.57        26
+weighted avg       0.64      0.58      0.56        26
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+[[6 9]
+ [2 9]]
+
+accuracy    57.7%  (15/26)   95% CI [38.9%, 74.5%]
+majority baseline 57.7%  <- must be beaten to mean anything
+ROC AUC     0.648   95% CI [0.429, 0.868]   (0.5 = no signal; robust to the class imbalance)
+            ^ interval still includes 0.5 -> suggestive, not established
+verdict: INCONCLUSIVE - CI straddles the trivial baseline (test set is small)
+
+{
+  "task": "AD vs CN within ADNI1 (no cohort confound)",
+  "arch": "efficientnet_b0",
+  "manifest": "manifest_v2_masked.csv",
+  "n_test_subjects": 26,
+  "accuracy": 0.5769230769230769,
+  "accuracy_95CI": [
+    0.3894829692111983,
+    0.744558100972706
+  ],
+  "decision_threshold": 0.39809998869895935,
+  "accuracy_at_default_0.5": 0.5769230769230769,
+  "majority_baseline": 0.5769230769230769,
+  "roc_auc": 0.6484848484848484,
+  "roc_auc_95CI": [
+    0.42862116118676674,
+    0.8683485357829301
+  ],
+  "verdict": "INCONCLUSIVE - CI straddles the trivial baseline (test set is small)",
+  "macro_f1": 0.5712143928035982,
+  "epochs_run": 12,
+  "train_minutes": 10.6
+}

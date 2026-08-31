@@ -1,0 +1,24 @@
+===== tune_val_dropout50 on cuda =====
+config: {"lr": 0.001, "weight_decay": 0.0001, "optimizer": "adam", "batch_size": 32, "epochs": 40, "patience": 7, "scheduler": "plateau", "warmup_epochs": 0, "label_smoothing": 0.0, "mixup_alpha": 0.0, "head_dropout": 0.5, "grad_clip": null, "sampler": "none", "class_weighted_loss": true, "select_by": "val_loss", "degrees": 10, "translate": 0.05, "scale": [0.95, 1.05], "hflip": 0.5, "rrc_scale": null, "jitter": null, "erasing": 0.0}
+subjects train 351 val 75
+  ep  1/40 train_loss 0.6983 acc 0.5606 | val_loss 0.6442 acc 0.6233 f1 0.5295 subjAUC 0.7653 | lr 1.00e-03
+  ep  2/40 train_loss 0.6163 acc 0.6678 | val_loss 0.6475 acc 0.6292 f1 0.5833 subjAUC 0.7442 | lr 1.00e-03
+  ep  3/40 train_loss 0.5788 acc 0.6977 | val_loss 0.6085 acc 0.6942 f1 0.6879 subjAUC 0.8488 | lr 1.00e-03
+  ep  4/40 train_loss 0.5582 acc 0.7164 | val_loss 1.4827 acc 0.4988 f1 0.4424 subjAUC 0.7253 | lr 1.00e-03
+  ep  5/40 train_loss 0.5391 acc 0.7333 | val_loss 0.7105 acc 0.6617 f1 0.6616 subjAUC 0.7769 | lr 1.00e-03
+  ep  6/40 train_loss 0.5267 acc 0.7429 | val_loss 0.5855 acc 0.7283 f1 0.7092 subjAUC 0.8568 | lr 1.00e-03
+  ep  7/40 train_loss 0.5026 acc 0.7562 | val_loss 0.6875 acc 0.7421 f1 0.7356 subjAUC 0.8583 | lr 1.00e-03
+  ep  8/40 train_loss 0.4852 acc 0.7645 | val_loss 0.8220 acc 0.6696 f1 0.5973 subjAUC 0.8314 | lr 1.00e-03
+  ep  9/40 train_loss 0.4654 acc 0.7749 | val_loss 0.7725 acc 0.6075 f1 0.5950 subjAUC 0.8561 | lr 5.00e-04
+  ep 10/40 train_loss 0.3990 acc 0.8174 | val_loss 0.5668 acc 0.7283 f1 0.7235 subjAUC 0.8721 | lr 5.00e-04
+  ep 11/40 train_loss 0.3754 acc 0.8305 | val_loss 1.1581 acc 0.5425 f1 0.5031 subjAUC 0.8503 | lr 5.00e-04
+  ep 12/40 train_loss 0.3395 acc 0.8478 | val_loss 0.8009 acc 0.7046 f1 0.6902 subjAUC 0.8067 | lr 5.00e-04
+  ep 13/40 train_loss 0.3258 acc 0.8580 | val_loss 0.7377 acc 0.6983 f1 0.6983 subjAUC 0.8525 | lr 2.50e-04
+  ep 14/40 train_loss 0.2487 acc 0.8941 | val_loss 0.7437 acc 0.7275 f1 0.7066 subjAUC 0.8634 | lr 2.50e-04
+  ep 15/40 train_loss 0.2071 acc 0.9174 | val_loss 0.7794 acc 0.7379 f1 0.7294 subjAUC 0.8510 | lr 2.50e-04
+  ep 16/40 train_loss 0.1973 acc 0.9175 | val_loss 1.8352 acc 0.6383 f1 0.6382 subjAUC 0.7224 | lr 1.25e-04
+  ep 17/40 train_loss 0.1597 acc 0.9349 | val_loss 0.9605 acc 0.6792 f1 0.6603 subjAUC 0.8060 | lr 1.25e-04
+  early stop at epoch 17 (no val_loss gain for 7)
+  restored epoch 10 (selected by val_loss)
+
+tune_val_dropout50: val subject AUC 0.8721 [0.785, 0.959]  acc@Youden 0.827  best_epoch 10/17  train-val gap +0.089  9.8 min

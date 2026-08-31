@@ -1,0 +1,16 @@
+{
+  "arch": "custom_cnn",
+  "mode": "v3go2hi",
+  "n_params": 1207012,
+  "select_by": "val_macro_f1",
+  "best_epoch": 2,
+  "init_from": "ssl_encoder.pt",
+  "epochs_run": 9,
+  "train_minutes": 11.1,
+  "slice_level_accuracy": 0.38676075268817206,
+  "slice_level_macro_f1": 0.3533602352460384,
+  "subject_level_accuracy": 0.41935483870967744,
+  "subject_level_macro_f1": 0.3953773925604912,
+  "subject_level_accuracy_softvote": 0.3978494623655914,
+  "subject_level_macro_f1_softvote": 0.3710184182015168
+}

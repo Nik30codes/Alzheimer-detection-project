@@ -1,0 +1,89 @@
+===== efficientnet_b0_v2 on cuda (manifest: manifest_v2.csv) =====
+efficientnet_b0: 4,012,672 params, in_channels=3, mode=v2
+Epoch  1/40 - train_loss 0.9492 train_acc 0.4701 - val_loss 0.7655 val_acc 0.5109
+Epoch  2/40 - train_loss 0.7660 train_acc 0.5618 - val_loss 1.7648 val_acc 0.3935
+Epoch  3/40 - train_loss 0.6851 train_acc 0.6207 - val_loss 2.2097 val_acc 0.3116
+Epoch  4/40 - train_loss 0.6504 train_acc 0.6461 - val_loss 1.8875 val_acc 0.3537
+Epoch  5/40 - train_loss 0.5818 train_acc 0.6849 - val_loss 0.9093 val_acc 0.4863
+Epoch  6/40 - train_loss 0.5422 train_acc 0.7150 - val_loss 0.8057 val_acc 0.5388
+Epoch  7/40 - train_loss 0.5203 train_acc 0.7294 - val_loss 0.8336 val_acc 0.6009
+Epoch  8/40 - train_loss 0.4563 train_acc 0.7655 - val_loss 0.8409 val_acc 0.5630
+Early stopping at epoch 8 (no val_loss improvement for 7 epochs)
+
+--- efficientnet_b0_v2 SLICE LEVEL ---
+              precision    recall  f1-score   support
+
+          CN       0.57      0.85      0.69       480
+          AD       0.47      0.05      0.08       352
+        EMCI       0.00      0.00      0.00       672
+        LMCI       0.44      1.00      0.61       608
+
+    accuracy                           0.49      2112
+   macro avg       0.37      0.47      0.35      2112
+weighted avg       0.34      0.49      0.35      2112
+
+slice confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[409  18   0  53]
+ [301  16   0  35]
+ [  1   0   0 671]
+ [  2   0   0 606]]
+
+--- efficientnet_b0_v2 SUBJECT LEVEL (hard majority vote) ---
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+              precision    recall  f1-score   support
+
+          CN       0.57      0.87      0.68        15
+          AD       0.00      0.00      0.00        11
+        EMCI       0.00      0.00      0.00        21
+        LMCI       0.44      1.00      0.61        19
+
+    accuracy                           0.48        66
+   macro avg       0.25      0.47      0.32        66
+weighted avg       0.26      0.48      0.33        66
+
+
+--- efficientnet_b0_v2 SUBJECT LEVEL (soft vote) ---
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+              precision    recall  f1-score   support
+
+          CN       0.57      0.87      0.68        15
+          AD       0.00      0.00      0.00        11
+        EMCI       0.00      0.00      0.00        21
+        LMCI       0.44      1.00      0.61        19
+
+    accuracy                           0.48        66
+   macro avg       0.25      0.47      0.32        66
+weighted avg       0.26      0.48      0.33        66
+
+soft-vote confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[13  0  0  2]
+ [10  0  0  1]
+ [ 0  0  0 21]
+ [ 0  0  0 19]]
+
+=== efficientnet_b0_v2 SUMMARY ===
+{
+  "arch": "efficientnet_b0",
+  "mode": "v2",
+  "n_params": 4012672,
+  "epochs_run": 8,
+  "train_minutes": 44.4,
+  "slice_level_accuracy": 0.4881628787878788,
+  "slice_level_macro_f1": 0.34571522413854616,
+  "subject_level_accuracy": 0.48484848484848486,
+  "subject_level_macro_f1": 0.3242784380305603,
+  "subject_level_accuracy_softvote": 0.48484848484848486,
+  "subject_level_macro_f1_softvote": 0.3242784380305603
+}
+=== efficientnet_b0_v2 DONE in 44.4 min ===
+

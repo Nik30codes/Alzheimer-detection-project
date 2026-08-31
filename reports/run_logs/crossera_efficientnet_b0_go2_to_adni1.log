@@ -1,0 +1,73 @@
+===== efficientnet_b0_crossera_go2_to_adni1 on cuda (checkpoint selected by val_loss) =====
+train/val cohort: GO2     test cohort: ADNI1
+subjects  train 226  val 40  test 235
+test-cohort class balance: {'AD': 108, 'CN': 127}
+train/test subject overlap: 0 (must be 0)
+Epoch  1/40 - train_loss 0.7006 train_acc 0.5513 - val_loss 0.7269 val_acc 0.5461 val_macro_f1 0.4576
+Epoch  2/40 - train_loss 0.5964 train_acc 0.7040 - val_loss 1.7367 val_acc 0.4406 val_macro_f1 0.3593
+Epoch  3/40 - train_loss 0.5461 train_acc 0.7355 - val_loss 0.6553 val_acc 0.6539 val_macro_f1 0.6528
+Epoch  4/40 - train_loss 0.5034 train_acc 0.7541 - val_loss 0.6254 val_acc 0.7039 val_macro_f1 0.7029
+Epoch  5/40 - train_loss 0.4698 train_acc 0.7789 - val_loss 0.9107 val_acc 0.6055 val_macro_f1 0.6049
+Epoch  6/40 - train_loss 0.4374 train_acc 0.7909 - val_loss 0.5920 val_acc 0.6414 val_macro_f1 0.6327
+Epoch  7/40 - train_loss 0.4108 train_acc 0.8106 - val_loss 0.8690 val_acc 0.6633 val_macro_f1 0.5561
+Epoch  8/40 - train_loss 0.3811 train_acc 0.8274 - val_loss 0.6892 val_acc 0.6484 val_macro_f1 0.6484
+Epoch  9/40 - train_loss 0.3467 train_acc 0.8402 - val_loss 1.0178 val_acc 0.6492 val_macro_f1 0.6217
+Epoch 10/40 - train_loss 0.2908 train_acc 0.8742 - val_loss 1.2264 val_acc 0.6094 val_macro_f1 0.6063
+Epoch 11/40 - train_loss 0.2567 train_acc 0.8909 - val_loss 0.8260 val_acc 0.6891 val_macro_f1 0.6554
+Epoch 12/40 - train_loss 0.2327 train_acc 0.8980 - val_loss 0.8392 val_acc 0.7203 val_macro_f1 0.7129
+Epoch 13/40 - train_loss 0.1909 train_acc 0.9215 - val_loss 0.9662 val_acc 0.6641 val_macro_f1 0.6632
+Early stopping at epoch 13 (no val_loss improvement for 7 epochs)
+restoring best checkpoint from epoch 6 (selected by val_loss)
+
+threshold 0.359 chosen on the GO2 validation split (Youden's J 0.438) -- the test cohort was never used for this
+
+trained 13 epochs (best epoch 6) in 10.5 min
+
+===== EXTERNAL COHORT (ADNI1), SUBJECT LEVEL =====
+              precision    recall  f1-score   support
+
+          CN       0.75      0.05      0.09       127
+          AD       0.47      0.98      0.63       108
+
+    accuracy                           0.48       235
+   macro avg       0.61      0.51      0.36       235
+weighted avg       0.62      0.48      0.34       235
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+[[  6 121]
+ [  2 106]]
+
+accuracy    47.7%  (112/235)   95% CI [41.4%, 54.0%]
+majority baseline 54.0%
+ROC AUC     0.552   95% CI [0.478, 0.626]
+            ^ interval includes 0.5 -> no demonstrated transfer
+verdict: FAILS TO TRANSFER - below the trivial baseline on the new cohort
+
+{
+  "task": "AD vs CN, trained on GO2, tested on ADNI1 (external cohort, zero subject overlap)",
+  "arch": "efficientnet_b0",
+  "direction": "go2->adni1",
+  "select_by": "val_loss",
+  "train_cohort": "GO2",
+  "test_cohort": "ADNI1",
+  "n_train_subjects": 226,
+  "n_val_subjects": 40,
+  "n_test_subjects": 235,
+  "accuracy": 0.4765957446808511,
+  "accuracy_95CI": [
+    0.41362862695668406,
+    0.5403157445430883
+  ],
+  "majority_baseline": 0.5404255319148936,
+  "roc_auc": 0.5517643627879848,
+  "roc_auc_95CI": [
+    0.4778270927964003,
+    0.6257016327795694
+  ],
+  "decision_threshold": 0.359499990940094,
+  "verdict": "FAILS TO TRANSFER - below the trivial baseline on the new cohort",
+  "macro_f1": 0.36086235489220564,
+  "epochs_run": 13,
+  "best_epoch": 6,
+  "train_minutes": 10.5
+}

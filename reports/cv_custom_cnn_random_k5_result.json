@@ -1,0 +1,99 @@
+{
+  "tag": "cv_custom_cnn_random_k5",
+  "arch": "custom_cnn",
+  "config": "random",
+  "k": 5,
+  "ssl_epochs": null,
+  "n_subjects": 618,
+  "accuracy": 0.43042071197411,
+  "accuracy_95CI": [
+    0.3919311383227582,
+    0.469769976559231
+  ],
+  "macro_f1": 0.41353753697985973,
+  "majority_baseline": 0.3673139158576052,
+  "verdict": "ABOVE BASELINE, significant",
+  "per_fold": [
+    {
+      "fold": 1,
+      "n_test": 125,
+      "accuracy": 0.472,
+      "macro_f1": 0.45613551653723816,
+      "best_epoch": 5,
+      "epochs_run": 12
+    },
+    {
+      "fold": 2,
+      "n_test": 125,
+      "accuracy": 0.416,
+      "macro_f1": 0.38144515877524693,
+      "best_epoch": 11,
+      "epochs_run": 18
+    },
+    {
+      "fold": 3,
+      "n_test": 124,
+      "accuracy": 0.46774193548387094,
+      "macro_f1": 0.4325757339445481,
+      "best_epoch": 7,
+      "epochs_run": 14
+    },
+    {
+      "fold": 4,
+      "n_test": 122,
+      "accuracy": 0.3770491803278688,
+      "macro_f1": 0.3767156862745098,
+      "best_epoch": 12,
+      "epochs_run": 19
+    },
+    {
+      "fold": 5,
+      "n_test": 122,
+      "accuracy": 0.4180327868852459,
+      "macro_f1": 0.40107515940849275,
+      "best_epoch": 15,
+      "epochs_run": 22
+    }
+  ],
+  "fold_accuracy_sd": 0.035584607415629445,
+  "confusion_matrix": [
+    [
+      76,
+      23,
+      46,
+      13
+    ],
+    [
+      25,
+      43,
+      18,
+      22
+    ],
+    [
+      64,
+      16,
+      110,
+      37
+    ],
+    [
+      20,
+      26,
+      42,
+      37
+    ]
+  ],
+  "classes": [
+    "CN",
+    "AD",
+    "EMCI",
+    "LMCI"
+  ],
+  "per_class_recall": {
+    "CN": 0.4810126582278481,
+    "AD": 0.39814814814814814,
+    "EMCI": 0.4845814977973568,
+    "LMCI": 0.296
+  },
+  "total_minutes": 130.5,
+  "note": "Pretraining (ssl/adcn) is redone inside each fold on non-test subjects only, so no fold's test subjects were ever seen during pretraining."
+}

@@ -1,0 +1,44 @@
+853 subjects -> C:\Users\Nikunj\Documents\alzheimer-mri-project\data\processed_v4
+geometry: isotropic 1.0 mm/px, 224.0mm FOV centred on the head, rendered at 224px (bottleneck 144px)
+class  era  
+AD     ADNI1    108
+       GO2      108
+CN     ADNI1    127
+       GO2      158
+EMCI   GO2      227
+LMCI   GO2      125
+
+extracted 853/853 subjects in 16.9 min
+0 failures
+wrote C:\Users\Nikunj\Documents\alzheimer-mri-project\data\manifest_v4.csv  (27296 slices, 853 subjects)
+wrote C:\Users\Nikunj\Documents\alzheimer-mri-project\data\manifest_v4_go2.csv  (19776 slices, 618 subjects)
+wrote C:\Users\Nikunj\Documents\alzheimer-mri-project\data\manifest_v4_adcn.csv  (16032 slices, 501 subjects)
+wrote C:\Users\Nikunj\Documents\alzheimer-mri-project\data\geometry_v4_qc.csv  (853 subjects)
+
+head vs the fixed 224mm window (fresh extractions only):
+       head_lr_mm  head_ap_mm  clipped_frac_max  clipped_frac_mean
+count  853.000000  853.000000        853.000000         853.000000
+mean   164.768569  208.255914          0.003253           0.000750
+std      8.944112   13.849855          0.006096           0.001816
+min    144.000555  169.804688          0.000000           0.000000
+25%    158.400000  197.226562          0.000000           0.000000
+50%    164.399582  206.250000          0.000000           0.000000
+75%    170.399998  218.000000          0.003420           0.000300
+max    203.999997  247.187500          0.030822           0.013028
+subjects losing >1% of head area at the worst slice: 121/853
+
+split inheritance vs manifest_v3.csv: 853 shared subjects, 0 split mismatches
+
+slices per split (primary GO2 4-way task):
+class    AD    CN  EMCI  LMCI
+split                        
+test    512   768  1088   608
+train  2432  3520  5088  2784
+val     512   768  1088   608
+
+subjects per split (primary GO2 4-way task):
+class  AD   CN  EMCI  LMCI
+split                     
+test   16   24    34    19
+train  76  110   159    87
+val    16   24    34    19

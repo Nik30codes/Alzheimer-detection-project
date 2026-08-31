@@ -1,0 +1,90 @@
+===== efficientnet_b0_braincrop2d on cuda (manifest: manifest_braincrop.csv) =====
+efficientnet_b0: 4,012,672 params, in_channels=3, mode=braincrop2d
+Epoch  1/40 - train_loss 1.0972 train_acc 0.4277 - val_loss 0.9241 val_acc 0.4517
+Epoch  2/40 - train_loss 0.8619 train_acc 0.4958 - val_loss 0.8382 val_acc 0.5005
+Epoch  3/40 - train_loss 0.8020 train_acc 0.5301 - val_loss 0.8449 val_acc 0.4811
+Epoch  4/40 - train_loss 0.7486 train_acc 0.5669 - val_loss 0.8678 val_acc 0.5625
+Epoch  5/40 - train_loss 0.6985 train_acc 0.6038 - val_loss 0.8599 val_acc 0.5123
+Epoch  6/40 - train_loss 0.6166 train_acc 0.6593 - val_loss 0.8414 val_acc 0.5426
+Epoch  7/40 - train_loss 0.5907 train_acc 0.6827 - val_loss 0.8496 val_acc 0.5384
+Epoch  8/40 - train_loss 0.5658 train_acc 0.6932 - val_loss 0.8694 val_acc 0.5876
+Epoch  9/40 - train_loss 0.5092 train_acc 0.7307 - val_loss 0.8607 val_acc 0.5545
+Early stopping at epoch 9 (no val_loss improvement for 7 epochs)
+
+--- efficientnet_b0_braincrop2d SLICE LEVEL ---
+              precision    recall  f1-score   support
+
+          CN       0.61      0.83      0.70       480
+          AD       0.20      0.01      0.01       352
+        EMCI       0.48      0.95      0.63       672
+        LMCI       0.06      0.01      0.02       608
+
+    accuracy                           0.50      2112
+   macro avg       0.34      0.45      0.34      2112
+weighted avg       0.34      0.50      0.37      2112
+
+slice confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[400   8  41  31]
+ [238   2  71  41]
+ [ 14   0 641  17]
+ [  8   0 594   6]]
+
+--- efficientnet_b0_braincrop2d SUBJECT LEVEL (hard majority vote) ---
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+              precision    recall  f1-score   support
+
+          CN       0.59      0.87      0.70        15
+          AD       0.00      0.00      0.00        11
+        EMCI       0.49      1.00      0.66        21
+        LMCI       0.00      0.00      0.00        19
+
+    accuracy                           0.52        66
+   macro avg       0.27      0.47      0.34        66
+weighted avg       0.29      0.52      0.37        66
+
+
+--- efficientnet_b0_braincrop2d SUBJECT LEVEL (soft vote) ---
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\sklearn\metrics\_classification.py:1879: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+              precision    recall  f1-score   support
+
+          CN       0.62      0.87      0.72        15
+          AD       0.00      0.00      0.00        11
+        EMCI       0.49      1.00      0.66        21
+        LMCI       0.00      0.00      0.00        19
+
+    accuracy                           0.52        66
+   macro avg       0.28      0.47      0.34        66
+weighted avg       0.30      0.52      0.37        66
+
+soft-vote confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[13  0  1  1]
+ [ 8  0  2  1]
+ [ 0  0 21  0]
+ [ 0  0 19  0]]
+
+=== efficientnet_b0_braincrop2d SUMMARY ===
+{
+  "arch": "efficientnet_b0",
+  "mode": "braincrop2d",
+  "n_params": 4012672,
+  "epochs_run": 9,
+  "train_minutes": 13.9,
+  "slice_level_accuracy": 0.4966856060606061,
+  "slice_level_macro_f1": 0.34121040421163085,
+  "subject_level_accuracy": 0.5151515151515151,
+  "subject_level_macro_f1": 0.33973817567567566,
+  "subject_level_accuracy_softvote": 0.5151515151515151,
+  "subject_level_macro_f1_softvote": 0.3446180555555556
+}
+=== efficientnet_b0_braincrop2d DONE in 13.9 min ===
+

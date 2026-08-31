@@ -1,0 +1,90 @@
+{
+  "tag": "simple3dcnn_adcn_v3",
+  "task": "AD vs CN, 5-fold subject-level CV, Simple3DCNN (whole-volume)",
+  "comparison": "reports/mobilenetv2_ADvsCN_cv_result.json (2D slice-averaged headline)",
+  "k": 5,
+  "epochs_budget": 40,
+  "batch_size": 8,
+  "n_subjects": 501,
+  "accuracy": 0.6427145708582834,
+  "accuracy_95CI": [
+    0.5998126540635567,
+    0.6834445101637969
+  ],
+  "roc_auc": 0.7208252111760883,
+  "roc_auc_95CI": [
+    0.6750458707821653,
+    0.7666045515700114
+  ],
+  "majority_baseline": 0.5688622754491018,
+  "auc_verdict": "interval excludes 0.5 -> genuine ranking signal",
+  "accuracy_verdict": "REAL SIGNAL - significantly above majority baseline",
+  "per_fold": [
+    {
+      "fold": 1,
+      "n_test": 101,
+      "accuracy": 0.5346534653465347,
+      "threshold": 0.4959,
+      "train_acc_at_best": 0.465,
+      "val_acc_at_best": 0.55,
+      "overfit_gap": -0.085,
+      "best_epoch": 8,
+      "epochs_run": 15,
+      "minutes": 15.0,
+      "note": "recovered from checkpoint after the first CV run was killed mid-fold-2"
+    },
+    {
+      "fold": 2,
+      "n_test": 100,
+      "accuracy": 0.73,
+      "threshold": 0.5521,
+      "train_acc_at_best": 0.7126099706744868,
+      "val_acc_at_best": 0.7333333333333333,
+      "overfit_gap": -0.020723362658846445,
+      "best_epoch": 12,
+      "epochs_run": 19,
+      "minutes": 18.2
+    },
+    {
+      "fold": 3,
+      "n_test": 100,
+      "accuracy": 0.72,
+      "threshold": 0.4579,
+      "train_acc_at_best": 0.7448680351906158,
+      "val_acc_at_best": 0.7666666666666667,
+      "overfit_gap": -0.021798631476050878,
+      "best_epoch": 22,
+      "epochs_run": 29,
+      "minutes": 17.8
+    },
+    {
+      "fold": 4,
+      "n_test": 100,
+      "accuracy": 0.47,
+      "threshold": 0.5068,
+      "train_acc_at_best": 0.49560117302052786,
+      "val_acc_at_best": 0.45,
+      "overfit_gap": 0.04560117302052785,
+      "best_epoch": 2,
+      "epochs_run": 9,
+      "minutes": 5.8
+    },
+    {
+      "fold": 5,
+      "n_test": 100,
+      "accuracy": 0.76,
+      "threshold": 0.5821,
+      "train_acc_at_best": 0.7302052785923754,
+      "val_acc_at_best": 0.75,
+      "overfit_gap": -0.019794721407624616,
+      "best_epoch": 32,
+      "epochs_run": 39,
+      "minutes": 23.6
+    }
+  ],
+  "fold_accuracy_sd": 0.11734985944104181,
+  "mean_overfit_gap": -0.02034310850439882,
+  "total_minutes": 47.3,
+  "select_by": "val_loss",
+  "note": "select_by=val_loss to match the DEPLOYED 2D configuration exactly. Threshold fit with Youden's J on each fold's own validation subjects, never on that fold's test subjects."
+}

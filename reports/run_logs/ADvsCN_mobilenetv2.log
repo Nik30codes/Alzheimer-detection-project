@@ -1,0 +1,51 @@
+===== AD vs CN within ADNI1 (mobilenetv2) =====
+subjects  train 122  val 26  test 26
+slices    train 3904  val 832  test 832
+class balance (test subjects): {'AD': 11, 'CN': 15}
+Epoch  1/40 - train_loss 0.7060 train_acc 0.5438 - val_loss 0.6723 val_acc 0.5613
+Epoch  2/40 - train_loss 0.6176 train_acc 0.6568 - val_loss 0.7092 val_acc 0.5938
+Epoch  3/40 - train_loss 0.5542 train_acc 0.7095 - val_loss 1.0690 val_acc 0.5685
+Epoch  4/40 - train_loss 0.5186 train_acc 0.7346 - val_loss 0.7996 val_acc 0.5577
+Epoch  5/40 - train_loss 0.4438 train_acc 0.7830 - val_loss 0.8731 val_acc 0.5120
+Epoch  6/40 - train_loss 0.4147 train_acc 0.8035 - val_loss 0.9666 val_acc 0.4736
+Epoch  7/40 - train_loss 0.4001 train_acc 0.8197 - val_loss 1.2625 val_acc 0.4748
+Epoch  8/40 - train_loss 0.3566 train_acc 0.8420 - val_loss 1.2593 val_acc 0.4928
+Early stopping at epoch 8 (no val_loss improvement for 7 epochs)
+
+trained 8 epochs in 6.7 min
+
+===== SUBJECT LEVEL, AD vs CN =====
+              precision    recall  f1-score   support
+
+          CN       0.52      0.73      0.61        15
+          AD       0.20      0.09      0.12        11
+
+    accuracy                           0.46        26
+   macro avg       0.36      0.41      0.37        26
+weighted avg       0.39      0.46      0.41        26
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+[[11  4]
+ [10  1]]
+
+accuracy    46.2%  (12/26)   95% CI [28.8%, 64.5%]
+majority baseline 57.7%  <- must be beaten to mean anything
+ROC AUC     0.345   (0.5 = no signal; robust to the class imbalance)
+verdict: INCONCLUSIVE - CI straddles the trivial baseline (test set is small)
+
+{
+  "task": "AD vs CN within ADNI1 (no cohort confound)",
+  "arch": "mobilenetv2",
+  "n_test_subjects": 26,
+  "accuracy": 0.46153846153846156,
+  "accuracy_95CI": [
+    0.28755582695234905,
+    0.6454236379556988
+  ],
+  "majority_baseline": 0.5769230769230769,
+  "roc_auc": 0.34545454545454546,
+  "verdict": "INCONCLUSIVE - CI straddles the trivial baseline (test set is small)",
+  "macro_f1": 0.3680555555555556,
+  "epochs_run": 8,
+  "train_minutes": 6.7
+}

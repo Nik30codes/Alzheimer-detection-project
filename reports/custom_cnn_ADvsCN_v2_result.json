@@ -1,0 +1,23 @@
+{
+  "task": "AD vs CN within ADNI1 (no cohort confound)",
+  "arch": "custom_cnn",
+  "manifest": "manifest_v2.csv",
+  "n_test_subjects": 26,
+  "accuracy": 0.5769230769230769,
+  "accuracy_95CI": [
+    0.3894829692111983,
+    0.744558100972706
+  ],
+  "decision_threshold": 0.1704999953508377,
+  "accuracy_at_default_0.5": 0.5769230769230769,
+  "majority_baseline": 0.5769230769230769,
+  "roc_auc": 0.6727272727272727,
+  "roc_auc_95CI": [
+    0.4567946582421367,
+    0.8886598872124087
+  ],
+  "verdict": "INCONCLUSIVE - CI straddles the trivial baseline (test set is small)",
+  "macro_f1": 0.5712143928035982,
+  "epochs_run": 9,
+  "train_minutes": 6.5
+}

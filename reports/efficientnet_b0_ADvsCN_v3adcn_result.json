@@ -1,0 +1,23 @@
+{
+  "task": "AD vs CN across both ADNI cohorts (era-balanced, 501 subjects)",
+  "arch": "efficientnet_b0",
+  "manifest": "manifest_v3_adcn.csv",
+  "n_test_subjects": 75,
+  "accuracy": 0.7733333333333333,
+  "accuracy_95CI": [
+    0.6666425143266057,
+    0.8533875205788248
+  ],
+  "decision_threshold": 0.3928999900817871,
+  "accuracy_at_default_0.5": 0.7866666666666666,
+  "majority_baseline": 0.5733333333333334,
+  "roc_auc": 0.875,
+  "roc_auc_95CI": [
+    0.7893133308801312,
+    0.9606866691198688
+  ],
+  "verdict": "REAL SIGNAL - significantly above the trivial baseline",
+  "macro_f1": 0.7673782156540777,
+  "epochs_run": 11,
+  "train_minutes": 12.0
+}

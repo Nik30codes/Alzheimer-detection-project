@@ -1,0 +1,13 @@
+{
+  "arch": "mobilenetv2",
+  "mode": "v3go2",
+  "n_params": 2228996,
+  "epochs_run": 11,
+  "train_minutes": 10.8,
+  "slice_level_accuracy": 0.3860887096774194,
+  "slice_level_macro_f1": 0.38053024482089964,
+  "subject_level_accuracy": 0.3870967741935484,
+  "subject_level_macro_f1": 0.3831653602090332,
+  "subject_level_accuracy_softvote": 0.3655913978494624,
+  "subject_level_macro_f1_softvote": 0.36046896018649593
+}

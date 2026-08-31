@@ -1,0 +1,15 @@
+{
+  "arch": "efficientnet_b0",
+  "mode": "v3go2",
+  "n_params": 4012672,
+  "select_by": "val_macro_f1",
+  "best_epoch": 9,
+  "epochs_run": 16,
+  "train_minutes": 19.2,
+  "slice_level_accuracy": 0.3118279569892473,
+  "slice_level_macro_f1": 0.3145538289069285,
+  "subject_level_accuracy": 0.3333333333333333,
+  "subject_level_macro_f1": 0.333368201726009,
+  "subject_level_accuracy_softvote": 0.3655913978494624,
+  "subject_level_macro_f1_softvote": 0.3666229603729604
+}

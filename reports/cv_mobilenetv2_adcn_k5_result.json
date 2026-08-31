@@ -1,0 +1,99 @@
+{
+  "tag": "cv_mobilenetv2_adcn_k5",
+  "arch": "mobilenetv2",
+  "config": "adcn",
+  "k": 5,
+  "ssl_epochs": null,
+  "n_subjects": 618,
+  "accuracy": 0.39158576051779936,
+  "accuracy_95CI": [
+    0.35388519395566853,
+    0.4306258455116171
+  ],
+  "macro_f1": 0.37168712717986674,
+  "majority_baseline": 0.3673139158576052,
+  "verdict": "INCONCLUSIVE - CI straddles the baseline",
+  "per_fold": [
+    {
+      "fold": 1,
+      "n_test": 125,
+      "accuracy": 0.344,
+      "macro_f1": 0.33112798733973764,
+      "best_epoch": 2,
+      "epochs_run": 9
+    },
+    {
+      "fold": 2,
+      "n_test": 125,
+      "accuracy": 0.392,
+      "macro_f1": 0.3779487134456708,
+      "best_epoch": 2,
+      "epochs_run": 9
+    },
+    {
+      "fold": 3,
+      "n_test": 124,
+      "accuracy": 0.4435483870967742,
+      "macro_f1": 0.41863115438483084,
+      "best_epoch": 17,
+      "epochs_run": 24
+    },
+    {
+      "fold": 4,
+      "n_test": 122,
+      "accuracy": 0.4016393442622951,
+      "macro_f1": 0.27692551221962985,
+      "best_epoch": 3,
+      "epochs_run": 10
+    },
+    {
+      "fold": 5,
+      "n_test": 122,
+      "accuracy": 0.3770491803278688,
+      "macro_f1": 0.36318783330041476,
+      "best_epoch": 23,
+      "epochs_run": 30
+    }
+  ],
+  "fold_accuracy_sd": 0.03248710046425988,
+  "confusion_matrix": [
+    [
+      65,
+      27,
+      48,
+      18
+    ],
+    [
+      20,
+      47,
+      24,
+      17
+    ],
+    [
+      51,
+      29,
+      105,
+      42
+    ],
+    [
+      15,
+      33,
+      52,
+      25
+    ]
+  ],
+  "classes": [
+    "CN",
+    "AD",
+    "EMCI",
+    "LMCI"
+  ],
+  "per_class_recall": {
+    "CN": 0.41139240506329117,
+    "AD": 0.4351851851851852,
+    "EMCI": 0.46255506607929514,
+    "LMCI": 0.2
+  },
+  "total_minutes": 141.4,
+  "note": "Pretraining (ssl/adcn) is redone inside each fold on non-test subjects only, so no fold's test subjects were ever seen during pretraining."
+}

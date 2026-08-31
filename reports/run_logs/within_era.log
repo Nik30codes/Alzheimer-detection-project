@@ -1,0 +1,40 @@
+
+================ EfficientNet-B0 (from scratch) ================
+4-way subject accuracy            : 54.5%  (chance 25%)
+acquisition-era accuracy (2-way)  : 98.5%  (chance 50%)
+  CN vs AD    within ADNI1     : 52.0% on 25 subjects | always-guess-majority would score 56.0% -> NO real signal
+  EMCI vs LMCI  within ADNI-GO/2 : 57.5% on 40 subjects | always-guess-majority would score 52.5% -> some signal
+
+================ custom CNN (Phase C) ================
+4-way subject accuracy            : 56.1%  (chance 25%)
+acquisition-era accuracy (2-way)  : 97.0%  (chance 50%)
+  CN vs AD    within ADNI1     : 58.3% on 24 subjects | always-guess-majority would score 58.3% -> NO real signal
+  EMCI vs LMCI  within ADNI-GO/2 : 57.5% on 40 subjects | always-guess-majority would score 52.5% -> some signal
+
+================ MobileNetV2 (from scratch) ================
+4-way subject accuracy            : 60.6%  (chance 25%)
+acquisition-era accuracy (2-way)  : 100.0%  (chance 50%)
+  CN vs AD    within ADNI1     : 65.4% on 26 subjects | always-guess-majority would score 57.7% -> some signal
+  EMCI vs LMCI  within ADNI-GO/2 : 57.5% on 40 subjects | always-guess-majority would score 52.5% -> some signal
+
+
+================ WHAT THE HEADLINE NUMBER IS MADE OF ================
+                                four_way    era
+model                                          
+EfficientNet-B0 (from scratch)      54.5   98.5
+custom CNN (Phase C)                56.1   97.0
+MobileNetV2 (from scratch)          60.6  100.0
+
+Read this way: the 4-way accuracy is largely the era split (easy, and not diagnosis)
+combined with near-chance guessing inside each era. The clinically meaningful question --
+AD vs CN -- is where the models have little to no real signal, which is exactly the
+comparison a diagnostic tool would need to get right.
+
+Root cause is the dataset, not the models: every CN and AD subject comes from ADNI1 and
+every EMCI and LMCI subject from ADNI-GO/2, so "class" and "scanner era" are the same
+variable. No architecture can separate them.
+
+Fix, and it is worth doing during the planned LONI expansion: pull CN/AD subjects from
+ADNI-GO/2 and EMCI/LMCI subjects from ADNI1 as well, so each class spans both eras. Then
+protocol cues stop being predictive of the label and the accuracy that remains is real.
+

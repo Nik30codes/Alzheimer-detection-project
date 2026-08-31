@@ -1,0 +1,22 @@
+{
+  "source": "reports/cvheadline_mobilenetv2_val_loss_oof.csv",
+  "note": "Confusion matrix and macro-F1 recomputed from the exact out-of-fold predictions behind the 5-fold CV headline in mobilenetv2_ADvsCN_cv_result.json, using the same decision threshold. Not a separate run, not a separate model.",
+  "classes": [
+    "CN",
+    "AD"
+  ],
+  "confusion_matrix": [
+    [
+      219,
+      66
+    ],
+    [
+      64,
+      152
+    ]
+  ],
+  "macro_f1": 0.7358,
+  "accuracy_check": 0.7405,
+  "decision_threshold": 0.493,
+  "n_subjects": 501
+}

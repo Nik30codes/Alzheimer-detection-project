@@ -1,0 +1,107 @@
+{
+  "custom_cnn": {
+    "slice_level_accuracy": 0.5402462121212122,
+    "slice_level_macro_f1": 0.5211729958462759,
+    "subject_level_accuracy": 0.5606060606060606,
+    "subject_level_macro_f1": 0.5242769607843137,
+    "subject_level_accuracy_softvote": 0.5606060606060606,
+    "subject_level_macro_f1_softvote": 0.5183634992458521,
+    "n_params": 1207012
+  },
+  "mobilenetv2": {
+    "slice_level_accuracy": 0.5435606060606061,
+    "slice_level_macro_f1": 0.526355622350072,
+    "subject_level_accuracy": 0.5909090909090909,
+    "subject_level_macro_f1": 0.5773349588941793,
+    "subject_level_accuracy_softvote": 0.6060606060606061,
+    "subject_level_macro_f1_softvote": 0.5869916194942361,
+    "n_params": 2228996
+  },
+  "efficientnet_b0": {
+    "slice_level_accuracy": 0.5459280303030303,
+    "slice_level_macro_f1": 0.5072469550542351,
+    "subject_level_accuracy": 0.5757575757575758,
+    "subject_level_macro_f1": 0.5370776150386345,
+    "subject_level_accuracy_softvote": 0.5454545454545454,
+    "subject_level_macro_f1_softvote": 0.5137266646700609,
+    "n_params": 4012672
+  },
+  "custom_cnn_25d": {
+    "slice_level_accuracy": 0.5056818181818182,
+    "slice_level_macro_f1": 0.48874397507569745,
+    "subject_level_accuracy": 0.5,
+    "subject_level_macro_f1": 0.4719490068754775,
+    "subject_level_accuracy_softvote": 0.5303030303030303,
+    "subject_level_macro_f1_softvote": 0.5146579610865325,
+    "n_params": 1207588
+  },
+  "mobilenetv2_25d": {
+    "slice_level_accuracy": 0.48863636363636365,
+    "slice_level_macro_f1": 0.4092578531895014,
+    "subject_level_accuracy": 0.5,
+    "subject_level_macro_f1": 0.4022766608973506,
+    "subject_level_accuracy_softvote": 0.4696969696969697,
+    "subject_level_macro_f1_softvote": 0.35606589417841683,
+    "n_params": 2228996
+  },
+  "efficientnet_b0_25d": {
+    "slice_level_accuracy": 0.5132575757575758,
+    "slice_level_macro_f1": 0.48464592437176823,
+    "subject_level_accuracy": 0.5151515151515151,
+    "subject_level_macro_f1": 0.47099846390168976,
+    "subject_level_accuracy_softvote": 0.5303030303030303,
+    "subject_level_macro_f1_softvote": 0.4865646258503401,
+    "n_params": 4012672
+  },
+  "ensemble": {
+    "slice_level_accuracy": 0.5662878787878788,
+    "slice_level_macro_f1": 0.5365892175275695,
+    "subject_level_accuracy": 0.5757575757575758,
+    "subject_level_macro_f1": 0.5427418549755737,
+    "subject_level_accuracy_softvote": 0.5757575757575758,
+    "subject_level_macro_f1_softvote": 0.5427418549755737,
+    "members": [
+      "custom_cnn",
+      "mobilenetv2",
+      "efficientnet_b0"
+    ]
+  },
+  "mobilenetv2_pretrained_finetuned": {
+    "n_params": 2228996,
+    "slice_level_accuracy": 0.421875,
+    "slice_level_macro_f1": 0.4203511046302526,
+    "subject_level_accuracy": 0.4090909090909091,
+    "subject_level_macro_f1": 0.39943928748482826,
+    "note": "ImageNet-pretrained, two-phase fine-tune. Kept for comparison: this is the negative-transfer result that motivated training from scratch instead."
+  },
+  "custom_cnn_LEAKY": {
+    "arch": "custom_cnn",
+    "mode": "leaky",
+    "n_params": 1207012,
+    "epochs_run": 30,
+    "train_minutes": 35.9,
+    "slice_level_accuracy": 0.6978178368121443,
+    "slice_level_macro_f1": 0.7080746602403605,
+    "WARNING": "INVALID FOR REPORTING. Slice-wise split leaks the same subject into train and test; this number largely reflects subject re-identification, not diagnostic accuracy."
+  },
+  "mobilenetv2_LEAKY": {
+    "arch": "mobilenetv2",
+    "mode": "leaky",
+    "n_params": 2228996,
+    "epochs_run": 30,
+    "train_minutes": 32.9,
+    "slice_level_accuracy": 0.963472485768501,
+    "slice_level_macro_f1": 0.9640839042276779,
+    "WARNING": "INVALID FOR REPORTING. Slice-wise split leaks the same subject into train and test; this number largely reflects subject re-identification, not diagnostic accuracy."
+  },
+  "efficientnet_b0_LEAKY": {
+    "arch": "efficientnet_b0",
+    "mode": "leaky",
+    "n_params": 4012672,
+    "epochs_run": 30,
+    "train_minutes": 400.2,
+    "slice_level_accuracy": 0.920303605313093,
+    "slice_level_macro_f1": 0.9261863165813268,
+    "WARNING": "INVALID FOR REPORTING. Slice-wise split leaks the same subject into train and test; this number largely reflects subject re-identification, not diagnostic accuracy."
+  }
+}

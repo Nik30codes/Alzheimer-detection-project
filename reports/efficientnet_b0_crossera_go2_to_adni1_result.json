@@ -1,0 +1,28 @@
+{
+  "task": "AD vs CN, trained on GO2, tested on ADNI1 (external cohort, zero subject overlap)",
+  "arch": "efficientnet_b0",
+  "direction": "go2->adni1",
+  "select_by": "val_loss",
+  "train_cohort": "GO2",
+  "test_cohort": "ADNI1",
+  "n_train_subjects": 226,
+  "n_val_subjects": 40,
+  "n_test_subjects": 235,
+  "accuracy": 0.4765957446808511,
+  "accuracy_95CI": [
+    0.41362862695668406,
+    0.5403157445430883
+  ],
+  "majority_baseline": 0.5404255319148936,
+  "roc_auc": 0.5517643627879848,
+  "roc_auc_95CI": [
+    0.4778270927964003,
+    0.6257016327795694
+  ],
+  "decision_threshold": 0.359499990940094,
+  "verdict": "FAILS TO TRANSFER - below the trivial baseline on the new cohort",
+  "macro_f1": 0.36086235489220564,
+  "epochs_run": 13,
+  "best_epoch": 6,
+  "train_minutes": 10.5
+}

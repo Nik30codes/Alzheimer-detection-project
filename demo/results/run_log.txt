@@ -1,0 +1,271 @@
+Alzheimer's MRI classification -- live model demo
+device: cuda
+task: AD vs CN, real ADNI MRI scans, 501 subjects spanning two scanner generations
+split: train 351  val 75  test 75 subjects (subject-wise -- no person appears in more than one split)
+models to train: Custom CNN (from scratch), MobileNetV2 (from scratch), EfficientNet-B0 (from scratch)
+
+======================================================================
+  Custom CNN (from scratch)
+======================================================================
+Epoch  1/40 - train_loss 0.6405 train_acc 0.6298 - val_loss 0.7080 val_acc 0.5437 val_macro_f1 0.5130
+Epoch  2/40 - train_loss 0.5990 train_acc 0.6848 - val_loss 0.6185 val_acc 0.6587 val_macro_f1 0.6234
+Epoch  3/40 - train_loss 0.5788 train_acc 0.6999 - val_loss 0.7246 val_acc 0.6383 val_macro_f1 0.6351
+Epoch  4/40 - train_loss 0.5740 train_acc 0.7097 - val_loss 0.6257 val_acc 0.6371 val_macro_f1 0.5530
+Epoch  5/40 - train_loss 0.5659 train_acc 0.7161 - val_loss 0.5994 val_acc 0.7117 val_macro_f1 0.7046
+Epoch  6/40 - train_loss 0.5593 train_acc 0.7179 - val_loss 0.6404 val_acc 0.6721 val_macro_f1 0.6721
+Epoch  7/40 - train_loss 0.5478 train_acc 0.7262 - val_loss 0.6380 val_acc 0.6637 val_macro_f1 0.5936
+Epoch  8/40 - train_loss 0.5420 train_acc 0.7317 - val_loss 0.6564 val_acc 0.6825 val_macro_f1 0.6825
+Epoch  9/40 - train_loss 0.5100 train_acc 0.7496 - val_loss 1.2723 val_acc 0.4512 val_macro_f1 0.3490
+Epoch 10/40 - train_loss 0.5000 train_acc 0.7553 - val_loss 0.6321 val_acc 0.6975 val_macro_f1 0.6973
+Epoch 11/40 - train_loss 0.4895 train_acc 0.7680 - val_loss 0.7758 val_acc 0.6675 val_macro_f1 0.6642
+Epoch 12/40 - train_loss 0.4572 train_acc 0.7823 - val_loss 0.6203 val_acc 0.7033 val_macro_f1 0.7033
+Early stopping at epoch 12 (no val_loss improvement for 7 epochs)
+restoring best checkpoint from epoch 5 (selected by val_loss)
+trained 12 epochs in 17.0 min (best epoch 5)
+
+--- test set performance (75 subjects, threshold 0.510 chosen on validation) ---
+              precision    recall  f1-score   support
+
+          CN       0.76      0.79      0.77        43
+          AD       0.70      0.66      0.68        32
+
+    accuracy                           0.73        75
+   macro avg       0.73      0.72      0.73        75
+weighted avg       0.73      0.73      0.73        75
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+         pred_CN  pred_AD
+true_CN       34        9
+true_AD       11       21
+
+accuracy   73.3%  (55/75)   95% CI [62.4%, 82.0%]
+macro F1   0.725
+ROC AUC    0.838   95% CI [0.742, 0.934]
+
+sample predictions:
+  009_S_5224: true=AD   pred=AD   p(AD)=0.789   [correct]
+  130_S_4971: true=AD   pred=AD   p(AD)=0.637   [correct]
+  013_S_0592: true=AD   pred=AD   p(AD)=0.754   [correct]
+  002_S_1018: true=AD   pred=CN   p(AD)=0.458   [WRONG]
+  037_S_4770: true=AD   pred=AD   p(AD)=0.757   [correct]
+
+======================================================================
+  MobileNetV2 (from scratch)
+======================================================================
+Epoch  1/40 - train_loss 0.7038 train_acc 0.5484 - val_loss 0.6478 val_acc 0.6433 val_macro_f1 0.6360
+Epoch  2/40 - train_loss 0.6226 train_acc 0.6562 - val_loss 0.6773 val_acc 0.5613 val_macro_f1 0.5473
+Epoch  3/40 - train_loss 0.5935 train_acc 0.6875 - val_loss 0.5799 val_acc 0.7029 val_macro_f1 0.6931
+Epoch  4/40 - train_loss 0.5708 train_acc 0.7043 - val_loss 0.6217 val_acc 0.6750 val_macro_f1 0.6738
+Epoch  5/40 - train_loss 0.5528 train_acc 0.7213 - val_loss 0.5488 val_acc 0.7229 val_macro_f1 0.7100
+Epoch  6/40 - train_loss 0.5291 train_acc 0.7439 - val_loss 0.8408 val_acc 0.6246 val_macro_f1 0.6219
+Epoch  7/40 - train_loss 0.5159 train_acc 0.7469 - val_loss 0.6668 val_acc 0.6804 val_macro_f1 0.6798
+Epoch  8/40 - train_loss 0.4947 train_acc 0.7605 - val_loss 0.6247 val_acc 0.6983 val_macro_f1 0.6970
+Epoch  9/40 - train_loss 0.4356 train_acc 0.7942 - val_loss 0.6758 val_acc 0.7133 val_macro_f1 0.7099
+Epoch 10/40 - train_loss 0.4118 train_acc 0.8051 - val_loss 0.7266 val_acc 0.6642 val_macro_f1 0.6626
+Epoch 11/40 - train_loss 0.3856 train_acc 0.8240 - val_loss 0.6233 val_acc 0.7242 val_macro_f1 0.6948
+Epoch 12/40 - train_loss 0.3381 train_acc 0.8505 - val_loss 0.7015 val_acc 0.7371 val_macro_f1 0.7291
+Early stopping at epoch 12 (no val_loss improvement for 7 epochs)
+restoring best checkpoint from epoch 5 (selected by val_loss)
+trained 12 epochs in 15.4 min (best epoch 5)
+Alzheimer's MRI classification -- live model demo
+device: cuda
+task: AD vs CN, real ADNI MRI scans, 501 subjects spanning two scanner generations
+split: train 351  val 75  test 75 subjects (subject-wise -- no person appears in more than one split)
+models to train: Custom CNN (from scratch), MobileNetV2 (from scratch), EfficientNet-B0 (from scratch)
+
+======================================================================
+  Custom CNN (from scratch)
+======================================================================
+RESUMING custom_cnn from existing checkpoint + history (skipping training)
+Traceback (most recent call last):
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\demo\run_demo.py", line 323, in <module>
+    main()
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\demo\run_demo.py", line 280, in main
+    results = [run_one(arch, manifest, device) for arch in ARCHS]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\demo\run_demo.py", line 280, in <listcomp>
+    results = [run_one(arch, manifest, device) for arch in ARCHS]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\demo\run_demo.py", line 213, in run_one
+    val_df = subject_probs(model, loaders["val"], device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\utils\_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\demo\run_demo.py", line 121, in subject_probs
+    p = torch.softmax(model(imgs.to(device)), dim=1).cpu().numpy()
+                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\src\models.py", line 61, in forward
+    x = self.features(x)
+        ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\container.py", line 250, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\container.py", line 250, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\torch\nn\modules\conv.py", line 549, in _conv_forward
+    return F.conv2d(
+           ^^^^^^^^^
+RuntimeError: Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same
+Alzheimer's MRI classification -- live model demo
+device: cuda
+task: AD vs CN, real ADNI MRI scans, 501 subjects spanning two scanner generations
+split: train 351  val 75  test 75 subjects (subject-wise -- no person appears in more than one split)
+models to train: Custom CNN (from scratch), MobileNetV2 (from scratch), EfficientNet-B0 (from scratch)
+
+======================================================================
+  Custom CNN (from scratch)
+======================================================================
+RESUMING custom_cnn from existing checkpoint + history (skipping training)
+
+--- test set performance (75 subjects, threshold 0.510 chosen on validation) ---
+              precision    recall  f1-score   support
+
+          CN       0.76      0.79      0.77        43
+          AD       0.70      0.66      0.68        32
+
+    accuracy                           0.73        75
+   macro avg       0.73      0.72      0.73        75
+weighted avg       0.73      0.73      0.73        75
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+         pred_CN  pred_AD
+true_CN       34        9
+true_AD       11       21
+
+accuracy   73.3%  (55/75)   95% CI [62.4%, 82.0%]
+macro F1   0.725
+ROC AUC    0.838   95% CI [0.742, 0.934]
+
+sample predictions:
+  009_S_5224: true=AD   pred=AD   p(AD)=0.789   [correct]
+  130_S_4971: true=AD   pred=AD   p(AD)=0.637   [correct]
+  013_S_0592: true=AD   pred=AD   p(AD)=0.754   [correct]
+  002_S_1018: true=AD   pred=CN   p(AD)=0.458   [WRONG]
+  037_S_4770: true=AD   pred=AD   p(AD)=0.757   [correct]
+
+======================================================================
+  MobileNetV2 (from scratch)
+======================================================================
+RESUMING mobilenetv2 from existing checkpoint + history (skipping training)
+
+--- test set performance (75 subjects, threshold 0.469 chosen on validation) ---
+              precision    recall  f1-score   support
+
+          CN       0.82      0.74      0.78        43
+          AD       0.69      0.78      0.74        32
+
+    accuracy                           0.76        75
+   macro avg       0.76      0.76      0.76        75
+weighted avg       0.77      0.76      0.76        75
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+         pred_CN  pred_AD
+true_CN       32       11
+true_AD        7       25
+
+accuracy   76.0%  (57/75)   95% CI [65.2%, 84.2%]
+macro F1   0.758
+ROC AUC    0.852   95% CI [0.759, 0.944]
+
+sample predictions:
+  009_S_5224: true=AD   pred=AD   p(AD)=0.854   [correct]
+  130_S_4971: true=AD   pred=AD   p(AD)=0.753   [correct]
+  013_S_0592: true=AD   pred=AD   p(AD)=0.860   [correct]
+  002_S_1018: true=AD   pred=CN   p(AD)=0.429   [WRONG]
+  037_S_4770: true=AD   pred=AD   p(AD)=0.685   [correct]
+
+======================================================================
+  EfficientNet-B0 (from scratch)
+======================================================================
+Epoch  1/40 - train_loss 0.6854 train_acc 0.5851 - val_loss 0.6527 val_acc 0.6462 val_macro_f1 0.6301
+Epoch  2/40 - train_loss 0.6215 train_acc 0.6589 - val_loss 0.6812 val_acc 0.6608 val_macro_f1 0.6561
+Epoch  3/40 - train_loss 0.5847 train_acc 0.7004 - val_loss 0.6290 val_acc 0.6679 val_macro_f1 0.6232
+Epoch  4/40 - train_loss 0.5596 train_acc 0.7155 - val_loss 0.6181 val_acc 0.6704 val_macro_f1 0.6377
+Epoch  5/40 - train_loss 0.5443 train_acc 0.7263 - val_loss 0.6343 val_acc 0.6787 val_macro_f1 0.6515
+Epoch  6/40 - train_loss 0.5193 train_acc 0.7490 - val_loss 0.5898 val_acc 0.7075 val_macro_f1 0.7055
+Epoch  7/40 - train_loss 0.5002 train_acc 0.7561 - val_loss 0.5995 val_acc 0.6896 val_macro_f1 0.6896
+Epoch  8/40 - train_loss 0.4852 train_acc 0.7666 - val_loss 0.7306 val_acc 0.6700 val_macro_f1 0.6137
+Epoch  9/40 - train_loss 0.4585 train_acc 0.7818 - val_loss 0.6253 val_acc 0.6842 val_macro_f1 0.6571
+Epoch 10/40 - train_loss 0.4091 train_acc 0.8086 - val_loss 0.7084 val_acc 0.6671 val_macro_f1 0.6654
+Epoch 11/40 - train_loss 0.3774 train_acc 0.8268 - val_loss 0.7518 val_acc 0.6987 val_macro_f1 0.6635
+Epoch 12/40 - train_loss 0.3461 train_acc 0.8468 - val_loss 0.7168 val_acc 0.6842 val_macro_f1 0.6764
+Epoch 13/40 - train_loss 0.3132 train_acc 0.8599 - val_loss 0.7266 val_acc 0.7104 val_macro_f1 0.6880
+Early stopping at epoch 13 (no val_loss improvement for 7 epochs)
+restoring best checkpoint from epoch 6 (selected by val_loss)
+trained 13 epochs in 20.9 min (best epoch 6)
+
+--- test set performance (75 subjects, threshold 0.515 chosen on validation) ---
+              precision    recall  f1-score   support
+
+          CN       0.86      0.74      0.80        43
+          AD       0.71      0.84      0.77        32
+
+    accuracy                           0.79        75
+   macro avg       0.79      0.79      0.79        75
+weighted avg       0.80      0.79      0.79        75
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+         pred_CN  pred_AD
+true_CN       32       11
+true_AD        5       27
+
+accuracy   78.7%  (59/75)   95% CI [68.1%, 86.4%]
+macro F1   0.786
+ROC AUC    0.876   95% CI [0.790, 0.961]
+
+sample predictions:
+  009_S_5224: true=AD   pred=AD   p(AD)=0.858   [correct]
+  130_S_4971: true=AD   pred=AD   p(AD)=0.920   [correct]
+  013_S_0592: true=AD   pred=AD   p(AD)=0.873   [correct]
+  002_S_1018: true=AD   pred=AD   p(AD)=0.689   [correct]
+  037_S_4770: true=AD   pred=AD   p(AD)=0.770   [correct]
+
+======================================================================
+  COMPARISON ACROSS ALL MODELS (this run's single split)
+======================================================================
+                         model accuracy macro F1 ROC AUC      epochs  minutes
+     Custom CNN (from scratch)    73.3%    0.725   0.838 12 (best 5)     17.0
+    MobileNetV2 (from scratch)    76.0%    0.758   0.852 12 (best 5)     17.0
+EfficientNet-B0 (from scratch)    78.7%    0.786   0.876 13 (best 6)     20.9
+
+======================================================================
+  HONEST REFERENCE POINT -- read this before quoting a number above
+======================================================================
+This demo trains on ONE train/val/test split, for speed. This project's own rule is that a single split is never trustworthy on its own -- three separate single-split 'wins' in this project's history reversed once checked against 5-fold cross-validation (over ALL 501 subjects, so every person gets exactly one out-of-fold prediction).
+
+The real, cross-validated headline for this exact task:
+  accuracy  74.1%   95% CI [0.7, 0.777]
+  ROC AUC   0.7845   95% CI [0.7429287373787891, 0.8261095992034072]
+  majority baseline 57.3% (a model that always guesses the larger class)
+
+total demo runtime: 23.3 min
+saved: confusion matrices + training curves per model, and results/summary.json, in C:\Users\Nikunj\Documents\alzheimer-mri-project\demo\results

@@ -1,0 +1,15 @@
+===== simple3dcnn_adcn_v3, 5-fold CV over 501 subjects =====
+fold sizes [101, 100, 100, 100, 100]
+class balance: {'CN': 285, 'AD': 216}
+
+--- fold 1/5: RESUMED from C:\Users\Nikunj\Documents\alzheimer-mri-project\reports\run_logs\simple3dcnn_adcn_v3_fold1_done.json (acc 53.5%) ---
+
+--- fold 2/5: RESUMED from C:\Users\Nikunj\Documents\alzheimer-mri-project\reports\run_logs\simple3dcnn_adcn_v3_fold2_done.json (acc 73.0%) ---
+
+--- fold 3/5: 100 test subjects ---
+Epoch  1/40 - train_loss 0.7018 train_acc 0.4927 - val_loss 0.7533 val_acc 0.5667 val_macro_f1 0.3617
+Epoch  2/40 - train_loss 0.6877 train_acc 0.5660 - val_loss 1.0014 val_acc 0.4333 val_macro_f1 0.3023
+Epoch  3/40 - train_loss 0.6633 train_acc 0.5924 - val_loss 0.7176 val_acc 0.5667 val_macro_f1 0.5417
+Epoch  4/40 - train_loss 0.6611 train_acc 0.6070 - val_loss 0.6525 val_acc 0.5667 val_macro_f1 0.5623
+Epoch  5/40 - train_loss 0.6680 train_acc 0.6364 - val_loss 1.0686 val_acc 0.4333 val_macro_f1 0.3023
+Epoch  6/40 - train_loss 0.6154 train_acc 0.6540 - val_loss 1.3916 val_acc 0.5667 val_macro_f1 0.3617

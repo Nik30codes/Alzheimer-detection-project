@@ -1,0 +1,10 @@
+{
+  "arch": "mobilenetv2",
+  "mode": "leaky",
+  "n_params": 2228996,
+  "epochs_run": 30,
+  "train_minutes": 32.9,
+  "slice_level_accuracy": 0.963472485768501,
+  "slice_level_macro_f1": 0.9640839042276779,
+  "WARNING": "INVALID FOR REPORTING. Slice-wise split leaks the same subject into train and test; this number largely reflects subject re-identification, not diagnostic accuracy."
+}

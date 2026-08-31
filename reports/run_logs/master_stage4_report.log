@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\scripts\make_report_docx.py", line 614, in <module>
+    main(sys.argv[1] if len(sys.argv) > 1 else None)
+  File "C:\Users\Nikunj\Documents\alzheimer-mri-project\scripts\make_report_docx.py", line 609, in main
+    doc.save(out_path)
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\docx\document.py", line 204, in save
+    self._part.save(path_or_stream)
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\docx\parts\document.py", line 114, in save
+    self.package.save(path_or_stream)
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\docx\opc\package.py", line 166, in save
+    PackageWriter.write(pkg_file, self.rels, self.parts)
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\docx\opc\pkgwriter.py", line 34, in write
+    phys_writer = PhysPkgWriter(pkg_file)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\site-packages\docx\opc\phys_pkg.py", line 109, in __init__
+    self._zipf = ZipFile(pkg_file, "w", compression=ZIP_DEFLATED)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\zipfile.py", line 1311, in __init__
+    self.fp = io.open(file, filemode)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\Nikunj\\Documents\\alzheimer-mri-project\\reports\\Alzheimer_Project_Report.docx'

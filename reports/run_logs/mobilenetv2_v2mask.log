@@ -1,0 +1,78 @@
+===== mobilenetv2_v2mask on cuda (manifest: manifest_v2_masked.csv) =====
+mobilenetv2: 2,228,996 params, in_channels=3, mode=v2mask
+Epoch  1/40 - train_loss 1.0464 train_acc 0.4445 - val_loss 1.7577 val_acc 0.3973
+Epoch  2/40 - train_loss 0.7332 train_acc 0.5892 - val_loss 0.7117 val_acc 0.6009
+Epoch  3/40 - train_loss 0.6713 train_acc 0.6312 - val_loss 0.8228 val_acc 0.5156
+Epoch  4/40 - train_loss 0.6245 train_acc 0.6636 - val_loss 1.0581 val_acc 0.4796
+Epoch  5/40 - train_loss 0.6016 train_acc 0.6776 - val_loss 0.8294 val_acc 0.5800
+Epoch  6/40 - train_loss 0.5276 train_acc 0.7211 - val_loss 0.8117 val_acc 0.5848
+Epoch  7/40 - train_loss 0.4866 train_acc 0.7418 - val_loss 0.8007 val_acc 0.5895
+Epoch  8/40 - train_loss 0.4711 train_acc 0.7500 - val_loss 0.8662 val_acc 0.5928
+Epoch  9/40 - train_loss 0.4060 train_acc 0.7885 - val_loss 0.8747 val_acc 0.5739
+Early stopping at epoch 9 (no val_loss improvement for 7 epochs)
+
+--- mobilenetv2_v2mask SLICE LEVEL ---
+              precision    recall  f1-score   support
+
+          CN       0.60      0.75      0.67       480
+          AD       0.50      0.30      0.38       352
+        EMCI       0.51      0.65      0.57       672
+        LMCI       0.44      0.32      0.37       608
+
+    accuracy                           0.52      2112
+   macro avg       0.51      0.51      0.50      2112
+weighted avg       0.51      0.52      0.50      2112
+
+slice confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[360 106   1  13]
+ [231 106   8   7]
+ [  4   0 439 229]
+ [  4   0 408 196]]
+
+--- mobilenetv2_v2mask SUBJECT LEVEL (hard majority vote) ---
+              precision    recall  f1-score   support
+
+          CN       0.62      0.87      0.72        15
+          AD       0.60      0.27      0.38        11
+        EMCI       0.54      0.67      0.60        21
+        LMCI       0.50      0.37      0.42        19
+
+    accuracy                           0.56        66
+   macro avg       0.56      0.54      0.53        66
+weighted avg       0.56      0.56      0.54        66
+
+
+--- mobilenetv2_v2mask SUBJECT LEVEL (soft vote) ---
+              precision    recall  f1-score   support
+
+          CN       0.60      0.80      0.69        15
+          AD       0.50      0.27      0.35        11
+        EMCI       0.52      0.62      0.57        21
+        LMCI       0.47      0.37      0.41        19
+
+    accuracy                           0.53        66
+   macro avg       0.52      0.52      0.50        66
+weighted avg       0.52      0.53      0.51        66
+
+soft-vote confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[12  3  0  0]
+ [ 8  3  0  0]
+ [ 0  0 13  8]
+ [ 0  0 12  7]]
+
+=== mobilenetv2_v2mask SUMMARY ===
+{
+  "arch": "mobilenetv2",
+  "mode": "v2mask",
+  "n_params": 2228996,
+  "epochs_run": 9,
+  "train_minutes": 13.3,
+  "slice_level_accuracy": 0.5213068181818182,
+  "slice_level_macro_f1": 0.4975120207437188,
+  "subject_level_accuracy": 0.5606060606060606,
+  "subject_level_macro_f1": 0.5293023318289276,
+  "subject_level_accuracy_softvote": 0.5303030303030303,
+  "subject_level_macro_f1_softvote": 0.5039093898428937
+}
+=== mobilenetv2_v2mask DONE in 13.3 min ===
+

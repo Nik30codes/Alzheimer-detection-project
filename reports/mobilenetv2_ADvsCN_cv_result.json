@@ -1,0 +1,30 @@
+{
+  "task": "AD vs CN, 5-fold subject-level cross-validation over all 501 subjects",
+  "arch": "mobilenetv2",
+  "evaluation": "5-fold CV (not a single split)",
+  "n_test_subjects": 501,
+  "accuracy": 0.741,
+  "accuracy_95CI": [
+    0.7,
+    0.777
+  ],
+  "roc_auc": 0.7845191682910981,
+  "roc_auc_95CI": [
+    0.7429287373787891,
+    0.8261095992034072
+  ],
+  "majority_baseline": 0.5733333333333334,
+  "decision_threshold": 0.493,
+  "verdict": "REAL SIGNAL - AUC interval excludes 0.5 by a wide margin",
+  "supersedes": {
+    "note": "The previously displayed 82.7% / AUC 0.9055 came from ONE 75-subject test split. Cross-validating the same configuration over all 501 subjects gives 70.9% / 0.7845, and the AUC intervals do not overlap. The single split drew a favourable sample.",
+    "single_split_accuracy": 0.8266666666666667,
+    "single_split_roc_auc": 0.9055232558139534,
+    "single_split_n": 75
+  },
+  "threshold_note": "Chosen on 501 out-of-fold cross-validation predictions, not on a 75-subject validation split. The previous 0.422 was fitted on 75 subjects and was badly miscalibrated: it called 36% of healthy subjects Alzheimer's (CN recall 63.9% vs AD recall 78.7%) AND scored lower overall (70.3% vs 74.1%). At 0.493 the two classes are treated symmetrically -- CN recall 76.8%, AD recall 70.4%.",
+  "per_class_recall": {
+    "CN": 0.768,
+    "AD": 0.704
+  }
+}

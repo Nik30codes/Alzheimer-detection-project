@@ -1,0 +1,136 @@
+[
+  {
+    "kind": "slice",
+    "multi": false,
+    "n_slices": 1,
+    "file": "/samples/cn_1.png",
+    "files": [
+      "/samples/cn_1.png"
+    ],
+    "true_class": "CN",
+    "label": "Single slice \u2014 true diagnosis CN",
+    "p_ad": 0.07
+  },
+  {
+    "kind": "slice",
+    "multi": false,
+    "n_slices": 1,
+    "file": "/samples/cn_2.png",
+    "files": [
+      "/samples/cn_2.png"
+    ],
+    "true_class": "CN",
+    "label": "Single slice \u2014 true diagnosis CN",
+    "p_ad": 0.072
+  },
+  {
+    "kind": "slice",
+    "multi": false,
+    "n_slices": 1,
+    "file": "/samples/ad_1.png",
+    "files": [
+      "/samples/ad_1.png"
+    ],
+    "true_class": "AD",
+    "label": "Single slice \u2014 true diagnosis AD",
+    "p_ad": 0.894
+  },
+  {
+    "kind": "slice",
+    "multi": false,
+    "n_slices": 1,
+    "file": "/samples/ad_2.png",
+    "files": [
+      "/samples/ad_2.png"
+    ],
+    "true_class": "AD",
+    "label": "Single slice \u2014 true diagnosis AD",
+    "p_ad": 0.878
+  },
+  {
+    "kind": "subject",
+    "multi": true,
+    "n_slices": 32,
+    "file": "/samples/subject_cn/slice_16.png",
+    "files": [
+      "/samples/subject_cn/slice_00.png",
+      "/samples/subject_cn/slice_01.png",
+      "/samples/subject_cn/slice_02.png",
+      "/samples/subject_cn/slice_03.png",
+      "/samples/subject_cn/slice_04.png",
+      "/samples/subject_cn/slice_05.png",
+      "/samples/subject_cn/slice_06.png",
+      "/samples/subject_cn/slice_07.png",
+      "/samples/subject_cn/slice_08.png",
+      "/samples/subject_cn/slice_09.png",
+      "/samples/subject_cn/slice_10.png",
+      "/samples/subject_cn/slice_11.png",
+      "/samples/subject_cn/slice_12.png",
+      "/samples/subject_cn/slice_13.png",
+      "/samples/subject_cn/slice_14.png",
+      "/samples/subject_cn/slice_15.png",
+      "/samples/subject_cn/slice_16.png",
+      "/samples/subject_cn/slice_17.png",
+      "/samples/subject_cn/slice_18.png",
+      "/samples/subject_cn/slice_19.png",
+      "/samples/subject_cn/slice_20.png",
+      "/samples/subject_cn/slice_21.png",
+      "/samples/subject_cn/slice_22.png",
+      "/samples/subject_cn/slice_23.png",
+      "/samples/subject_cn/slice_24.png",
+      "/samples/subject_cn/slice_25.png",
+      "/samples/subject_cn/slice_26.png",
+      "/samples/subject_cn/slice_27.png",
+      "/samples/subject_cn/slice_28.png",
+      "/samples/subject_cn/slice_29.png",
+      "/samples/subject_cn/slice_30.png",
+      "/samples/subject_cn/slice_31.png"
+    ],
+    "true_class": "CN",
+    "label": "Full subject \u2014 32 slices, true diagnosis CN",
+    "note": "A typical correctly-classified held-out subject (median probability among the correct ones, not the most confident)."
+  },
+  {
+    "kind": "subject",
+    "multi": true,
+    "n_slices": 32,
+    "file": "/samples/subject_ad/slice_16.png",
+    "files": [
+      "/samples/subject_ad/slice_00.png",
+      "/samples/subject_ad/slice_01.png",
+      "/samples/subject_ad/slice_02.png",
+      "/samples/subject_ad/slice_03.png",
+      "/samples/subject_ad/slice_04.png",
+      "/samples/subject_ad/slice_05.png",
+      "/samples/subject_ad/slice_06.png",
+      "/samples/subject_ad/slice_07.png",
+      "/samples/subject_ad/slice_08.png",
+      "/samples/subject_ad/slice_09.png",
+      "/samples/subject_ad/slice_10.png",
+      "/samples/subject_ad/slice_11.png",
+      "/samples/subject_ad/slice_12.png",
+      "/samples/subject_ad/slice_13.png",
+      "/samples/subject_ad/slice_14.png",
+      "/samples/subject_ad/slice_15.png",
+      "/samples/subject_ad/slice_16.png",
+      "/samples/subject_ad/slice_17.png",
+      "/samples/subject_ad/slice_18.png",
+      "/samples/subject_ad/slice_19.png",
+      "/samples/subject_ad/slice_20.png",
+      "/samples/subject_ad/slice_21.png",
+      "/samples/subject_ad/slice_22.png",
+      "/samples/subject_ad/slice_23.png",
+      "/samples/subject_ad/slice_24.png",
+      "/samples/subject_ad/slice_25.png",
+      "/samples/subject_ad/slice_26.png",
+      "/samples/subject_ad/slice_27.png",
+      "/samples/subject_ad/slice_28.png",
+      "/samples/subject_ad/slice_29.png",
+      "/samples/subject_ad/slice_30.png",
+      "/samples/subject_ad/slice_31.png"
+    ],
+    "true_class": "AD",
+    "label": "Full subject \u2014 32 slices, true diagnosis AD",
+    "note": "A typical correctly-classified held-out subject (median probability among the correct ones, not the most confident)."
+  }
+]

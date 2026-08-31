@@ -1,0 +1,77 @@
+===== mobilenetv2_crossera_adni1_to_go2 on cuda =====
+train/val cohort: ADNI1     test cohort: GO2
+subjects  train 200  val 35  test 266
+test-cohort class balance: {'AD': 108, 'CN': 158}
+train/test subject overlap: 0 (must be 0)
+Epoch  1/40 - train_loss 0.6921 train_acc 0.5664 - val_loss 0.8495 val_acc 0.5491 val_macro_f1 0.5482
+Epoch  2/40 - train_loss 0.6316 train_acc 0.6492 - val_loss 1.0422 val_acc 0.5473 val_macro_f1 0.4845
+Epoch  3/40 - train_loss 0.5770 train_acc 0.6981 - val_loss 0.7025 val_acc 0.5696 val_macro_f1 0.5533
+Epoch  4/40 - train_loss 0.5566 train_acc 0.7128 - val_loss 0.7126 val_acc 0.6027 val_macro_f1 0.5225
+Epoch  5/40 - train_loss 0.5292 train_acc 0.7295 - val_loss 0.8602 val_acc 0.5071 val_macro_f1 0.5054
+Epoch  6/40 - train_loss 0.4886 train_acc 0.7594 - val_loss 0.6489 val_acc 0.6634 val_macro_f1 0.6561
+Epoch  7/40 - train_loss 0.4792 train_acc 0.7667 - val_loss 0.8124 val_acc 0.5821 val_macro_f1 0.5810
+Epoch  8/40 - train_loss 0.4584 train_acc 0.7850 - val_loss 0.7641 val_acc 0.6384 val_macro_f1 0.6202
+Epoch  9/40 - train_loss 0.4261 train_acc 0.8008 - val_loss 1.0698 val_acc 0.5500 val_macro_f1 0.4850
+Epoch 10/40 - train_loss 0.3602 train_acc 0.8391 - val_loss 0.6521 val_acc 0.6991 val_macro_f1 0.6910
+Epoch 11/40 - train_loss 0.3380 train_acc 0.8492 - val_loss 0.6340 val_acc 0.7321 val_macro_f1 0.7289
+Epoch 12/40 - train_loss 0.3046 train_acc 0.8694 - val_loss 0.9978 val_acc 0.6554 val_macro_f1 0.6407
+Epoch 13/40 - train_loss 0.2889 train_acc 0.8797 - val_loss 0.9345 val_acc 0.6366 val_macro_f1 0.6293
+Epoch 14/40 - train_loss 0.2755 train_acc 0.8842 - val_loss 0.9817 val_acc 0.6304 val_macro_f1 0.6304
+Epoch 15/40 - train_loss 0.1990 train_acc 0.9191 - val_loss 1.2286 val_acc 0.6589 val_macro_f1 0.6588
+Epoch 16/40 - train_loss 0.1892 train_acc 0.9222 - val_loss 1.1001 val_acc 0.6848 val_macro_f1 0.6803
+Epoch 17/40 - train_loss 0.1677 train_acc 0.9344 - val_loss 1.3494 val_acc 0.6518 val_macro_f1 0.6516
+Epoch 18/40 - train_loss 0.1207 train_acc 0.9533 - val_loss 1.1828 val_acc 0.6554 val_macro_f1 0.6449
+Early stopping at epoch 18 (no val_loss improvement for 7 epochs)
+restoring best checkpoint from epoch 11 (selected by val_loss)
+
+threshold 0.316 chosen on the ADNI1 validation split (Youden's J 0.622) -- the test cohort was never used for this
+
+trained 18 epochs (best epoch 11) in 11.2 min
+
+===== EXTERNAL COHORT (GO2), SUBJECT LEVEL =====
+              precision    recall  f1-score   support
+
+          CN       0.66      0.82      0.73       158
+          AD       0.60      0.40      0.48       108
+
+    accuracy                           0.65       266
+   macro avg       0.63      0.61      0.61       266
+weighted avg       0.64      0.65      0.63       266
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD']:
+[[129  29]
+ [ 65  43]]
+
+accuracy    64.7%  (172/266)   95% CI [58.7%, 70.2%]
+majority baseline 59.4%
+ROC AUC     0.682   95% CI [0.616, 0.749]
+            ^ interval excludes 0.5 -> the signal TRANSFERS across cohorts
+verdict: INCONCLUSIVE - CI straddles the baseline
+
+{
+  "task": "AD vs CN, trained on ADNI1, tested on GO2 (external cohort, zero subject overlap)",
+  "arch": "mobilenetv2",
+  "direction": "adni1->go2",
+  "train_cohort": "ADNI1",
+  "test_cohort": "GO2",
+  "n_train_subjects": 200,
+  "n_val_subjects": 35,
+  "n_test_subjects": 266,
+  "accuracy": 0.6466165413533834,
+  "accuracy_95CI": [
+    0.5874551755281637,
+    0.7016032943297085
+  ],
+  "majority_baseline": 0.5939849624060151,
+  "roc_auc": 0.6821378340365682,
+  "roc_auc_95CI": [
+    0.6156819072014316,
+    0.7485937608717049
+  ],
+  "decision_threshold": 0.3156999945640564,
+  "verdict": "INCONCLUSIVE - CI straddles the baseline",
+  "macro_f1": 0.6053661616161616,
+  "epochs_run": 18,
+  "best_epoch": 11,
+  "train_minutes": 11.2
+}

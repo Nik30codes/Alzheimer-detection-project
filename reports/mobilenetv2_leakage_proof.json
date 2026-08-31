@@ -1,0 +1,19 @@
+{
+  "arch": "mobilenetv2",
+  "train_minutes": 33.6,
+  "n_seen_subjects": 352,
+  "n_unseen_subjects": 87,
+  "results": {
+    "SEEN (leaked)": {
+      "slice_accuracy": 0.9720372836218375,
+      "subject_accuracy": 1.0,
+      "n_subjects": 351
+    },
+    "UNSEEN (new patients)": {
+      "slice_accuracy": 0.603448275862069,
+      "subject_accuracy": 0.6091954022988506,
+      "n_subjects": 87
+    }
+  },
+  "leakage_inflation_points": 36.858900775976856
+}

@@ -1,0 +1,12 @@
+{
+  "fold": 5,
+  "n_test": 100,
+  "accuracy": 0.76,
+  "threshold": 0.5821,
+  "train_acc_at_best": 0.7302052785923754,
+  "val_acc_at_best": 0.75,
+  "overfit_gap": -0.019794721407624616,
+  "best_epoch": 32,
+  "epochs_run": 39,
+  "minutes": 23.6
+}

@@ -1,0 +1,56 @@
+# --- ADNI data: never redistributed -----------------------------------------
+# ADNI's Data Use Agreement prohibits redistributing raw or derived imaging data
+# (including subject-ID manifests). Nothing under data/ is ever pushed, regardless
+# of size.
+data/
+
+# --- model weights ------------------------------------------------------------
+# ~1GB across every experimental checkpoint from the project's history -- far too
+# large for git, and none of it is needed to run the demo except the one checkpoint
+# actually served (webapp/backend/tasks.py). That one IS tracked (9MB) so the repo
+# is enough on its own to run the live demo -- training requires the (excluded,
+# ADNI-licensed) dataset, but *serving* an already-trained model does not.
+models/*
+!models/checkpoints/
+models/checkpoints/*
+!models/checkpoints/mobilenetv2_ADvsCN.pt
+*.pt
+!mobilenetv2_ADvsCN.pt
+
+# --- unpublished paper + third-party copyrighted references -------------------
+# The paper drafts in report_assets/ are submitted to a conference and still under
+# review; the PDFs in reference_papers/ are other authors' published work kept
+# locally for citation. Neither belongs in a public repo. Code that generates the
+# report (build_report*.py etc.) is fine and stays tracked.
+report_assets/*.docx
+report_assets/*.pdf
+reference_papers/*.pdf
+reports/*.docx
+reports/*.pdf
+
+# --- demo run artifacts (binary/derived, not source) ---------------------------
+demo/results/*.pt
+demo/results/*.npy
+demo/results/*.csv
+
+# --- disposable/aborted scratch runs, not real results -------------------------
+reports/BAD_*
+reports/*_adhoc_backup.*
+
+# --- Python ----------------------------------------------------------------
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# --- Node / frontend build ---------------------------------------------------
+webapp/frontend/node_modules/
+webapp/frontend/dist/
+npm-debug.log*
+
+# --- editor/OS ----------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# --- internal working notes, not part of the project deliverable --------------
+CLAUDE.md
+claudereaserch.md

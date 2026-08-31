@@ -1,0 +1,12 @@
+# Web demo backend only (FastAPI + inference). Training/experiment scripts in
+# scripts/ pull in additional packages (scikit-learn, matplotlib, etc.) not needed
+# to just serve the demo.
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+torch>=2.6
+torchvision>=0.21
+numpy>=1.26
+pandas>=2.0
+opencv-python-headless>=4.9
+pydicom>=2.4

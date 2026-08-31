@@ -1,0 +1,13 @@
+{
+  "arch": "custom_cnn",
+  "mode": "v2",
+  "n_params": 1207012,
+  "epochs_run": 12,
+  "train_minutes": 13.8,
+  "slice_level_accuracy": 0.5222537878787878,
+  "slice_level_macro_f1": 0.3981343063076528,
+  "subject_level_accuracy": 0.5454545454545454,
+  "subject_level_macro_f1": 0.38879781420765025,
+  "subject_level_accuracy_softvote": 0.5454545454545454,
+  "subject_level_macro_f1_softvote": 0.423076923076923
+}

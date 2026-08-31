@@ -1,0 +1,10 @@
+{
+  "arch": "efficientnet_b0",
+  "mode": "leaky",
+  "n_params": 4012672,
+  "epochs_run": 30,
+  "train_minutes": 400.2,
+  "slice_level_accuracy": 0.920303605313093,
+  "slice_level_macro_f1": 0.9261863165813268,
+  "WARNING": "INVALID FOR REPORTING. Slice-wise split leaks the same subject into train and test; this number largely reflects subject re-identification, not diagnostic accuracy."
+}

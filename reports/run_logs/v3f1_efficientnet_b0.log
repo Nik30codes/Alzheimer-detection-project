@@ -1,0 +1,88 @@
+===== efficientnet_b0_v3go2_f1 on cuda (manifest: manifest_v3_go2.csv, checkpoint selected by val_macro_f1) =====
+efficientnet_b0: 4,012,672 params, in_channels=3, mode=v3go2
+Epoch  1/40 - train_loss 1.3931 train_acc 0.2997 - val_loss 1.3583 val_acc 0.2194 val_macro_f1 0.1482
+Epoch  2/40 - train_loss 1.3243 train_acc 0.3800 - val_loss 1.3326 val_acc 0.3740 val_macro_f1 0.2593
+Epoch  3/40 - train_loss 1.2951 train_acc 0.3986 - val_loss 1.3842 val_acc 0.3364 val_macro_f1 0.3119
+Epoch  4/40 - train_loss 1.2815 train_acc 0.4031 - val_loss 1.3430 val_acc 0.4399 val_macro_f1 0.3868
+Epoch  5/40 - train_loss 1.2402 train_acc 0.4326 - val_loss 1.4314 val_acc 0.3599 val_macro_f1 0.1658
+Epoch  6/40 - train_loss 1.1710 train_acc 0.4587 - val_loss 1.6503 val_acc 0.3434 val_macro_f1 0.2979
+Epoch  7/40 - train_loss 1.1291 train_acc 0.4816 - val_loss 1.4161 val_acc 0.3367 val_macro_f1 0.3360
+Epoch  8/40 - train_loss 1.0845 train_acc 0.5020 - val_loss 1.7906 val_acc 0.4052 val_macro_f1 0.3834
+Epoch  9/40 - train_loss 1.0072 train_acc 0.5484 - val_loss 1.3471 val_acc 0.4264 val_macro_f1 0.4277
+Epoch 10/40 - train_loss 0.9628 train_acc 0.5641 - val_loss 1.5714 val_acc 0.3609 val_macro_f1 0.3424
+Epoch 11/40 - train_loss 0.9219 train_acc 0.5818 - val_loss 1.5111 val_acc 0.4009 val_macro_f1 0.3803
+Epoch 12/40 - train_loss 0.8617 train_acc 0.6199 - val_loss 1.5535 val_acc 0.4197 val_macro_f1 0.4116
+Epoch 13/40 - train_loss 0.8260 train_acc 0.6293 - val_loss 1.5164 val_acc 0.3942 val_macro_f1 0.3944
+Epoch 14/40 - train_loss 0.8018 train_acc 0.6462 - val_loss 1.7174 val_acc 0.3844 val_macro_f1 0.3728
+Epoch 15/40 - train_loss 0.7648 train_acc 0.6612 - val_loss 1.6566 val_acc 0.3938 val_macro_f1 0.3835
+Epoch 16/40 - train_loss 0.7297 train_acc 0.6781 - val_loss 1.6626 val_acc 0.4106 val_macro_f1 0.3843
+Early stopping at epoch 16 (no val_macro_f1 improvement for 7 epochs)
+restoring best checkpoint from epoch 9 (selected by val_macro_f1)
+
+--- efficientnet_b0_v3go2_f1 SLICE LEVEL ---
+              precision    recall  f1-score   support
+
+          CN       0.37      0.23      0.29       768
+          AD       0.31      0.47      0.38       512
+        EMCI       0.33      0.26      0.29      1088
+        LMCI       0.26      0.37      0.31       608
+
+    accuracy                           0.31      2976
+   macro avg       0.32      0.33      0.31      2976
+weighted avg       0.32      0.31      0.31      2976
+
+slice confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[179  21 378 190]
+ [ 57 243  73 139]
+ [191 316 282 299]
+ [ 55 203 126 224]]
+
+--- efficientnet_b0_v3go2_f1 SUBJECT LEVEL (hard majority vote) ---
+              precision    recall  f1-score   support
+
+          CN       0.50      0.21      0.29        24
+          AD       0.32      0.50      0.39        16
+        EMCI       0.36      0.29      0.32        34
+        LMCI       0.27      0.42      0.33        19
+
+    accuracy                           0.33        93
+   macro avg       0.36      0.36      0.33        93
+weighted avg       0.37      0.33      0.33        93
+
+
+--- efficientnet_b0_v3go2_f1 SUBJECT LEVEL (soft vote) ---
+              precision    recall  f1-score   support
+
+          CN       0.56      0.21      0.30        24
+          AD       0.38      0.56      0.45        16
+        EMCI       0.35      0.32      0.34        34
+        LMCI       0.31      0.47      0.38        19
+
+    accuracy                           0.37        93
+   macro avg       0.40      0.39      0.37        93
+weighted avg       0.40      0.37      0.36        93
+
+soft-vote confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[ 5  0 14  5]
+ [ 0  9  3  4]
+ [ 3  9 11 11]
+ [ 1  6  3  9]]
+
+=== efficientnet_b0_v3go2_f1 SUMMARY ===
+{
+  "arch": "efficientnet_b0",
+  "mode": "v3go2",
+  "n_params": 4012672,
+  "select_by": "val_macro_f1",
+  "best_epoch": 9,
+  "epochs_run": 16,
+  "train_minutes": 19.2,
+  "slice_level_accuracy": 0.3118279569892473,
+  "slice_level_macro_f1": 0.3145538289069285,
+  "subject_level_accuracy": 0.3333333333333333,
+  "subject_level_macro_f1": 0.333368201726009,
+  "subject_level_accuracy_softvote": 0.3655913978494624,
+  "subject_level_macro_f1_softvote": 0.3666229603729604
+}
+=== efficientnet_b0_v3go2_f1 DONE in 19.2 min ===
+

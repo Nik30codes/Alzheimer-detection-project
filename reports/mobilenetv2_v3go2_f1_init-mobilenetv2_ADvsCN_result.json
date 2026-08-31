@@ -1,0 +1,16 @@
+{
+  "arch": "mobilenetv2",
+  "mode": "v3go2",
+  "n_params": 2228996,
+  "select_by": "val_macro_f1",
+  "best_epoch": 12,
+  "init_from": "mobilenetv2_ADvsCN.pt",
+  "epochs_run": 19,
+  "train_minutes": 18.5,
+  "slice_level_accuracy": 0.40658602150537637,
+  "slice_level_macro_f1": 0.39758737133323796,
+  "subject_level_accuracy": 0.44086021505376344,
+  "subject_level_macro_f1": 0.43189443724546467,
+  "subject_level_accuracy_softvote": 0.43010752688172044,
+  "subject_level_macro_f1_softvote": 0.4211207304356144
+}

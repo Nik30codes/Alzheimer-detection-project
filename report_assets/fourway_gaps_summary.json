@@ -1,0 +1,101 @@
+{
+  "custom_cnn": {
+    "display": "Custom CNN",
+    "n_test": 93,
+    "accuracy": 0.40860215053763443,
+    "macro_f1": 0.39068350348838154,
+    "classification_report": "              precision    recall  f1-score   support\n\n          CN       0.40      0.25      0.31        24\n          AD       0.67      0.25      0.36        16\n        EMCI       0.38      0.56      0.45        34\n        LMCI       0.41      0.47      0.44        19\n\n    accuracy                           0.41        93\n   macro avg       0.46      0.38      0.39        93\nweighted avg       0.44      0.41      0.40        93\n",
+    "confusion_matrix": [
+      [
+        6,
+        0,
+        18,
+        0
+      ],
+      [
+        3,
+        4,
+        4,
+        5
+      ],
+      [
+        6,
+        1,
+        19,
+        8
+      ],
+      [
+        0,
+        1,
+        9,
+        9
+      ]
+    ]
+  },
+  "mobilenetv2": {
+    "display": "MobileNetV2",
+    "n_test": 93,
+    "accuracy": 0.3655913978494624,
+    "macro_f1": 0.36046896018649593,
+    "classification_report": "              precision    recall  f1-score   support\n\n          CN       0.54      0.54      0.54        24\n          AD       0.32      0.62      0.43        16\n        EMCI       0.37      0.21      0.26        34\n        LMCI       0.21      0.21      0.21        19\n\n    accuracy                           0.37        93\n   macro avg       0.36      0.40      0.36        93\nweighted avg       0.37      0.37      0.35        93\n",
+    "confusion_matrix": [
+      [
+        13,
+        3,
+        4,
+        4
+      ],
+      [
+        2,
+        10,
+        2,
+        2
+      ],
+      [
+        9,
+        9,
+        7,
+        9
+      ],
+      [
+        0,
+        9,
+        6,
+        4
+      ]
+    ]
+  },
+  "efficientnet_b0": {
+    "display": "EfficientNet-B0",
+    "n_test": 93,
+    "accuracy": 0.3763440860215054,
+    "macro_f1": 0.2321912027446209,
+    "classification_report": "              precision    recall  f1-score   support\n\n          CN       0.33      0.04      0.07        24\n          AD       0.33      0.31      0.32        16\n        EMCI       0.39      0.85      0.53        34\n        LMCI       0.00      0.00      0.00        19\n\n    accuracy                           0.38        93\n   macro avg       0.26      0.30      0.23        93\nweighted avg       0.28      0.38      0.27        93\n",
+    "confusion_matrix": [
+      [
+        1,
+        0,
+        23,
+        0
+      ],
+      [
+        2,
+        5,
+        9,
+        0
+      ],
+      [
+        0,
+        5,
+        29,
+        0
+      ],
+      [
+        0,
+        5,
+        14,
+        0
+      ]
+    ]
+  }
+}

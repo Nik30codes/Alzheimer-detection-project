@@ -1,0 +1,12 @@
+wrote C:\Users\Nikunj\Documents\alzheimer-mri-project\reports\figures\gradcam_mobilenetv2_v2mask.png
+{
+  "tag": "mobilenetv2_v2mask",
+  "mean_gradcam_mass_outside_brain": 0.44415155053138733,
+  "by_class": {
+    "CN": 0.34493077794710797,
+    "AD": 0.3631327549616496,
+    "EMCI": 0.5339910089969635,
+    "LMCI": 0.5345516602198283
+  },
+  "interpretation": "Fraction of Grad-CAM attention falling outside the brain mask. Near 0 = the model is reading anatomy. Large = it is reading skull/scalp/background, i.e. scanner-protocol cues."
+}

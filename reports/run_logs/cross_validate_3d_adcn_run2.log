@@ -1,0 +1,35 @@
+===== simple3dcnn_adcn_v3, 5-fold CV over 501 subjects =====
+fold sizes [101, 100, 100, 100, 100]
+class balance: {'CN': 285, 'AD': 216}
+
+--- fold 1/5: RESUMED from C:\Users\Nikunj\Documents\alzheimer-mri-project\reports\run_logs\simple3dcnn_adcn_v3_fold1_done.json (acc 53.5%) ---
+
+--- fold 2/5: 100 test subjects ---
+Epoch  1/40 - train_loss 0.6791 train_acc 0.5484 - val_loss 0.6223 val_acc 0.6000 val_macro_f1 0.5982
+Epoch  2/40 - train_loss 0.6709 train_acc 0.5865 - val_loss 1.6381 val_acc 0.4333 val_macro_f1 0.3023
+Epoch  3/40 - train_loss 0.6971 train_acc 0.5279 - val_loss 0.6943 val_acc 0.5000 val_macro_f1 0.4910
+Epoch  4/40 - train_loss 0.6713 train_acc 0.5982 - val_loss 0.7398 val_acc 0.4500 val_macro_f1 0.3887
+Epoch  5/40 - train_loss 0.6562 train_acc 0.6364 - val_loss 0.6731 val_acc 0.6833 val_macro_f1 0.6288
+Epoch  6/40 - train_loss 0.6284 train_acc 0.6393 - val_loss 0.6267 val_acc 0.6667 val_macro_f1 0.6606
+Epoch  7/40 - train_loss 0.6125 train_acc 0.6862 - val_loss 0.6377 val_acc 0.6500 val_macro_f1 0.6491
+Epoch  8/40 - train_loss 0.5791 train_acc 0.7097 - val_loss 0.6096 val_acc 0.7000 val_macro_f1 0.6875
+Epoch  9/40 - train_loss 0.6076 train_acc 0.6745 - val_loss 0.6607 val_acc 0.5833 val_macro_f1 0.5628
+Epoch 10/40 - train_loss 0.5836 train_acc 0.7097 - val_loss 0.6007 val_acc 0.6667 val_macro_f1 0.6652
+Epoch 11/40 - train_loss 0.5863 train_acc 0.7097 - val_loss 0.5881 val_acc 0.6833 val_macro_f1 0.6825
+Epoch 12/40 - train_loss 0.5573 train_acc 0.7126 - val_loss 0.5590 val_acc 0.7333 val_macro_f1 0.7306
+Epoch 13/40 - train_loss 0.5523 train_acc 0.7390 - val_loss 0.6044 val_acc 0.7667 val_macro_f1 0.7488
+Epoch 14/40 - train_loss 0.5746 train_acc 0.7185 - val_loss 0.6582 val_acc 0.7167 val_macro_f1 0.6978
+Epoch 15/40 - train_loss 0.5813 train_acc 0.7155 - val_loss 0.8725 val_acc 0.6000 val_macro_f1 0.4410
+Epoch 16/40 - train_loss 0.5622 train_acc 0.7361 - val_loss 0.5663 val_acc 0.7667 val_macro_f1 0.7569
+Epoch 17/40 - train_loss 0.5073 train_acc 0.7771 - val_loss 0.6090 val_acc 0.7333 val_macro_f1 0.7180
+Epoch 18/40 - train_loss 0.4788 train_acc 0.7771 - val_loss 0.6024 val_acc 0.6833 val_macro_f1 0.6391
+Epoch 19/40 - train_loss 0.4956 train_acc 0.7859 - val_loss 0.5835 val_acc 0.7167 val_macro_f1 0.6851
+Early stopping at epoch 19 (no val_loss improvement for 7 epochs)
+restoring best checkpoint from epoch 12 (selected by val_loss)
+  fold 2: acc 73.0%  thr 0.552  train_acc@best 0.713  val_acc@best 0.733  (gap -0.021)  best_epoch 12/19  18.2 min
+
+--- fold 3/5: 100 test subjects ---
+Epoch  1/40 - train_loss 0.7129 train_acc 0.4780 - val_loss 0.7033 val_acc 0.4333 val_macro_f1 0.3023
+Epoch  2/40 - train_loss 0.6977 train_acc 0.4956 - val_loss 0.6997 val_acc 0.5667 val_macro_f1 0.5238
+Epoch  3/40 - train_loss 0.6885 train_acc 0.5630 - val_loss 0.6933 val_acc 0.6333 val_macro_f1 0.5312
+Epoch  4/40 - train_loss 0.6746 train_acc 0.5748 - val_loss 0.9730 val_acc 0.4333 val_macro_f1 0.3023

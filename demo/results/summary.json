@@ -1,0 +1,106 @@
+{
+  "results": [
+    {
+      "arch": "custom_cnn",
+      "n_test_subjects": 75,
+      "accuracy": 0.7333333333333333,
+      "accuracy_95CI": [
+        0.6236898715426942,
+        0.8202382070351124
+      ],
+      "macro_f1": 0.7250733137829912,
+      "roc_auc": 0.8379360465116279,
+      "roc_auc_95CI": [
+        0.7416137672435981,
+        0.9342583257796577
+      ],
+      "decision_threshold": 0.51,
+      "epochs_run": 12,
+      "best_epoch": 5,
+      "train_minutes": 17.0,
+      "confusion_matrix": [
+        [
+          34,
+          9
+        ],
+        [
+          11,
+          21
+        ]
+      ],
+      "classes": [
+        "CN",
+        "AD"
+      ]
+    },
+    {
+      "arch": "mobilenetv2",
+      "n_test_subjects": 75,
+      "accuracy": 0.76,
+      "accuracy_95CI": [
+        0.6522102034171385,
+        0.8424525127124175
+      ],
+      "macro_f1": 0.7578909612625538,
+      "roc_auc": 0.8517441860465116,
+      "roc_auc_95CI": [
+        0.7591465445072151,
+        0.9443418275858081
+      ],
+      "decision_threshold": 0.4692,
+      "epochs_run": 12,
+      "best_epoch": 5,
+      "train_minutes": 17.0,
+      "confusion_matrix": [
+        [
+          32,
+          11
+        ],
+        [
+          7,
+          25
+        ]
+      ],
+      "classes": [
+        "CN",
+        "AD"
+      ]
+    },
+    {
+      "arch": "efficientnet_b0",
+      "n_test_subjects": 75,
+      "accuracy": 0.7866666666666666,
+      "accuracy_95CI": [
+        0.6811982171013853,
+        0.86419913657992
+      ],
+      "macro_f1": 0.7857142857142858,
+      "roc_auc": 0.8757267441860465,
+      "roc_auc_95CI": [
+        0.7902702893519324,
+        0.9611831990201605
+      ],
+      "decision_threshold": 0.5151,
+      "epochs_run": 13,
+      "best_epoch": 6,
+      "train_minutes": 20.9,
+      "confusion_matrix": [
+        [
+          32,
+          11
+        ],
+        [
+          5,
+          27
+        ]
+      ],
+      "classes": [
+        "CN",
+        "AD"
+      ]
+    }
+  ],
+  "epochs_budget": 40,
+  "patience": 7,
+  "n_subjects": 501
+}

@@ -1,0 +1,12 @@
+===== tune_val_aug_erase on cuda =====
+config: {"lr": 0.001, "weight_decay": 0.0001, "optimizer": "adam", "batch_size": 32, "epochs": 40, "patience": 7, "scheduler": "plateau", "warmup_epochs": 0, "label_smoothing": 0.0, "mixup_alpha": 0.0, "head_dropout": null, "grad_clip": null, "sampler": "none", "class_weighted_loss": true, "select_by": "val_loss", "degrees": 10, "translate": 0.05, "scale": [0.95, 1.05], "hflip": 0.5, "rrc_scale": null, "jitter": null, "erasing": 0.25}
+subjects train 351 val 75
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nikunj\miniconda3\envs\ml\Lib\multiprocessing\spawn.py", line 132, in _main
+    self = reduction.pickle.load(from_parent)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_pickle.UnpicklingError: pickle data was truncated

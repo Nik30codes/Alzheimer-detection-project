@@ -1,0 +1,27 @@
+{
+  "task": "AD vs CN, trained on ADNI1, tested on GO2 (external cohort, zero subject overlap)",
+  "arch": "mobilenetv2",
+  "direction": "adni1->go2",
+  "train_cohort": "ADNI1",
+  "test_cohort": "GO2",
+  "n_train_subjects": 200,
+  "n_val_subjects": 35,
+  "n_test_subjects": 266,
+  "accuracy": 0.6466165413533834,
+  "accuracy_95CI": [
+    0.5874551755281637,
+    0.7016032943297085
+  ],
+  "majority_baseline": 0.5939849624060151,
+  "roc_auc": 0.6821378340365682,
+  "roc_auc_95CI": [
+    0.6156819072014316,
+    0.7485937608717049
+  ],
+  "decision_threshold": 0.3156999945640564,
+  "verdict": "INCONCLUSIVE - CI straddles the baseline",
+  "macro_f1": 0.6053661616161616,
+  "epochs_run": 18,
+  "best_epoch": 11,
+  "train_minutes": 11.2
+}

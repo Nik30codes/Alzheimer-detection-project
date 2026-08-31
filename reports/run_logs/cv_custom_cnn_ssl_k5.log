@@ -1,0 +1,173 @@
+===== cv_custom_cnn_ssl_k5 on cuda =====
+618 subjects, 5 folds (sizes [125, 125, 124, 122, 122])
+class balance: {'EMCI': 227, 'CN': 158, 'LMCI': 125, 'AD': 108}
+
+--- fold 1/5: 125 test subjects ---
+    SSL pretrain on 493 subjects / 15776 slices (10 epochs)
+      ssl fold1 epoch 5/10 loss 0.0485
+      ssl fold1 epoch 10/10 loss 0.0420
+    initialised 56/60 tensors from pretrained weights
+Epoch  1/40 - train_loss 1.3224 train_acc 0.3608 - val_loss 1.3064 val_acc 0.3454 val_macro_f1 0.1755
+Epoch  2/40 - train_loss 1.2608 train_acc 0.4190 - val_loss 1.6842 val_acc 0.2090 val_macro_f1 0.1375
+Epoch  3/40 - train_loss 1.2481 train_acc 0.4236 - val_loss 1.3370 val_acc 0.3932 val_macro_f1 0.3179
+Epoch  4/40 - train_loss 1.2298 train_acc 0.4372 - val_loss 2.0602 val_acc 0.2120 val_macro_f1 0.1447
+Epoch  5/40 - train_loss 1.2009 train_acc 0.4538 - val_loss 1.2873 val_acc 0.3661 val_macro_f1 0.3468
+Epoch  6/40 - train_loss 1.1925 train_acc 0.4529 - val_loss 2.2496 val_acc 0.2179 val_macro_f1 0.1437
+Epoch  7/40 - train_loss 1.1760 train_acc 0.4540 - val_loss 1.5696 val_acc 0.2500 val_macro_f1 0.2406
+Epoch  8/40 - train_loss 1.1626 train_acc 0.4676 - val_loss 1.3953 val_acc 0.4062 val_macro_f1 0.2730
+Epoch  9/40 - train_loss 1.1321 train_acc 0.4752 - val_loss 1.3682 val_acc 0.3834 val_macro_f1 0.3513
+Epoch 10/40 - train_loss 1.1257 train_acc 0.4837 - val_loss 1.2914 val_acc 0.4122 val_macro_f1 0.3845
+Epoch 11/40 - train_loss 1.1111 train_acc 0.4887 - val_loss 1.3006 val_acc 0.3847 val_macro_f1 0.3715
+Epoch 12/40 - train_loss 1.0821 train_acc 0.5003 - val_loss 1.4502 val_acc 0.3936 val_macro_f1 0.3849
+Epoch 13/40 - train_loss 1.0655 train_acc 0.5079 - val_loss 1.3273 val_acc 0.4286 val_macro_f1 0.4008
+Epoch 14/40 - train_loss 1.0486 train_acc 0.5128 - val_loss 1.5323 val_acc 0.3222 val_macro_f1 0.3066
+Epoch 15/40 - train_loss 1.0228 train_acc 0.5248 - val_loss 1.4089 val_acc 0.4155 val_macro_f1 0.4056
+Epoch 16/40 - train_loss 1.0113 train_acc 0.5348 - val_loss 1.4001 val_acc 0.3995 val_macro_f1 0.3773
+Epoch 17/40 - train_loss 1.0029 train_acc 0.5343 - val_loss 1.4528 val_acc 0.4008 val_macro_f1 0.3837
+Epoch 18/40 - train_loss 0.9944 train_acc 0.5454 - val_loss 1.3824 val_acc 0.3974 val_macro_f1 0.3846
+Epoch 19/40 - train_loss 0.9844 train_acc 0.5433 - val_loss 1.4491 val_acc 0.3957 val_macro_f1 0.3747
+Epoch 20/40 - train_loss 0.9804 train_acc 0.5446 - val_loss 1.4337 val_acc 0.3957 val_macro_f1 0.3782
+Epoch 21/40 - train_loss 0.9686 train_acc 0.5505 - val_loss 1.4682 val_acc 0.3910 val_macro_f1 0.3655
+Epoch 22/40 - train_loss 0.9616 train_acc 0.5562 - val_loss 1.4330 val_acc 0.3986 val_macro_f1 0.3757
+Early stopping at epoch 22 (no val_macro_f1 improvement for 7 epochs)
+restoring best checkpoint from epoch 15 (selected by val_macro_f1)
+  fold 1: acc 45.6%  macroF1 0.444  best_epoch 15/22  569.2 min
+
+--- fold 2/5: 125 test subjects ---
+    SSL pretrain on 493 subjects / 15776 slices (10 epochs)
+      ssl fold2 epoch 5/10 loss 0.0487
+      ssl fold2 epoch 10/10 loss 0.0423
+    initialised 56/60 tensors from pretrained weights
+Epoch  1/40 - train_loss 1.3118 train_acc 0.3819 - val_loss 1.2597 val_acc 0.3940 val_macro_f1 0.3021
+Epoch  2/40 - train_loss 1.2648 train_acc 0.4137 - val_loss 1.3996 val_acc 0.2665 val_macro_f1 0.2553
+Epoch  3/40 - train_loss 1.2560 train_acc 0.4240 - val_loss 1.3174 val_acc 0.4088 val_macro_f1 0.3983
+Epoch  4/40 - train_loss 1.2488 train_acc 0.4243 - val_loss 1.5050 val_acc 0.2534 val_macro_f1 0.2544
+Epoch  5/40 - train_loss 1.2190 train_acc 0.4368 - val_loss 1.2557 val_acc 0.4535 val_macro_f1 0.4425
+Epoch  6/40 - train_loss 1.2173 train_acc 0.4435 - val_loss 1.4823 val_acc 0.1959 val_macro_f1 0.2023
+Epoch  7/40 - train_loss 1.2002 train_acc 0.4413 - val_loss 1.2774 val_acc 0.3522 val_macro_f1 0.3385
+Epoch  8/40 - train_loss 1.1870 train_acc 0.4576 - val_loss 1.5495 val_acc 0.4240 val_macro_f1 0.3122
+Epoch  9/40 - train_loss 1.1558 train_acc 0.4617 - val_loss 1.3577 val_acc 0.4151 val_macro_f1 0.4035
+Epoch 10/40 - train_loss 1.1442 train_acc 0.4693 - val_loss 1.5871 val_acc 0.4143 val_macro_f1 0.3889
+Epoch 11/40 - train_loss 1.1381 train_acc 0.4710 - val_loss 1.6626 val_acc 0.4413 val_macro_f1 0.3865
+Epoch 12/40 - train_loss 1.1037 train_acc 0.4811 - val_loss 1.2636 val_acc 0.4046 val_macro_f1 0.3918
+Early stopping at epoch 12 (no val_macro_f1 improvement for 7 epochs)
+restoring best checkpoint from epoch 5 (selected by val_macro_f1)
+  fold 2: acc 40.0%  macroF1 0.389  best_epoch 5/12  14.7 min
+
+--- fold 3/5: 124 test subjects ---
+    SSL pretrain on 494 subjects / 15808 slices (10 epochs)
+      ssl fold3 epoch 5/10 loss 0.0491
+      ssl fold3 epoch 10/10 loss 0.0422
+    initialised 56/60 tensors from pretrained weights
+Epoch  1/40 - train_loss 1.3116 train_acc 0.3634 - val_loss 1.3958 val_acc 0.2855 val_macro_f1 0.2743
+Epoch  2/40 - train_loss 1.2636 train_acc 0.3969 - val_loss 1.3830 val_acc 0.2226 val_macro_f1 0.1342
+Epoch  3/40 - train_loss 1.2484 train_acc 0.4095 - val_loss 1.4783 val_acc 0.2724 val_macro_f1 0.2585
+Epoch  4/40 - train_loss 1.2350 train_acc 0.4194 - val_loss 1.7727 val_acc 0.1964 val_macro_f1 0.1425
+Epoch  5/40 - train_loss 1.2217 train_acc 0.4229 - val_loss 1.5503 val_acc 0.2732 val_macro_f1 0.1642
+Epoch  6/40 - train_loss 1.1946 train_acc 0.4270 - val_loss 1.4645 val_acc 0.2707 val_macro_f1 0.2680
+Epoch  7/40 - train_loss 1.1840 train_acc 0.4374 - val_loss 1.7730 val_acc 0.2910 val_macro_f1 0.2747
+Epoch  8/40 - train_loss 1.1767 train_acc 0.4474 - val_loss 1.3727 val_acc 0.3813 val_macro_f1 0.3167
+Epoch  9/40 - train_loss 1.1612 train_acc 0.4460 - val_loss 1.4373 val_acc 0.3281 val_macro_f1 0.3128
+Epoch 10/40 - train_loss 1.1541 train_acc 0.4516 - val_loss 1.5098 val_acc 0.3252 val_macro_f1 0.3092
+Epoch 11/40 - train_loss 1.1503 train_acc 0.4547 - val_loss 1.5584 val_acc 0.3176 val_macro_f1 0.3200
+Epoch 12/40 - train_loss 1.1158 train_acc 0.4612 - val_loss 1.4852 val_acc 0.3057 val_macro_f1 0.2749
+Epoch 13/40 - train_loss 1.0958 train_acc 0.4755 - val_loss 1.4799 val_acc 0.3273 val_macro_f1 0.3322
+Epoch 14/40 - train_loss 1.0837 train_acc 0.4829 - val_loss 1.4231 val_acc 0.3036 val_macro_f1 0.3023
+Epoch 15/40 - train_loss 1.0459 train_acc 0.4990 - val_loss 1.5551 val_acc 0.3138 val_macro_f1 0.3133
+Epoch 16/40 - train_loss 1.0254 train_acc 0.5055 - val_loss 1.5333 val_acc 0.3585 val_macro_f1 0.3503
+Epoch 17/40 - train_loss 1.0134 train_acc 0.5113 - val_loss 1.4914 val_acc 0.2914 val_macro_f1 0.2949
+Epoch 18/40 - train_loss 0.9798 train_acc 0.5307 - val_loss 1.5035 val_acc 0.3454 val_macro_f1 0.3374
+Epoch 19/40 - train_loss 0.9650 train_acc 0.5406 - val_loss 1.4173 val_acc 0.3695 val_macro_f1 0.3653
+Epoch 20/40 - train_loss 0.9533 train_acc 0.5431 - val_loss 1.5293 val_acc 0.3463 val_macro_f1 0.3321
+Epoch 21/40 - train_loss 0.9397 train_acc 0.5546 - val_loss 1.5110 val_acc 0.3568 val_macro_f1 0.3513
+Epoch 22/40 - train_loss 0.9233 train_acc 0.5626 - val_loss 1.4567 val_acc 0.3636 val_macro_f1 0.3526
+Epoch 23/40 - train_loss 0.9231 train_acc 0.5740 - val_loss 1.4504 val_acc 0.3505 val_macro_f1 0.3438
+Epoch 24/40 - train_loss 0.9012 train_acc 0.5727 - val_loss 1.5136 val_acc 0.3522 val_macro_f1 0.3464
+Epoch 25/40 - train_loss 0.9039 train_acc 0.5695 - val_loss 1.4991 val_acc 0.3514 val_macro_f1 0.3431
+Epoch 26/40 - train_loss 0.8895 train_acc 0.5733 - val_loss 1.5191 val_acc 0.3488 val_macro_f1 0.3349
+Early stopping at epoch 26 (no val_macro_f1 improvement for 7 epochs)
+restoring best checkpoint from epoch 19 (selected by val_macro_f1)
+  fold 3: acc 38.7%  macroF1 0.385  best_epoch 19/26  30.9 min
+
+--- fold 4/5: 122 test subjects ---
+    SSL pretrain on 496 subjects / 15872 slices (10 epochs)
+      ssl fold4 epoch 5/10 loss 0.0484
+      ssl fold4 epoch 10/10 loss 0.0419
+    initialised 56/60 tensors from pretrained weights
+Epoch  1/40 - train_loss 1.3247 train_acc 0.3700 - val_loss 1.2710 val_acc 0.3809 val_macro_f1 0.3567
+Epoch  2/40 - train_loss 1.2783 train_acc 0.4046 - val_loss 1.4638 val_acc 0.3623 val_macro_f1 0.1893
+Epoch  3/40 - train_loss 1.2628 train_acc 0.4205 - val_loss 1.4178 val_acc 0.3530 val_macro_f1 0.3542
+Epoch  4/40 - train_loss 1.2463 train_acc 0.4288 - val_loss 1.3851 val_acc 0.3847 val_macro_f1 0.2019
+Epoch  5/40 - train_loss 1.2170 train_acc 0.4438 - val_loss 1.5773 val_acc 0.3514 val_macro_f1 0.3224
+Epoch  6/40 - train_loss 1.2019 train_acc 0.4486 - val_loss 1.2185 val_acc 0.4350 val_macro_f1 0.4133
+Epoch  7/40 - train_loss 1.1916 train_acc 0.4495 - val_loss 1.6460 val_acc 0.3138 val_macro_f1 0.2878
+Epoch  8/40 - train_loss 1.1798 train_acc 0.4639 - val_loss 1.3801 val_acc 0.3830 val_macro_f1 0.3668
+Epoch  9/40 - train_loss 1.1670 train_acc 0.4661 - val_loss 1.2937 val_acc 0.4430 val_macro_f1 0.4109
+Epoch 10/40 - train_loss 1.1349 train_acc 0.4771 - val_loss 1.3088 val_acc 0.4658 val_macro_f1 0.4492
+Epoch 11/40 - train_loss 1.1223 train_acc 0.4887 - val_loss 1.4298 val_acc 0.3623 val_macro_f1 0.3530
+Epoch 12/40 - train_loss 1.0997 train_acc 0.4979 - val_loss 1.3299 val_acc 0.4405 val_macro_f1 0.4192
+Epoch 13/40 - train_loss 1.0670 train_acc 0.5144 - val_loss 1.3604 val_acc 0.4231 val_macro_f1 0.4140
+Epoch 14/40 - train_loss 1.0433 train_acc 0.5197 - val_loss 1.4837 val_acc 0.3834 val_macro_f1 0.3820
+Epoch 15/40 - train_loss 1.0187 train_acc 0.5371 - val_loss 1.4261 val_acc 0.4447 val_macro_f1 0.4280
+Epoch 16/40 - train_loss 0.9958 train_acc 0.5498 - val_loss 1.4455 val_acc 0.4527 val_macro_f1 0.4310
+Epoch 17/40 - train_loss 0.9729 train_acc 0.5574 - val_loss 1.4997 val_acc 0.4092 val_macro_f1 0.3954
+Early stopping at epoch 17 (no val_macro_f1 improvement for 7 epochs)
+restoring best checkpoint from epoch 10 (selected by val_macro_f1)
+  fold 4: acc 40.2%  macroF1 0.403  best_epoch 10/17  20.5 min
+
+--- fold 5/5: 122 test subjects ---
+    SSL pretrain on 496 subjects / 15872 slices (10 epochs)
+      ssl fold5 epoch 5/10 loss 0.0489
+      ssl fold5 epoch 10/10 loss 0.0418
+    initialised 56/60 tensors from pretrained weights
+Epoch  1/40 - train_loss 1.3130 train_acc 0.3649 - val_loss 1.7706 val_acc 0.2014 val_macro_f1 0.1211
+Epoch  2/40 - train_loss 1.2675 train_acc 0.3919 - val_loss 1.4863 val_acc 0.2787 val_macro_f1 0.2419
+Epoch  3/40 - train_loss 1.2545 train_acc 0.4019 - val_loss 1.4611 val_acc 0.3007 val_macro_f1 0.2552
+Epoch  4/40 - train_loss 1.2418 train_acc 0.4102 - val_loss 1.7669 val_acc 0.2314 val_macro_f1 0.1795
+Epoch  5/40 - train_loss 1.2312 train_acc 0.4159 - val_loss 1.6169 val_acc 0.2648 val_macro_f1 0.2087
+Epoch  6/40 - train_loss 1.2211 train_acc 0.4243 - val_loss 1.4356 val_acc 0.3041 val_macro_f1 0.2518
+Epoch  7/40 - train_loss 1.2124 train_acc 0.4269 - val_loss 1.4034 val_acc 0.2948 val_macro_f1 0.2865
+Epoch  8/40 - train_loss 1.1989 train_acc 0.4347 - val_loss 1.3330 val_acc 0.3404 val_macro_f1 0.3532
+Epoch  9/40 - train_loss 1.1863 train_acc 0.4314 - val_loss 1.3481 val_acc 0.3742 val_macro_f1 0.3298
+Epoch 10/40 - train_loss 1.1770 train_acc 0.4397 - val_loss 1.3337 val_acc 0.4662 val_macro_f1 0.3413
+Epoch 11/40 - train_loss 1.1609 train_acc 0.4405 - val_loss 1.6935 val_acc 0.2969 val_macro_f1 0.2110
+Epoch 12/40 - train_loss 1.1186 train_acc 0.4570 - val_loss 1.8084 val_acc 0.3805 val_macro_f1 0.2993
+Epoch 13/40 - train_loss 1.0905 train_acc 0.4730 - val_loss 1.5774 val_acc 0.2758 val_macro_f1 0.2561
+Epoch 14/40 - train_loss 1.0682 train_acc 0.4800 - val_loss 1.3245 val_acc 0.3716 val_macro_f1 0.3781
+Epoch 15/40 - train_loss 1.0408 train_acc 0.4918 - val_loss 1.6591 val_acc 0.2901 val_macro_f1 0.2435
+Epoch 16/40 - train_loss 1.0168 train_acc 0.5039 - val_loss 1.8855 val_acc 0.3129 val_macro_f1 0.3043
+Epoch 17/40 - train_loss 1.0006 train_acc 0.5139 - val_loss 1.9580 val_acc 0.2517 val_macro_f1 0.2441
+Epoch 18/40 - train_loss 0.9443 train_acc 0.5402 - val_loss 2.2026 val_acc 0.2230 val_macro_f1 0.2259
+Epoch 19/40 - train_loss 0.9080 train_acc 0.5615 - val_loss 1.6163 val_acc 0.3771 val_macro_f1 0.3765
+Epoch 20/40 - train_loss 0.8983 train_acc 0.5668 - val_loss 2.2587 val_acc 0.2703 val_macro_f1 0.2365
+Epoch 21/40 - train_loss 0.8483 train_acc 0.5906 - val_loss 1.6987 val_acc 0.3699 val_macro_f1 0.3705
+Early stopping at epoch 21 (no val_macro_f1 improvement for 7 epochs)
+restoring best checkpoint from epoch 14 (selected by val_macro_f1)
+  fold 5: acc 32.8%  macroF1 0.327  best_epoch 14/21  25.1 min
+
+===== cv_custom_cnn_ssl_k5 POOLED OVER ALL 618 SUBJECTS =====
+              precision    recall  f1-score   support
+
+          CN       0.43      0.41      0.42       158
+          AD       0.35      0.41      0.38       108
+        EMCI       0.52      0.37      0.43       227
+        LMCI       0.29      0.42      0.34       125
+
+    accuracy                           0.39       618
+   macro avg       0.40      0.40      0.39       618
+weighted avg       0.42      0.39      0.40       618
+
+confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+      CN  AD  EMCI  LMCI
+CN    64  27    36    31
+AD    18  44    11    35
+EMCI  52  27    84    64
+LMCI  14  28    31    52
+
+accuracy   39.5% (244/618)   95% CI [35.7%, 43.4%]
+macro F1   0.391
+baseline   36.7%   chance 25.0%
+per-fold accuracy: ['45.6%', '40.0%', '38.7%', '40.2%', '32.8%']  (sd 0.041)
+verdict: INCONCLUSIVE - CI straddles the baseline
+
+cv_custom_cnn_ssl_k5 DONE in 849.5 min

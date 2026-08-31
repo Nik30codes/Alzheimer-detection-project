@@ -1,0 +1,86 @@
+===== custom_cnn_v3go2_f1_init-custom_cnn_ADvsCN on cuda (manifest: manifest_v3_go2.csv, checkpoint selected by val_macro_f1) =====
+initialised 58/60 tensors from custom_cnn_ADvsCN.pt; 2 skipped (shape mismatch = classifier head): ['classifier.5.weight', 'classifier.5.bias']
+custom_cnn: 1,207,012 params, in_channels=1, mode=v3go2
+Epoch  1/40 - train_loss 1.3046 train_acc 0.3827 - val_loss 1.2665 val_acc 0.4335 val_macro_f1 0.3579
+Epoch  2/40 - train_loss 1.2670 train_acc 0.4123 - val_loss 1.3560 val_acc 0.3058 val_macro_f1 0.3026
+Epoch  3/40 - train_loss 1.2553 train_acc 0.4293 - val_loss 1.3390 val_acc 0.4029 val_macro_f1 0.3635
+Epoch  4/40 - train_loss 1.2395 train_acc 0.4240 - val_loss 1.3582 val_acc 0.3720 val_macro_f1 0.3493
+Epoch  5/40 - train_loss 1.2106 train_acc 0.4488 - val_loss 1.1778 val_acc 0.4698 val_macro_f1 0.4266
+Epoch  6/40 - train_loss 1.1893 train_acc 0.4532 - val_loss 1.3285 val_acc 0.3696 val_macro_f1 0.3618
+Epoch  7/40 - train_loss 1.1746 train_acc 0.4654 - val_loss 1.3705 val_acc 0.3128 val_macro_f1 0.3004
+Epoch  8/40 - train_loss 1.1548 train_acc 0.4748 - val_loss 1.8280 val_acc 0.2298 val_macro_f1 0.2244
+Epoch  9/40 - train_loss 1.1145 train_acc 0.4868 - val_loss 1.3869 val_acc 0.3864 val_macro_f1 0.3840
+Epoch 10/40 - train_loss 1.0990 train_acc 0.5004 - val_loss 1.4649 val_acc 0.3091 val_macro_f1 0.3120
+Epoch 11/40 - train_loss 1.0775 train_acc 0.4993 - val_loss 1.2698 val_acc 0.4207 val_macro_f1 0.4064
+Epoch 12/40 - train_loss 1.0384 train_acc 0.5228 - val_loss 1.2607 val_acc 0.4150 val_macro_f1 0.3881
+Early stopping at epoch 12 (no val_macro_f1 improvement for 7 epochs)
+restoring best checkpoint from epoch 5 (selected by val_macro_f1)
+
+--- custom_cnn_v3go2_f1_init-custom_cnn_ADvsCN SLICE LEVEL ---
+              precision    recall  f1-score   support
+
+          CN       0.46      0.43      0.45       768
+          AD       0.41      0.21      0.28       512
+        EMCI       0.39      0.46      0.42      1088
+        LMCI       0.31      0.36      0.34       608
+
+    accuracy                           0.39      2976
+   macro avg       0.39      0.37      0.37      2976
+weighted avg       0.40      0.39      0.39      2976
+
+slice confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[330  17 368  53]
+ [100 107 118 187]
+ [263  72 505 248]
+ [ 21  67 299 221]]
+
+--- custom_cnn_v3go2_f1_init-custom_cnn_ADvsCN SUBJECT LEVEL (hard majority vote) ---
+              precision    recall  f1-score   support
+
+          CN       0.43      0.42      0.43        24
+          AD       0.50      0.25      0.33        16
+        EMCI       0.41      0.50      0.45        34
+        LMCI       0.38      0.42      0.40        19
+
+    accuracy                           0.42        93
+   macro avg       0.43      0.40      0.40        93
+weighted avg       0.43      0.42      0.41        93
+
+
+--- custom_cnn_v3go2_f1_init-custom_cnn_ADvsCN SUBJECT LEVEL (soft vote) ---
+              precision    recall  f1-score   support
+
+          CN       0.43      0.42      0.43        24
+          AD       0.44      0.25      0.32        16
+        EMCI       0.40      0.47      0.43        34
+        LMCI       0.33      0.37      0.35        19
+
+    accuracy                           0.40        93
+   macro avg       0.40      0.38      0.38        93
+weighted avg       0.40      0.40      0.39        93
+
+soft-vote confusion matrix (rows=true, cols=pred) ['CN', 'AD', 'EMCI', 'LMCI']:
+[[10  0 13  1]
+ [ 4  4  2  6]
+ [ 8  3 16  7]
+ [ 1  2  9  7]]
+
+=== custom_cnn_v3go2_f1_init-custom_cnn_ADvsCN SUMMARY ===
+{
+  "arch": "custom_cnn",
+  "mode": "v3go2",
+  "n_params": 1207012,
+  "select_by": "val_macro_f1",
+  "best_epoch": 5,
+  "init_from": "custom_cnn_ADvsCN.pt",
+  "epochs_run": 12,
+  "train_minutes": 14.6,
+  "slice_level_accuracy": 0.3907930107526882,
+  "slice_level_macro_f1": 0.3704527651334465,
+  "subject_level_accuracy": 0.41935483870967744,
+  "subject_level_macro_f1": 0.40304964539007093,
+  "subject_level_accuracy_softvote": 0.3978494623655914,
+  "subject_level_macro_f1_softvote": 0.3819910868315124
+}
+=== custom_cnn_v3go2_f1_init-custom_cnn_ADvsCN DONE in 14.6 min ===
+

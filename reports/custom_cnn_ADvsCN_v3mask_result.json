@@ -1,0 +1,23 @@
+{
+  "task": "AD vs CN within ADNI1 (no cohort confound)",
+  "arch": "custom_cnn",
+  "manifest": "manifest_v3_masked.csv",
+  "n_test_subjects": 75,
+  "accuracy": 0.8,
+  "accuracy_95CI": [
+    0.6958850544883829,
+    0.8748796179687971
+  ],
+  "decision_threshold": 0.4350999891757965,
+  "accuracy_at_default_0.5": 0.76,
+  "majority_baseline": 0.5733333333333334,
+  "roc_auc": 0.8880813953488371,
+  "roc_auc_95CI": [
+    0.8066859249800968,
+    0.9694768657175774
+  ],
+  "verdict": "REAL SIGNAL - significantly above the trivial baseline",
+  "macro_f1": 0.7976982557094048,
+  "epochs_run": 17,
+  "train_minutes": 18.1
+}
