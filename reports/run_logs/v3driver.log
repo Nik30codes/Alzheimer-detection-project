@@ -1,9 +1,0 @@
-[15:31:06] v3 driver pid 8704
-[16:53:55] starting after 51 min wait
-[16:53:55] START ADvsCN_mnet_v2_thr
-[17:02:07] OK    ADvsCN_mnet_v2_thr in 8.2 min
-[17:02:07] START ADvsCN_cnn_v2_thr
-[17:09:15] OK    ADvsCN_cnn_v2_thr in 7.1 min
-[17:09:15] START ADvsCN_effnet_v2_thr
-[17:16:33] OK    ADvsCN_effnet_v2_thr in 7.3 min
-[17:16:33] V3 RUN COMPLETE
