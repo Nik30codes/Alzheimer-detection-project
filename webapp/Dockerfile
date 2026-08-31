@@ -35,4 +35,6 @@ COPY --from=frontend /app/frontend/dist ./webapp/frontend/dist
 
 WORKDIR /app/webapp
 EXPOSE 8000
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Render (and most PaaS hosts) inject $PORT and expect the app to bind it; default
+# to 8000 for a plain local `docker run`. Shell form so $PORT actually expands.
+CMD uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}
