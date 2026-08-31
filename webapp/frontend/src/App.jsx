@@ -12,6 +12,12 @@ import Validation from './components/Validation'
 
 const fmtPct = (x, d = 1) => `${(x * 100).toFixed(d)}%`
 
+// Empty string -> relative '/api/...', which works locally (Vite proxies it) and in
+// any single-service deploy where the backend serves the built frontend itself. Set
+// VITE_API_BASE at build time (e.g. "https://your-backend.onrender.com") only when
+// the frontend is hosted as a separate static site from the backend.
+const API_BASE = import.meta.env.VITE_API_BASE || ''
+
 export default function App() {
   const [cfg, setCfg] = useState(null)
   // A LIST, not one file. The published accuracy is subject-level: 32 axial slices per
@@ -29,7 +35,7 @@ export default function App() {
   const [dragging, setDragging] = useState(false)
 
   useEffect(() => {
-    fetch('/api/config')
+    fetch(`${API_BASE}/api/config`)
       .then((r) => r.json())
       .then(setCfg)
       .catch(() => setError('Could not reach the API. Is the backend running?'))
@@ -64,7 +70,7 @@ export default function App() {
     body.append('task', cfg.tasks[0].id)
 
     try {
-      const res = await fetch('/api/predict-stream', { method: 'POST', body })
+      const res = await fetch(`${API_BASE}/api/predict-stream`, { method: 'POST', body })
       if (!res.ok) {
         const d = await res.json().catch(() => ({}))
         throw new Error(d.detail || 'Request failed')

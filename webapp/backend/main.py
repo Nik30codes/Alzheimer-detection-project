@@ -71,9 +71,13 @@ app = FastAPI(title=BRAND, version="1.0",
               description="Alzheimer's classification from structural MRI. "
                           "Research demonstration; not a medical device.")
 
-# The React dev server runs on a different port during development.
-app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173",
-                                                  "http://127.0.0.1:5173"],
+# The React dev server runs on a different port during development, and a deployed
+# frontend hosted as a separate static site is a different origin entirely -- add its
+# URL via the CORS_ORIGINS env var (comma-separated) rather than hardcoding it here.
+_EXTRA_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()]
+app.add_middleware(CORSMiddleware,
+                   allow_origins=["http://localhost:5173", "http://127.0.0.1:5173",
+                                  *_EXTRA_ORIGINS],
                    allow_methods=["*"], allow_headers=["*"])
 
 
