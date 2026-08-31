@@ -10,3 +10,6 @@ numpy>=1.26
 pandas>=2.0
 opencv-python-headless>=4.9
 pydicom>=2.4
+# src/data_prep.py imports sklearn at module level (for train_test_split) even
+# though inference.py only needs two constants from that file.
+scikit-learn>=1.3
