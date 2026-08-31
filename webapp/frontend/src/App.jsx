@@ -315,6 +315,12 @@ export default function App() {
                 Selecting all of a subject&rsquo;s slices reproduces the published
                 subject-level metric. One slice is the noisier, harder task.
               </div>
+              <div className="mt-2.5 text-[12px] leading-relaxed text-warn/85">
+                This demo runs on a free CPU-only server that sleeps when idle — the first
+                request can take up to a minute to wake it, and a full 32-slice subject can
+                take a few minutes end to end. It hasn&rsquo;t frozen; the progress bar below
+                is real.
+              </div>
             </label>
             <input
               id="file"
