@@ -1,0 +1,5 @@
+Example,Reference label,Recorded prediction,AD model score,Outcome
+Example 1,CN,CN,0.2963755147065967,Correct
+Example 2,AD,AD,0.5964255477301776,Correct
+Example 3,CN,AD,0.5699942475184798,Incorrect
+Example 4,AD,CN,0.4130049962550401,Incorrect

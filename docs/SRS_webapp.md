@@ -54,7 +54,7 @@ Anonymous public visitors. No accounts, no authentication, no roles, no sessions
 
 | ID | Requirement |
 |---|---|
-| NFR-1 | No uploaded image is written to disk or logged, ever |
+| NFR-1 | No application retention of uploaded images. Multipart parsing may spool large files to temporary disk storage; close upload handles on success and failure and disclose this behavior. |
 | NFR-2 | End-to-end response under ~5 s on CPU-only hosting |
 | NFR-3 | Upload capped at 8 MB |
 | NFR-4 | Runs CPU-only; no GPU at deploy time |
@@ -100,10 +100,10 @@ Flask app.py
    |-- tasks.py        registry: classes, checkpoint, metrics source, enabled flag
    |-- validation      cheap geometric checks for "is this an axial brain slice"
    |-- preprocess      DICOM/PNG -> grayscale -> 144px -> 224px  (matches training)
-   |-- inference       torch, CPU, + mirrored TTA
+   |-- inference       torch, CPU, no TTA; shared lock covers forward and Grad-CAM
    |-- gradcam.py      reused from scripts/, handles 2-class and 4-class heads
    v
-Server-Sent Events: one event per completed stage, final event carries the result
+NDJSON stream: one event per completed stage, final event carries the result
 ```
 
 Model weights load lazily on first request and are cached in-process.
@@ -143,5 +143,5 @@ stat row.
 - [ ] Requesting `task=four_stage` returns 400
 - [ ] Displayed AUC matches `reports/mobilenetv2_ADvsCN_v3adcn_result.json`
 - [ ] Progress stages appear in order during a real request
-- [ ] No file is written to disk during a request
+- [ ] Upload handles close on success and failure; temporary storage is disclosed
 - [ ] Page is legible and usable at 360px width

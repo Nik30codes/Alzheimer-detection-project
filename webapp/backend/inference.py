@@ -7,6 +7,7 @@ import base64
 import io
 import os
 import sys
+import threading
 
 import cv2
 import numpy as np
@@ -35,6 +36,7 @@ DEVICE = torch.device(
     "cuda" if os.environ.get("MMAD_DEVICE", "cpu").lower() == "cuda"
     and torch.cuda.is_available() else "cpu")
 _LOADED = {}
+_LOAD_LOCK = threading.RLock()
 
 
 class InvalidInput(Exception):
@@ -53,6 +55,11 @@ def _build(arch, n_out):
 
 def load_task_model(task_id):
     """Build and cache one task's model. Refuses leaky checkpoints outright."""
+    with _LOAD_LOCK:
+        return _load_task_model(task_id)
+
+
+def _load_task_model(task_id):
     if task_id in _LOADED:
         return _LOADED[task_id]
     task = get_task(task_id)
@@ -72,6 +79,7 @@ def load_task_model(task_id):
     model.to(DEVICE).eval()
     target = model.features[-1] if hasattr(model, "features") else None
     _LOADED[task_id] = {"model": model, "rgb": rgb,
+                        "lock": threading.RLock(),
                         "cam": GradCAM(model, target) if target is not None else None}
     return _LOADED[task_id]
 
@@ -88,6 +96,10 @@ def dicom_plane(ds):
     if iop is None or len(iop) != 6:
         return None
     n = np.cross(np.array(iop[:3], float), np.array(iop[3:], float))
+    if not np.isfinite(n).all() or np.linalg.norm(n) < 0.9:
+        return None
+    if np.max(np.abs(n)) / np.linalg.norm(n) < 0.95:
+        return "OBLIQUE"
     return ["SAGITTAL", "CORONAL", "AXIAL"][int(np.argmax(np.abs(n)))]
 
 
@@ -115,22 +127,34 @@ def decode_image(file_bytes, filename=""):
         raise InvalidInput(f"Could not read that file as an image or DICOM ({e}).")
 
     plane = dicom_plane(ds)
-    if plane is not None and plane != "AXIAL":
+    if plane is None:
+        raise InvalidInput("DICOM orientation is missing or invalid. Supply a single "
+                           "axial slice with valid ImageOrientationPatient metadata.")
+    if plane != "AXIAL":
         raise InvalidInput(
             f"This DICOM was acquired in the {plane.lower()} plane, but the model reads "
             "AXIAL (top-down) slices. ADNI's T1 scans are stored sagittally, so a raw "
             "ADNI file will hit this message. Reconstruct an axial slice first, or "
             "upload an axially-acquired image.")
 
-    if px.ndim == 3:                       # multi-frame: take the middle frame
-        px = px[px.shape[0] // 2]
+    if px.ndim != 2:
+        raise InvalidInput("Multi-frame or colour DICOM is not supported. Export a "
+                           "single grayscale axial slice first.")
+    photo = str(ds.get("PhotometricInterpretation", ""))
+    if photo not in ("MONOCHROME1", "MONOCHROME2"):
+        raise InvalidInput("Only monochrome DICOM slices are supported.")
+    px = px * float(ds.get("RescaleSlope", 1)) + float(ds.get("RescaleIntercept", 0))
+    if not np.isfinite(px).all():
+        raise InvalidInput("DICOM contains invalid pixel intensities.")
+    if photo == "MONOCHROME1":
+        px = px.max() + px.min() - px
     lo, hi = np.percentile(px, [0.5, 99.5])
     px = np.clip(px, lo, hi)
     return ((px - lo) / max(hi - lo, 1e-6) * 255).astype(np.uint8), "dicom"
 
 
 def validate_slice(img):
-    """Cheap geometric checks for 'is this an axial brain slice'.
+    """Reject obvious invalid inputs; these checks cannot authenticate an MRI.
 
     Not a classifier -- these are properties every head-on-black-background scan has,
     chosen to catch the common failure mode: a photograph returning a confident
@@ -153,6 +177,12 @@ def validate_slice(img):
     if not 0.10 < fg < 0.85:
         raise InvalidInput(f"Bright pixels cover {fg:.0%} of the frame, which does not "
                            "look like a head on a dark background.")
+    # Uniform shapes can satisfy all geometric checks. Reject low-information
+    # foregrounds without claiming that texture alone proves an image is MRI.
+    foreground = img[f > 0.15]
+    if np.unique(foreground).size < 16 or np.std(foreground) < 5:
+        raise InvalidInput("The foreground has too little intensity variation for "
+                           "a usable MRI slice. Use an original grayscale axial scan.")
     ys, xs = np.nonzero(f > 0.15)
     if len(xs) == 0:
         raise InvalidInput("This image appears to be blank.")
@@ -204,7 +234,9 @@ def predict(img, task_id, tta=False):
     state = load_task_model(task_id)
     transform = EVAL_TRANSFORM_RGB if state["rgb"] else EVAL_TRANSFORM
     x = transform(img).unsqueeze(0).to(DEVICE)
-    with torch.no_grad():
+    # Forward hooks also write Grad-CAM state, even under no_grad. All forwards
+    # must share the same lock as the complete Grad-CAM forward/backward pass.
+    with state["lock"], torch.no_grad():
         p = torch.softmax(state["model"](x), dim=1)
         if tta:
             p = (p + torch.softmax(state["model"](torch.flip(x, dims=[3])), dim=1)) / 2
@@ -215,7 +247,8 @@ def predict(img, task_id, tta=False):
 def gradcam_overlay(state, x, img, class_idx):
     if state["cam"] is None:
         return None
-    cam, _, _ = state["cam"](x, class_idx=int(class_idx))
+    with state["lock"]:
+        cam, _, _ = state["cam"](x, class_idx=int(class_idx))
     heat = cv2.applyColorMap(np.uint8(255 * cam), cv2.COLORMAP_JET)
     base = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
     return to_data_uri((0.55 * base + 0.45 * heat).astype(np.uint8))

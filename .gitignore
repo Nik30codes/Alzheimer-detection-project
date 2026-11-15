@@ -40,6 +40,16 @@ reports/*_adhoc_backup.*
 # --- Python ----------------------------------------------------------------
 __pycache__/
 *.pyc
+reports/attention_gan_*/features.npz
+reports/attention_gan_*/mpl-cache/
+reports/gan_quality_*/*preview.png
+reports/gan_quality_*/validation_reference.png
+reports/gan_quality_*/mpl-cache/
+reports/gan_quality_comparison_*/synthetic_comparison.png
+reports/attention_gan_*/fold_*/*.npz
+reports/attention_gan_*/fold_*/synthetic_preview.png
+reports/attention_gan_*/fold_*/split.json
+reports/attention_gan_*/oof_predictions.csv
 .ipynb_checkpoints/
 
 # --- Node / frontend build ---------------------------------------------------
@@ -54,3 +64,13 @@ Thumbs.db
 # --- internal working notes, not part of the project deliverable --------------
 CLAUDE.md
 claudereaserch.md
+
+.pbl-build/
+
+# Local presentation outputs and licensed practice data
+.pbl-report-build/
+output/
+batches/
+webapp-research/
+skill-output/
+webapp.zip

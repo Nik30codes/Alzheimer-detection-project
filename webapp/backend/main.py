@@ -6,7 +6,8 @@ production also serves the built static files so the whole thing is one containe
 Key behaviours:
   * Only tasks marked enabled in tasks.py are reachable (FR-13) -- an unvalidated
     model cannot be served even by a crafted request.
-  * Uploads are read into memory and never written to disk or logged (NFR-1).
+  * Multipart uploads may spool to temporary disk storage; upload handles are closed
+    after reading. The application does not retain uploaded images.
   * Progress is streamed as newline-delimited JSON, one event per stage as it actually
     completes (FR-9) -- not a fixed animation.
   * Displayed metrics come from the recorded result JSONs (FR-7).
@@ -30,6 +31,8 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
+from explanations import QUESTIONS, explain
+from research import router as research_router
 
 from inference import (InvalidInput, decode_image, gradcam_overlay, harmonise,
                        load_task_model, predict, to_data_uri, validate_slice, DEVICE)
@@ -46,7 +49,8 @@ DISCLAIMER = (
     "from other scanners or clinical settings is lower and unverified."
 )
 DICOM_NOTE = (
-    "DICOM (.dcm) is supported, and its acquisition plane is read from the file header. "
+    "Single-frame monochrome DICOM (.dcm) is supported with valid axial orientation "
+    "metadata. Missing orientation, oblique and multi-frame files are rejected. "
     "ADNI's T1 scans are acquired SAGITTALLY (side-on) while this model reads AXIAL "
     "slices (top-down), so a raw ADNI DICOM is rejected with an explanation — that is "
     "correct behaviour, not a bug. PNG and JPEG carry no header, so orientation cannot "
@@ -56,8 +60,8 @@ SINGLE_SLICE_NOTE = (
     "The accuracy figures are subject-level: each subject contributes 32 slices whose "
     "probabilities are averaged into one prediction. Uploading a single slice reproduces "
     "only part of that — a one-slice answer is measurably noisier and less accurate than "
-    "the headline number. Select all of a subject's slices at once to reproduce the "
-    "published figure faithfully."
+    "the headline number. Select all of a subject's slices at once to use the "
+    "evaluation's aggregation method."
 )
 MULTI_SLICE_NOTE = (
     "Select multiple slices (or a whole folder) and each one is run through the model "
@@ -70,6 +74,8 @@ MULTI_SLICE_NOTE = (
 app = FastAPI(title=BRAND, version="1.0",
               description="Alzheimer's classification from structural MRI. "
                           "Research demonstration; not a medical device.")
+
+app.include_router(research_router)
 
 # The React dev server runs on a different port during development, and a deployed
 # frontend hosted as a separate static site is a different origin entirely -- add its
@@ -104,6 +110,13 @@ def health():
             "device": str(DEVICE)}
 
 
+@app.get('/api/explain/{topic}')
+def explain_topic(topic: str):
+    if topic not in QUESTIONS:
+        raise HTTPException(400, 'Choose one of the supported project explanation topics.')
+    return explain(topic)
+
+
 
 SUBJECT_RE = re.compile(r"^(\d{3}_S_\d{4})_\d+\.(png|jpg|jpeg)$", re.I)
 
@@ -119,7 +132,8 @@ def subject_ids_in(filenames):
     to 43 different subjects.
 
     Returns (ids, n_unparsed). An empty set means the names carry no subject id, in
-    which case nothing can be inferred and no warning is shown.
+    which case nothing can be inferred. Results disclose that subject identity
+    is not verified by these filename checks.
     """
     ids, unparsed = set(), 0
     for fn in filenames:
@@ -158,6 +172,11 @@ def _analyse(uploads, task_id):
     multi = n_in > 1
     try:
         t0 = time.time()
+        _sids, _unparsed = subject_ids_in([fn for _, fn in uploads])
+        if len(_sids) > 1:
+            raise InvalidInput("These files identify more than one subject. Upload "
+                               "slices from one person only; mixed subjects cannot "
+                               "be averaged into a meaningful prediction.")
 
         # ---- stage 1: decode -------------------------------------------------
         yield ev(stage=1, pct=4,
@@ -206,10 +225,11 @@ def _analyse(uploads, task_id):
             # prediction here would mean predicting from nothing.
             raise InvalidInput(first_reason or "No usable axial slice in the upload.")
         n_used, n_skipped = len(valid), len(skipped)
+        multi = n_used > 1
         yield ev(stage=2, pct=40, done_stage=True,
-                 label=(f"{n_used} of {n_in} slices look like axial MRI"
+                 label=(f"{n_used} of {n_in} slices passed basic input checks"
                         f"{f' ({n_skipped} skipped)' if n_skipped else ''}" if multi
-                        else "Input looks like an axial slice"))
+                        else "Input passed basic checks; MRI identity is not verified"))
 
         # ---- stage 3: harmonise ---------------------------------------------
         yield ev(stage=3, pct=46, label="Harmonising resolution (144px to 224px)")
@@ -221,7 +241,7 @@ def _analyse(uploads, task_id):
         # ---- stage 4: inference, one slice at a time ------------------------
         task = get_task(task_id)
         yield ev(stage=4, pct=56,
-                 label=f"Running {task['arch']} + mirrored test-time augmentation")
+                 label=f"Running {task['arch']}")
         per_slice = []
         state = None
         for i, img in enumerate(images, 1):
@@ -231,7 +251,7 @@ def _analyse(uploads, task_id):
             # pass rather than on a timer.
             yield ev(stage=4, pct=56 + int(24 * i / n_used),
                      label=(f"Running model on slice {i} of {n_used}" if multi
-                            else f"Running {task['arch']} + mirrored test-time augmentation"))
+                            else f"Running {task['arch']}"))
         stack = np.stack(per_slice)          # (n_slices, n_classes)
         probs = stack.mean(axis=0)           # <-- the subject-level soft vote
         yield ev(stage=4, pct=80, done_stage=True,
@@ -270,10 +290,7 @@ def _analyse(uploads, task_id):
         overlay = gradcam_overlay(state, x_rep, rep_img, pred_idx)
         yield ev(stage=5, pct=95, done_stage=True, label="Attention map ready")
 
-        # Detect a mixed-subject upload before reporting anything. This is a hard
-        # correctness issue rather than a nicety: averaging slices across two people
-        # produces a confident number that means nothing.
-        _sids, _unparsed = subject_ids_in([fn for _, fn in uploads])
+        _sids, _unparsed = subject_ids_in([fn for _, _, fn in valid])
         result = {
             "prediction": {"code": classes[pred_idx],
                            "label": CLASS_LABELS.get(classes[pred_idx]),
@@ -287,15 +304,13 @@ def _analyse(uploads, task_id):
             "source_kind": "+".join(kinds),
             "n_slices_used": n_used,
             "subject_ids": sorted(_sids),
-            "mixed_subjects": len(_sids) > 1,
-            "mixed_subjects_note": (
-                f"These {n_used} slices come from {len(_sids)} DIFFERENT people "
-                f"({', '.join(sorted(_sids)[:4])}"
-                f"{'...' if len(_sids) > 4 else ''}). The probabilities have been "
-                "averaged together, which only makes sense for ONE person -- the "
-                "reported accuracy is a per-person figure. Select a single subject's "
-                "slices instead: they share a filename prefix."
-                if len(_sids) > 1 else None),
+            "input_note": (
+                "Basic image checks cannot verify MRI identity, acquisition protocol "
+                "or subject identity. Model probabilities are not a measure of input "
+                "validity. Only combine axial slices from the same person."),
+            "subject_identity_verified": False,
+            "mixed_subjects": False,  # detected mixtures are rejected before inference
+            "mixed_subjects_note": None,
             "n_slices_skipped": n_skipped,
             "n_files_received": n_in,
             "subject_level": multi,
@@ -334,11 +349,12 @@ def _analyse(uploads, task_id):
                     classes[1 - pos_idx]: int((col < thr).sum()),
                 }
                 result["threshold_note"] = (
-                    "The decision threshold was chosen on held-out validation data and is "
-                    "applied to the averaged probability, not to individual slices. "
-                    "Testing across scanner generations showed the ranking transfers to a "
-                    "new scanner but this cut-point does not — so the probability is more "
-                    "meaningful than the yes/no call.")
+                    "This upload uses the saved threshold fitted to pooled out-of-fold "
+                    "scores from 501 participants. The website's recorded accuracy "
+                    "instead uses each fold's validation-selected classifications; "
+                    "it is not an independent evaluation of this saved threshold. "
+                    "The threshold is applied to the mean score and may not transfer "
+                    "to another scanner.")
                 # Rare but real: with a threshold below 0.5 the call can differ from the
                 # largest probability. Say so rather than letting the bars contradict the
                 # verdict silently.
@@ -362,24 +378,27 @@ async def predict_stream(image: List[UploadFile] = File(...),
     `List[UploadFile]` also matches a single `image` part, so existing single-slice
     clients keep working with no change.
     """
-    if get_task(task) is None:
-        raise HTTPException(400, "Unknown or disabled task.")
-    if not image:
-        raise HTTPException(400, "Empty upload.")
-    if len(image) > MAX_FILES:
-        raise HTTPException(413, f"Too many files (maximum {MAX_FILES}).")
-
     uploads, total = [], 0
-    for f in image:
-        data = await f.read()
-        if len(data) > MAX_BYTES:
-            raise HTTPException(413, f"{f.filename or 'A file'} is too large "
-                                     "(maximum 8 MB per file).")
-        total += len(data)
-        if total > MAX_TOTAL_BYTES:
-            raise HTTPException(413, "Upload too large in total (maximum 48 MB).")
-        if data:
-            uploads.append((data, f.filename or ""))
+    try:
+        if get_task(task) is None:
+            raise HTTPException(400, "Unknown or disabled task.")
+        if not image:
+            raise HTTPException(400, "Empty upload.")
+        if len(image) > MAX_FILES:
+            raise HTTPException(413, f"Too many files (maximum {MAX_FILES}).")
+        for f in image:
+            data = await f.read(MAX_BYTES + 1)
+            if len(data) > MAX_BYTES:
+                raise HTTPException(413, f"{f.filename or 'A file'} is too large "
+                                         "(maximum 8 MB per file).")
+            total += len(data)
+            if total > MAX_TOTAL_BYTES:
+                raise HTTPException(413, "Upload too large in total (maximum 48 MB).")
+            if data:
+                uploads.append((data, f.filename or ""))
+    finally:
+        for f in image:
+            await f.close()
     if not uploads:
         raise HTTPException(400, "Empty upload.")
 

@@ -59,8 +59,8 @@ export default function ConfusionMatrix({ matrix, classes, macroF1 }) {
         ))}
       </div>
       <p className="mt-2.5 text-[11px] leading-relaxed text-muted max-w-[280px]">
-        {total} subjects, out-of-fold across all 5 cross-validation folds — the same
-        predictions behind the accuracy/AUC tiles above.
+        {total} subjects across 5 folds. This matrix uses stored classifications
+        from fold-specific validation thresholds.
       </p>
     </div>
   )

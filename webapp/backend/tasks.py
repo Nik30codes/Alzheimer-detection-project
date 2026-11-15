@@ -37,15 +37,15 @@ TASKS = {
         # optimistic number to a visitor would misrepresent the model.
         "metrics_file": "mobilenetv2_ADvsCN_cv_result.json",
         "positive_class": "AD",
-        "status": "validated",
+        "status": "internal_cv_only",
         "enabled": True,
         "description": (
-            "Trained on 501 ADNI subjects split evenly across two scanner generations, "
-            "so the model cannot separate the classes by recognising the scanner. "
-            "Figures below are 5-fold cross-validated over all 501 subjects, not a "
-            "single held-out split — an earlier single-split estimate ran about 12 "
-            "points optimistic. Also validated by training on one scanner generation "
-            "and testing on the other."
+            "The deployed unmasked v3 model was trained on 351 ADNI subjects, with "
+            "75 validation and 75 test subjects. Separate five-fold experiments "
+            "provide out-of-fold predictions for all 501 subjects. The displayed "
+            "accuracy and macro F1 use stored classifications from fold-specific "
+            "validation thresholds. Cross-era experiments provide "
+            "additional evidence of transfer, but do not rule out scanner confounds."
         ),
     },
     "four_stage": {
@@ -89,6 +89,7 @@ def load_metrics(task):
             "n_test": r.get("n_test_subjects"),
             "threshold": r.get("decision_threshold"),
             "verdict": r.get("verdict"),
+            "evaluation_note": r.get("evaluation_note"),
         })
         # Confusion matrix + macro-F1, recomputed by scripts/compute_cv_confusion.py
         # from the exact out-of-fold predictions behind the headline above (same
@@ -110,6 +111,23 @@ def load_metrics(task):
             "n_test": 93,
             "verdict": "Not significantly above baseline",
         })
+    evidence_path = os.path.join(REPORTS, 'benchmark_evidence_2026-11-09.json')
+    if task['metrics_file'] == 'mobilenetv2_ADvsCN_cv_result.json' and os.path.exists(evidence_path):
+        with open(evidence_path, encoding='utf-8') as evidence_file:
+            evidence = json.load(evidence_file)
+        measured = evidence['mri']['metrics']
+        transfers = [run['auroc'] for run in evidence.get('cross_era_runs', [])]
+        out['cross_era_auc_range'] = [min(transfers), max(transfers)] if transfers else None
+        tn, fp = measured['confusion_matrix'][0]
+        fn, tp = measured['confusion_matrix'][1]
+        macro_f1 = (2*tp/(2*tp+fp+fn) + 2*tn/(2*tn+fp+fn))/2
+        out.update(accuracy=measured['accuracy'], accuracy_ci=measured['accuracy_wilson_95ci'],
+                   auc=measured['auroc'], n_test=measured['subjects'],
+                   confusion_matrix=measured['confusion_matrix'], confusion_classes=measured['classes'],
+                   macro_f1=macro_f1, source_file='benchmark_evidence_2026-11-09.json',
+                   evaluation_note='Historical internal five-fold CV using stored predictions from validation-selected fold thresholds. '
+                   'The previously shown 74.1% used a threshold chosen on pooled OOF predictions. '
+                   'The serving checkpoint and its threshold are from a separate development run. External clinical performance is unverified.')
     return out
 
 

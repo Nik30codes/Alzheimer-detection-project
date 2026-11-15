@@ -66,7 +66,7 @@ export default function SliceStack() {
 
   return (
     <div
-      className="relative h-[280px] sm:h-[340px] lg:h-[400px] w-full"
+      className="relative min-w-0 h-[280px] sm:h-[340px] lg:h-[400px] w-full"
       onMouseMove={(e) => {
         const r = e.currentTarget.getBoundingClientRect()
         pointer.current = {
@@ -90,7 +90,7 @@ export default function SliceStack() {
           Loading visualisation…
         </div>
       )}
-      <div className="pointer-events-none absolute -bottom-1 left-1/2 -translate-x-1/2 text-center text-[11px] font-medium tracking-wide text-muted">
+      <div className="pointer-events-none absolute -bottom-1 inset-x-0 text-center text-[11px] font-medium tracking-wide text-muted">
         32 axial slices · 48–92&nbsp;mm below the skull vertex
       </div>
     </div>

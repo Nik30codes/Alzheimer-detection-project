@@ -1,27 +1,27 @@
 const FEATURES = [
   {
-    title: '853 Real Clinical Scans',
-    body: 'Raw DICOM downloaded directly from the ADNI study archive — not a pre-packaged teaching dataset.',
+    title: '853 Research Participants',
+    body: 'The project uses MRI scans from the approved ADNI research archive.',
   },
   {
     title: 'Subject-Level Splits',
-    body: 'No person’s slices appear in both training and test data. Unfixed, that leak alone inflates accuracy by 36.9 points.',
+    body: 'All slices from one person stay in the same evaluation partition.',
   },
   {
     title: '5-Fold Cross-Validated',
-    body: 'The headline number is measured on every subject, not a favourable single split — three earlier headlines were withdrawn this way.',
+    body: 'Results use one held-out prediction per person across five folds.',
   },
   {
-    title: '4 Confounds Found & Fixed',
-    body: 'Scanner era, slice misalignment, and acquisition geometry were each measured as shortcuts and corrected before being trusted.',
+    title: 'Confounds Investigated',
+    body: 'Scanner effects and preprocessing shortcuts were investigated; limitations remain.',
   },
   {
     title: 'Grad-CAM Explainability',
-    body: 'Every prediction ships a heat-map of the region that drove it — the same check that first caught the scanner-artifact shortcut.',
+    body: 'Inspect the image regions that influenced a result using Grad-CAM.',
   },
   {
     title: 'Cross-Scanner Tested',
-    body: 'Trained on one scanner generation, evaluated on a completely different one: the signal survived in 5 of 6 runs.',
+    body: 'Six experiments tested transfer between MRI acquisition eras.',
   },
 ]
 
@@ -33,10 +33,10 @@ export default function FeatureGrid() {
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl mb-10">
           <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-accent mb-3">
-            Why this result is trustworthy
+            Research quality checks
           </div>
           <h2 className="text-[clamp(1.6rem,3.4vw,2.2rem)] font-black tracking-tight">
-            Built to survive scrutiny, not just a demo click
+            How we checked the results
           </h2>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

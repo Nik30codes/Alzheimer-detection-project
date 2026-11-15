@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import BrainBackground from './components/BrainBackground'
 import FeatureGrid from './components/FeatureGrid'
-import FindingsCarousel from './components/FindingsCarousel'
+import BatchUpload from './components/BatchUpload'
+import BenchmarkEvidence from './components/BenchmarkEvidence'
+import { readPrediction } from './batch'
 import Pipeline from './components/Pipeline'
 import Result from './components/Result'
 import Samples from './components/Samples'
@@ -20,6 +22,8 @@ const API_BASE = import.meta.env.VITE_API_BASE || ''
 
 export default function App() {
   const [cfg, setCfg] = useState(null)
+  const [mode, setMode] = useState('batch')
+  const [batchBusy, setBatchBusy] = useState(false)
   // A LIST, not one file. The published accuracy is subject-level: 32 axial slices per
   // subject, averaged into one prediction. Accepting a single slice made the demo
   // systematically weaker than its own headline number, so multi-select is the default
@@ -36,9 +40,9 @@ export default function App() {
 
   useEffect(() => {
     fetch(`${API_BASE}/api/config`)
-      .then((r) => r.json())
+      .then((r) => { if (!r.ok) throw new Error('The model service is unavailable.'); return r.json() })
       .then(setCfg)
-      .catch(() => setError('Could not reach the API. Is the backend running?'))
+      .catch(() => setError('Could not connect to the model service. Please refresh and try again.'))
   }, [])
 
   const pick = (f, sample = null) => {
@@ -71,38 +75,16 @@ export default function App() {
 
     try {
       const res = await fetch(`${API_BASE}/api/predict-stream`, { method: 'POST', body })
-      if (!res.ok) {
-        const d = await res.json().catch(() => ({}))
-        throw new Error(d.detail || 'Request failed')
-      }
-      // One JSON object per line, emitted as each stage completes, so the progress
-      // shown is real work rather than an animation.
-      const reader = res.body.getReader()
-      const dec = new TextDecoder()
-      let buf = ''
-      for (;;) {
-        const { value, done } = await reader.read()
-        if (done) break
-        buf += dec.decode(value, { stream: true })
-        const lines = buf.split('\n')
-        buf = lines.pop()
-        for (const line of lines) {
-          if (!line.trim()) continue
-          const ev = JSON.parse(line)
-          if (ev.error) {
-            setError(ev.error)
-            setBusy(false)
-            setStage(0)
-            return
-          }
-          if (ev.pct !== undefined) setPct(ev.pct)
-          if (ev.stage) {
-            setLabels((l) => ({ ...l, [ev.stage]: ev.label }))
-            setStage(ev.done_stage ? ev.stage + 1 : ev.stage)
-          }
-          if (ev.result) setResult(ev.result)
+      const prediction = await readPrediction(res, (progress, event) => {
+        setPct(progress)
+        if (event?.stage) {
+          setLabels(l => ({ ...l, [event.stage]: event.label }))
+          setStage(event.done_stage ? event.stage + 1 : event.stage)
         }
-      }
+      })
+      setResult(prediction)
+      setPct(100)
+      setStage(7)
     } catch (err) {
       setError(err.message || 'Network error')
     }
@@ -159,10 +141,10 @@ export default function App() {
               Source
             </a>
             <a
-              href="#methodology"
+              href="#benchmark"
               className="glass-soft hidden sm:block rounded-full px-4 py-2 text-[12.5px] font-medium text-muted transition hover:text-ink"
             >
-              How it was validated
+              Study results
             </a>
           </div>
         </header>
@@ -177,7 +159,7 @@ export default function App() {
                 </svg>
               </span>
               <span className="text-[12px] font-semibold text-ok">
-                Validated on {m.n_test} held-out subjects
+                Evaluated on {m.n_test} participants
               </span>
               <span className="text-[12px] text-ok/70">· ADNI</span>
             </div>
@@ -189,11 +171,8 @@ export default function App() {
             </h1>
 
             <p className="mt-6 max-w-xl text-[16px] leading-relaxed text-muted">
-              Upload an axial brain MRI slice — or all 32 slices of one subject, which are
-              averaged into a single subject-level prediction, exactly as the reported
-              metrics were computed. You get the probability behind the call and a heat-map
-              of the region that drove it, alongside the confidence intervals most demos
-              leave out.
+              Upload one MRI or a batch of patient folders. Review one result per person,
+              export the table, and inspect the image regions that influenced the model.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
@@ -205,7 +184,7 @@ export default function App() {
                   boxShadow: '0 10px 26px -8px rgb(217 119 6 / .55)',
                 }}
               >
-                Try it on a scan
+                Try an MRI batch
               </a>
               <a
                 href="#methodology"
@@ -241,15 +220,15 @@ export default function App() {
           )}
           <Tile
             label="Cross-scanner"
-            value="0.68–0.79"
-            sub="AUC on an unseen scanner generation"
+            value={m.cross_era_auc_range ? m.cross_era_auc_range.map(x => x.toFixed(2)).join('–') : 'Under review'}
+            sub="AUC across six cross-era experiments"
             mono
             accent="plain"
           />
           <Tile
             label="Leakage"
             value="0"
-            sub="subjects shared between train and test"
+            sub="participants shared across manifest splits"
             accent="ok"
             mono
           />
@@ -257,15 +236,22 @@ export default function App() {
       </div>
 
       <FeatureGrid />
-      <TrustBar m={m} />
+      <TrustBar />
 
       <div id="analyse" className="mx-auto max-w-6xl px-5 sm:px-6 pt-14 pb-20">
         {/* ── disclaimer ──────────────────────────────────────── */}
         <div className="glass-soft mb-6 rounded-2xl border-warn/25 bg-warn/[0.06] p-4 text-[13px] leading-relaxed text-warn/90">
-          <b className="text-warn">Research demonstration only.</b> {cfg.disclaimer}
+          <b className="text-warn">Research demonstration.</b> Model outputs are not diagnoses. Clinical use has not been validated.
         </div>
 
         {/* ── analyse ─────────────────────────────────────────── */}
+        <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Analysis mode">
+          {[['batch', 'Patient batch'], ['single', 'One person']].map(([id, label]) => <button key={id}
+            type="button" aria-pressed={mode === id} disabled={busy || batchBusy}
+            onClick={() => setMode(id)} className={`rounded-full border px-5 py-2.5 text-sm font-semibold transition disabled:opacity-40 ${mode === id ? 'border-accent bg-accent text-white' : 'border-line bg-panel text-muted hover:text-ink'}`}>{label}</button>)}
+        </div>
+        <div hidden={mode !== 'batch'}><BatchUpload apiBase={API_BASE} taskId={task.id} maxFiles={cfg.max_files} enableResearch={false} onBusyChange={setBatchBusy} /></div>
+        <div hidden={mode !== 'single'}>
         <section className="glass topline rounded-3xl p-6 sm:p-7 mb-6">
           <div className="mb-5 flex flex-wrap items-center gap-2.5">
             <span className="h-1.5 w-1.5 rounded-full bg-accent2 shadow-[0_0_10px_var(--color-accent2)]" />
@@ -273,7 +259,7 @@ export default function App() {
               Analyse a scan
             </h2>
             <span className="ml-auto text-[11px] font-semibold uppercase tracking-[0.1em] text-ok bg-ok/12 border border-ok/30 rounded-full px-2.5 py-0.5">
-              {task.short} · validated
+              {task.short} · research model
             </span>
           </div>
 
@@ -312,14 +298,10 @@ export default function App() {
                 once, max 8 MB each
               </div>
               <div className="mt-2.5 text-[12px] leading-relaxed text-accent2/85">
-                Selecting all of a subject&rsquo;s slices reproduces the published
-                subject-level metric. One slice is the noisier, harder task.
+                Use the complete 32-slice axial set from one person where possible.
               </div>
               <div className="mt-2.5 text-[12px] leading-relaxed text-warn/85">
-                This demo runs on a free CPU-only server that sleeps when idle — the first
-                request can take up to a minute to wake it, and a full 32-slice subject can
-                take a few minutes end to end. It hasn&rsquo;t frozen; the progress bar below
-                is real.
+                Analysis time depends on the server and the number of slices. Progress is shown below.
               </div>
             </label>
             <input
@@ -414,57 +396,21 @@ export default function App() {
         </section>
 
         {result && <Result data={result} trueClass={sampleInfo?.true_class} />}
-
-        <div id="methodology">
-          <Validation />
+        </div>
+        <BenchmarkEvidence apiBase={API_BASE} />
+        <div id="methodology" className="scroll-mt-6">
+          <details className="glass rounded-3xl p-5 sm:p-7">
+            <summary className="cursor-pointer font-bold text-lg">Methodology and remaining limitations</summary>
+            <div className="mt-5"><Validation crossEraRange={m.cross_era_auc_range} /></div>
+          </details>
         </div>
       </div>
 
-      <FindingsCarousel />
-
-      <div className="mx-auto max-w-6xl px-5 sm:px-6 pt-14 pb-20">
-        {/* ── honesty panel ───────────────────────────────────── */}
-        <section className="glass-soft rounded-3xl p-6 mb-6">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-muted mb-4">
-            What this does not do
-          </h2>
-          <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2 text-[13px] leading-relaxed text-muted">
-            <p>
-              <b className="text-ink">No four-stage prediction.</b> Separating early from
-              late MCI is defined in ADNI by a memory-test cutoff, not anatomy. That model
-              exists but is withheld here, because presenting it would look authoritative
-              without being so.
-            </p>
-            <p>
-              <b className="text-ink">Single slices are noisy.</b> {cfg.single_slice_note}
-            </p>
-            <p>
-              <b className="text-ink">Aggregation is the published estimator.</b>{' '}
-              {cfg.multi_slice_note}
-            </p>
-            <p>
-              <b className="text-ink">One dataset only.</b> Trained on research-grade ADNI
-              scans. Performance on images from a different hospital is unverified and
-              likely lower.
-            </p>
-            <p>
-              <b className="text-ink">Figures are not typed in.</b> Every number is read
-              at load time from{' '}
-              <code className="rounded bg-accent/10 px-1.5 py-0.5 font-mono text-[11.5px] text-accent2">
-                {m.source_file}
-              </code>
-              , so the page cannot drift from the recorded experiment.
-            </p>
-          </div>
-        </section>
-
+      <div className="mx-auto max-w-6xl px-5 sm:px-6 pb-12">
         <footer className="border-t border-line pt-6 text-[12px] leading-relaxed text-muted">
-          Trained on the ADNI dataset with a strict subject-wise split — no person appears
-          in both training and test data. Uploads are processed in memory and never stored
-          or logged.
+          Nikunj Bhalla · 2430030052 · B.Tech Information Technology · Manipal University Jaipur
           <br />
-          <b className="text-ink/80">This tool cannot diagnose anyone.</b> If you have
-          concerns about memory or cognition, speak to a doctor.
+          ADNI research data. <b className="text-ink/80">Research demonstration, not a diagnosis.</b>
         </footer>
       </div>
     </>

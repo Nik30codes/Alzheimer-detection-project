@@ -1,7 +1,8 @@
 {
   "task": "AD vs CN, 5-fold subject-level cross-validation over all 501 subjects",
   "arch": "mobilenetv2",
-  "evaluation": "5-fold CV (not a single split)",
+  "evaluation": "5-fold out-of-fold AUC; accuracy after pooled post-hoc threshold calibration",
+  "evaluation_note": "Accuracy and macro F1 use a threshold selected on the same 501 pooled out-of-fold predictions. They do not independently evaluate threshold selection. AUC is threshold-independent. The deployed checkpoint is from the separate 351/75/75 subject split.",
   "n_test_subjects": 501,
   "accuracy": 0.741,
   "accuracy_95CI": [
@@ -13,7 +14,7 @@
     0.7429287373787891,
     0.8261095992034072
   ],
-  "majority_baseline": 0.5733333333333334,
+  "majority_baseline": 0.5688622754491018,
   "decision_threshold": 0.493,
   "verdict": "REAL SIGNAL - AUC interval excludes 0.5 by a wide margin",
   "supersedes": {

@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "updated": "2026-11-09",
+  "clinical_ready": false,
+  "mri": {
+    "status": "historical_internal_cv",
+    "source": "reports/cvheadline_mobilenetv2_val_loss_oof.csv",
+    "metrics": {
+      "subjects": 501,
+      "ad_subjects": 216,
+      "cn_subjects": 285,
+      "accuracy": 0.7085828343313373,
+      "accuracy_wilson_95ci": [
+        0.6673248450060582,
+        0.7466665107915073
+      ],
+      "auroc": 0.7845191682910981,
+      "auprc": 0.7436927569152552,
+      "brier_score": 0.18891408619173714,
+      "sensitivity": 0.6944444444444444,
+      "specificity": 0.7192982456140351,
+      "ppv": 0.6521739130434783,
+      "npv": 0.7564575645756457,
+      "confusion_matrix": [
+        [
+          205,
+          80
+        ],
+        [
+          66,
+          150
+        ]
+      ],
+      "classes": [
+        "CN",
+        "AD"
+      ]
+    },
+    "limitations": "Previously studied development cohort; stored fold predictions; no external validation. Scores have not been independently calibrated."
+  },
+  "protocol": {
+    "status": "draft_pending_label_and_visit_audit",
+    "target": "ADNI clinical AD vs CN at MRI index visit",
+    "positive_class": "AD",
+    "evaluation_unit": "participant",
+    "seed": 20261109,
+    "outer_folds": 5,
+    "threshold_selection": "inner validation only",
+    "preprocessing_fit": "outer training partition only",
+    "primary_comparison": "same eligible participants and same folds in every arm",
+    "index_rule": "one eligible T1 MRI per participant; exact visit rule pending metadata review",
+    "excluded_predictors": [
+      "diagnosis outcome",
+      "diagnosis-derived fields",
+      "post-index measurements"
+    ],
+    "arms": [
+      "demographics",
+      "MRI",
+      "biomarkers",
+      "clinical measurements",
+      "MRI + tabular fusion"
+    ],
+    "release_gates": [
+      "resolve participant ID discrepancy",
+      "validate visit-specific diagnosis codes",
+      "confirm MRI visit linkage and official series QC",
+      "adjudicate duplicate clinical visits",
+      "confirm assay units and QC",
+      "freeze cohort, feature list, and participant folds"
+    ]
+  },
+  "arms": [
+    {
+      "name": "demographics",
+      "status": "pending_matched_cohort",
+      "metrics": null
+    },
+    {
+      "name": "biomarkers",
+      "status": "pending_matched_cohort",
+      "metrics": null
+    },
+    {
+      "name": "clinical measurements",
+      "status": "pending_matched_cohort",
+      "metrics": null
+    },
+    {
+      "name": "MRI + tabular fusion",
+      "status": "pending_matched_cohort",
+      "metrics": null
+    }
+  ],
+  "cross_era_runs": [
+    {
+      "source": "custom_cnn_crossera_adni1_to_go2_result.json",
+      "auroc": 0.7860407876230662,
+      "accuracy": 0.7255639097744361,
+      "subjects": 266
+    },
+    {
+      "source": "custom_cnn_crossera_go2_to_adni1_result.json",
+      "auroc": 0.6992563429571304,
+      "accuracy": 0.5276595744680851,
+      "subjects": 235
+    },
+    {
+      "source": "efficientnet_b0_crossera_adni1_to_go2_result.json",
+      "auroc": 0.7393342709798405,
+      "accuracy": 0.6127819548872181,
+      "subjects": 266
+    },
+    {
+      "source": "efficientnet_b0_crossera_go2_to_adni1_result.json",
+      "auroc": 0.5517643627879848,
+      "accuracy": 0.4765957446808511,
+      "subjects": 235
+    },
+    {
+      "source": "mobilenetv2_crossera_adni1_to_go2_result.json",
+      "auroc": 0.6821378340365682,
+      "accuracy": 0.6466165413533834,
+      "subjects": 266
+    },
+    {
+      "source": "mobilenetv2_crossera_go2_to_adni1_result.json",
+      "auroc": 0.7375328083989502,
+      "accuracy": 0.6553191489361702,
+      "subjects": 235
+    }
+  ],
+  "recorded_examples": [
+    {
+      "id": "Example 1",
+      "reference": "CN",
+      "prediction": "CN",
+      "ad_score": 0.2963755147065967,
+      "correct": true
+    },
+    {
+      "id": "Example 2",
+      "reference": "AD",
+      "prediction": "AD",
+      "ad_score": 0.5964255477301776,
+      "correct": true
+    },
+    {
+      "id": "Example 3",
+      "reference": "CN",
+      "prediction": "AD",
+      "ad_score": 0.5699942475184798,
+      "correct": false
+    },
+    {
+      "id": "Example 4",
+      "reference": "AD",
+      "prediction": "CN",
+      "ad_score": 0.4130049962550401,
+      "correct": false
+    }
+  ],
+  "example_selection": "First stored example of each outcome: correct CN, correct AD, CN classified AD, AD classified CN. No participant identifiers are included.",
+  "input_audit": {
+    "schema_version": 1,
+    "audit_date": "2026-11-09",
+    "mri_headers": {
+      "series": 853,
+      "files": 145958,
+      "header_errors": 0,
+      "duplicate_sop_values": 0,
+      "duplicate_sop_extra_instances": 0,
+      "count_matches_series": 853,
+      "patient_matches_series": 852,
+      "single_series_series": 853,
+      "single_study_series": 853,
+      "consistent_geometry_series": 853,
+      "positions_present_series": 853,
+      "series_with_duplicate_positions": 0
+    },
+    "processed_images": {
+      "referenced_files": 27296,
+      "subjects": 853,
+      "errors": 0,
+      "subjects_crossing_splits": 0,
+      "subjects_with_multiple_labels": 0
+    },
+    "clinical_tables": [
+      {
+        "table": "UPENN_PLASMA_FUJIREBIO_QUANTERIX_08Nov2026",
+        "rows": 2422,
+        "duplicate_key_extra_rows": 4,
+        "missing_percent": {}
+      },
+      {
+        "table": "ADAS_08Nov2026",
+        "rows": 13326,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {
+          "TOTSCORE": 1.58,
+          "TOTAL13": 2.36
+        }
+      },
+      {
+        "table": "CDR_08Nov2026",
+        "rows": 15168,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {
+          "CDGLOBAL": 0.8
+        }
+      },
+      {
+        "table": "FAQ_08Nov2026",
+        "rows": 13850,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {
+          "FAQTOTAL": 2.17
+        }
+      },
+      {
+        "table": "MMSE_08Nov2026",
+        "rows": 15032,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {
+          "MMSCORE": 1.06
+        }
+      },
+      {
+        "table": "MOCA_08Nov2026",
+        "rows": 9416,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {
+          "MOCA": 55.96
+        }
+      },
+      {
+        "table": "PTDEMOG_08Nov2026",
+        "rows": 6246,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {
+          "PTGENDER": 2.08,
+          "PTEDUCAT": 2.42
+        }
+      },
+      {
+        "table": "BLCHANGE_08Nov2026",
+        "rows": 16526,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {}
+      },
+      {
+        "table": "DXSUM_08Nov2026",
+        "rows": 16627,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {
+          "DIAGNOSIS": 0.28
+        }
+      },
+      {
+        "table": "REGISTRY_08Nov2026",
+        "rows": 29821,
+        "duplicate_key_extra_rows": 0,
+        "missing_percent": {}
+      },
+      {
+        "table": "ROSTER_08Nov2026",
+        "rows": 7463,
+        "duplicate_key_extra_rows": null,
+        "missing_percent": {}
+      }
+    ],
+    "status": "audit_in_progress",
+    "clinical_ready": false,
+    "limitations": [
+      "DICOM pixel arrays have not been decoded in this audit.",
+      "Header and file checks do not validate clinical diagnoses.",
+      "MRI-to-clinical visit linkage and official series QC remain unverified.",
+      "Multimodal model performance has not been measured."
+    ]
+  },
+  "candidate_linkage": {
+    "schema_version": 1,
+    "date": "2026-11-09",
+    "method": "same participant + compatible phase + nearest assessment on/before MRI, within 90 days",
+    "status": "exploratory_candidate_linkage",
+    "training_eligible": false,
+    "dictionary_evidence": [
+      {
+        "PHASE": "ADNI1",
+        "FLDNAME": "DXCURREN",
+        "CODE": "1=NL;2=MCI;3=AD",
+        "MAPPING_NOTES": "Mapped to DIAGNOSIS, excluded from final dataset | TBLNAME Mapped from PDXCONV to DXSUM"
+      },
+      {
+        "PHASE": "ADNI1",
+        "FLDNAME": "DXAD",
+        "CODE": "1=Yes",
+        "MAPPING_NOTES": "TBLNAME Mapped from PDXCONV to DXSUM"
+      },
+      {
+        "PHASE": "ADNIGO",
+        "FLDNAME": "DXCHANGE",
+        "CODE": "1=Stable: NL to NL; 2=Stable: MCI to MCI; 3=Stable: Dementia to Dementia; 4=Conversion: NL to MCI; 5=Conversion: MCI to Dementia; 6=Conversion: NL to Dementia; 7=Reversion: MCI to NL; 8=Reversion: Dementia to MCI; 9=Reversion: Dementia to NL",
+        "MAPPING_NOTES": "Mapped to DIAGNOSIS, excluded from final dataset [1,7,9] -> 1,  [2,4,8] -> 2, [3,5,6] ->  3"
+      },
+      {
+        "PHASE": "ADNIGO",
+        "FLDNAME": "DXDDUE",
+        "CODE": "1=Dementia due to Alzheimer's Disease; 2=Dementia due to other etiology",
+        "MAPPING_NOTES": ""
+      },
+      {
+        "PHASE": "ADNI2",
+        "FLDNAME": "DXDDUE",
+        "CODE": "1=Dementia due to Alzheimer's Disease; 2=Dementia due to other etiology",
+        "MAPPING_NOTES": ""
+      },
+      {
+        "PHASE": "ADNI2",
+        "FLDNAME": "DXCHANGE",
+        "CODE": "1=Stable: NL; 2=Stable: MCI; 3=Stable: Dementia; 4=Conversion: NL to MCI; 5=Conversion: MCI to Dementia; 6=Conversion: NL to Dementia; 7=Reversion: MCI to NL; 8=Reversion: Dementia to MCI; 9=Reversion: Dementia to NL",
+        "MAPPING_NOTES": "Mapped to DIAGNOSIS, excluded from final dataset [1,7,9] -> 1,  [2,4,8] -> 2, [3,5,6] ->  3"
+      },
+      {
+        "PHASE": "ADNI3",
+        "FLDNAME": "DXDDUE",
+        "CODE": "1=Dementia due to Alzheimer's Disease;2=Dementia due to other etiology",
+        "MAPPING_NOTES": ""
+      },
+      {
+        "PHASE": "ADNI3",
+        "FLDNAME": "DIAGNOSIS",
+        "CODE": "1=CN;2=MCI;3=Dementia",
+        "MAPPING_NOTES": ""
+      },
+      {
+        "PHASE": "ADNI4",
+        "FLDNAME": "DIAGNOSIS",
+        "CODE": "1=CN; 2=MCI; 3=Dementia",
+        "MAPPING_NOTES": ""
+      },
+      {
+        "PHASE": "ADNI4",
+        "FLDNAME": "DXDDUE",
+        "CODE": "1=Dementia due to Alzheimer's Disease; 2=Dementia due to other etiology",
+        "MAPPING_NOTES": ""
+      },
+      {
+        "PHASE": "TEAM",
+        "FLDNAME": "DIAGNOSIS",
+        "CODE": "1=CN; 2=MCI; 3=Dementia; 10=TEAM_NODX",
+        "MAPPING_NOTES": "Assigned constant value 10 (TEAM_NODX) because TEAM does not collect a formal diagnosis assessment"
+      }
+    ],
+    "summaries": {
+      "all": {
+        "subjects": 853,
+        "status_counts": {
+          "candidate_only": 530,
+          "no_pre_index_candidate_within_90d": 323
+        },
+        "unique_candidates_within_30d": 483,
+        "candidate_labels": {
+          "MCI": 245,
+          "CN": 166,
+          "AD": 119
+        },
+        "folder_agreement_counts": {
+          "agree": 530
+        }
+      },
+      "ad_cn": {
+        "subjects": 501,
+        "status_counts": {
+          "candidate_only": 285,
+          "no_pre_index_candidate_within_90d": 216
+        },
+        "unique_candidates_within_30d": 266,
+        "candidate_labels": {
+          "CN": 166,
+          "AD": 119
+        },
+        "folder_agreement_counts": {
+          "agree": 285
+        }
+      }
+    },
+    "limitations": [
+      "Exact MRI visits and official MRI QC remain unverified.",
+      "The 90-day window is an audit sensitivity rule, not a frozen cohort rule.",
+      "All tied nearest records require adjudication.",
+      "DIAGNOSIS=3 requires phase-specific etiology evidence to call clinical AD."
+    ]
+  },
+  "assay_audit": {
+    "date": "2026-11-09",
+    "rows": 2422,
+    "analytes": [
+      {
+        "field": "pT217_F",
+        "units": "pg/mL",
+        "documented_missing_codes": "-4=Insufficient sample",
+        "missing_rows": 0,
+        "measured_rows": 2422,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "AB42_F",
+        "units": "pg/mL",
+        "documented_missing_codes": "-4=Insufficient sample",
+        "missing_rows": 6,
+        "measured_rows": 2416,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "AB40_F",
+        "units": "pg/mL",
+        "documented_missing_codes": "-4=Insufficient sample",
+        "missing_rows": 5,
+        "measured_rows": 2417,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "AB42_AB40_F",
+        "units": "0",
+        "documented_missing_codes": "-4=Insufficient sample",
+        "missing_rows": 6,
+        "measured_rows": 2416,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "pT217_AB42_F",
+        "units": "0",
+        "documented_missing_codes": "-4=Insufficient sample",
+        "missing_rows": 6,
+        "measured_rows": 2416,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "NfL_Q",
+        "units": "pg/mL",
+        "documented_missing_codes": "-4=Insufficient sample; -5=Sample quantity not sufficient",
+        "missing_rows": 695,
+        "measured_rows": 1727,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "GFAP_Q",
+        "units": "pg/mL",
+        "documented_missing_codes": "-4=Insufficient sample; -5=Sample quantity not sufficient",
+        "missing_rows": 695,
+        "measured_rows": 1727,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "NfL_F",
+        "units": "pg/mL",
+        "documented_missing_codes": " -4=missing value",
+        "missing_rows": 1051,
+        "measured_rows": 1371,
+        "undocumented_nonpositive_rows": 0
+      },
+      {
+        "field": "GFAP_F",
+        "units": "pg/mL",
+        "documented_missing_codes": " -4=missing value",
+        "missing_rows": 1051,
+        "measured_rows": 1371,
+        "undocumented_nonpositive_rows": 0
+      }
+    ],
+    "platform_rule": "Keep Fujirebio (_F) and Quanterix (_Q) measurements distinct.",
+    "rows_with_qc_drift_comment": 393,
+    "methods_source": "ADNI_UPENN_PLASMA_FUJIREBIO_QUANTERIX_METHODS_20260807.pdf",
+    "limitations": [
+      "Published p-tau cutpoints target PET amyloid status, not the clinical AD/CN label.",
+      "NfL/GFAP cutpoints are not established in the provided methods.",
+      "Methods report ADNI4 batch-3 QC drift; comments and batch must be retained.",
+      "Normalization converts only documented sentinel codes to missing; it does not impute measurements."
+    ]
+  }
+}

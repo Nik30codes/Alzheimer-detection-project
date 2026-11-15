@@ -1,10 +1,10 @@
-import ConfusionMatrix from './ConfusionMatrix'
 import Tile from './Tile'
+import ExplanationGuide from './ExplanationGuide'
 
 const pct = (p) => `${(p * 100).toFixed(1)}%`
 
 /** Result panel: verdict banner, metric row, probability bars, input vs Grad-CAM. */
-export default function Result({ data, trueClass }) {
+export default function Result({ data, trueClass, showResearch = false }) {
   const p = data.prediction
   // When a built-in sample is used the ground truth is known, so state plainly whether
   // the model got it right. Hiding a miss would make the demo dishonest.
@@ -57,12 +57,18 @@ export default function Result({ data, trueClass }) {
             </span>
           )}
         </div>
+        <details className="mt-3 text-xs text-muted"><summary className="cursor-pointer font-semibold">Slice details and input checks</summary>
         <p className="mt-2 text-[12.5px] leading-relaxed text-muted">
           {data.aggregation}
         </p>
         {data.skipped_note && (
           <p className="mt-2 text-[12.5px] leading-relaxed text-warn/90">
             {data.skipped_note}
+          </p>
+        )}
+        {data.input_note && (
+          <p className="mt-2 text-[12.5px] leading-relaxed text-warn/90">
+            {data.input_note}
           </p>
         )}
         {multi && range && (
@@ -84,6 +90,7 @@ export default function Result({ data, trueClass }) {
             . That spread is the reason aggregation is the published estimator.
           </p>
         )}
+        </details>
       </div>
 
       {data.mixed_subjects && (
@@ -105,14 +112,13 @@ export default function Result({ data, trueClass }) {
         >
           {correct ? (
             <>
-              <b>Correct.</b> True diagnosis was {trueClass}; the model predicted {p.code}
+              <b>Correct.</b> The sample reference is {trueClass}; the model predicted {p.code}
               {multi ? ` from ${n} slices averaged together` : ' from a single slice'}.
             </>
           ) : (
             <>
-              <b>Incorrect.</b> True diagnosis was {trueClass}; the model predicted{' '}
-              {p.code}. Shown rather than hidden — at ~83% subject-level accuracy this
-              happens
+              <b>Incorrect.</b> The sample reference is {trueClass}; the model predicted{' '}
+              {p.code}. The model can make mistakes
               {multi ? '.' : ', and a single slice is noisier still.'}
             </>
           )}
@@ -127,7 +133,7 @@ export default function Result({ data, trueClass }) {
           accent={isAD ? 'warn' : 'ok'}
         />
         <Tile
-          label="Confidence"
+          label="Model probability"
           value={pct(p.prob)}
           sub={multi ? `mean over ${n} slices` : 'model probability'}
           mono
@@ -146,15 +152,6 @@ export default function Result({ data, trueClass }) {
           accent={skipped > 0 ? 'warn' : multi ? 'grad' : 'plain'}
         />
         <Tile label="Latency" value={`${data.elapsed}s`} sub="end to end" mono accent="plain" />
-        {data.metrics?.macro_f1 != null && (
-          <Tile
-            label="Macro F1"
-            value={data.metrics.macro_f1.toFixed(3)}
-            sub="5-fold CV, out-of-fold"
-            mono
-            accent="plain"
-          />
-        )}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -189,16 +186,14 @@ export default function Result({ data, trueClass }) {
             <p className="text-[12px] leading-relaxed text-warn/90 mt-4 border-l-2 border-warn/40 pl-3">
               The averaged probability of {data.positive_class} is{' '}
               <span className="font-mono">{pct(data.positive_prob)}</span>, below 50% but
-              at or above the validation-chosen threshold of{' '}
+              at or above the saved decision threshold of{' '}
               <span className="font-mono">{pct(data.threshold)}</span> — so the call is{' '}
-              {p.code} even though it is not the larger bar. The threshold, not 50%, is
-              what the reported accuracy uses.
+              {p.code} even though it is not the larger bar. This threshold controls the
+              upload result; historical CV accuracy uses separate fold validation thresholds.
             </p>
           )}
           {data.threshold_note && (
-            <p className="text-[12px] leading-relaxed text-muted mt-4 border-l-2 border-accent/40 pl-3">
-              {data.threshold_note}
-            </p>
+            <details className="mt-4 text-xs leading-relaxed text-muted"><summary className="cursor-pointer font-semibold">How the decision threshold works</summary><p className="mt-2">{data.threshold_note}</p></details>
           )}
         </div>
 
@@ -216,11 +211,11 @@ export default function Result({ data, trueClass }) {
           {data.gradcam && (
             <figure className="m-0">
               <figcaption className="text-[10.5px] font-semibold uppercase tracking-[0.11em] text-muted mb-2">
-                Attention map
+                Grad-CAM explanation
               </figcaption>
               <img
                 src={data.gradcam}
-                alt="Grad-CAM attention overlay"
+                alt="Grad-CAM model sensitivity overlay"
                 className="w-full rounded-2xl border border-line bg-black block"
               />
             </figure>
@@ -229,22 +224,13 @@ export default function Result({ data, trueClass }) {
             {data.representative_note}
           </p>
           <p className="col-span-2 text-[11.5px] leading-relaxed text-muted">
-            Red marks the regions that most influenced the prediction. On earlier
-            versions of this model the heat sat outside the brain entirely — that is how
-            the scanner confound was caught.
+            Warmer colours indicate greater model sensitivity. This heatmap does not
+            establish a diagnosis or identify Alzheimer’s damage.
           </p>
         </div>
       </div>
 
-      {data.metrics?.confusion_matrix && (
-        <div className="mt-6 pt-6 border-t border-line">
-          <ConfusionMatrix
-            matrix={data.metrics.confusion_matrix}
-            classes={data.metrics.confusion_classes}
-            macroF1={data.metrics.macro_f1}
-          />
-        </div>
-      )}
+      {showResearch && <ExplanationGuide />}
     </section>
   )
 }
