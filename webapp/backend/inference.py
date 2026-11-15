@@ -35,6 +35,11 @@ from tasks import get_task                                           # noqa: E40
 DEVICE = torch.device(
     "cuda" if os.environ.get("MMAD_DEVICE", "cpu").lower() == "cuda"
     and torch.cuda.is_available() else "cpu")
+if DEVICE.type == "cpu":
+    # Shared/free hosts can expose more cores than the service is allocated.
+    # Bound native worker pools to avoid oversubscription and excess memory.
+    torch.set_num_threads(1)
+    cv2.setNumThreads(1)
 _LOADED = {}
 _LOAD_LOCK = threading.RLock()
 

@@ -89,7 +89,7 @@ export default function BatchUpload({ apiBase, taskId, maxFiles, enableResearch 
     setError('')
     const update = (id, changes) => setPatients(rows => rows.map(p => p.id === id ? { ...p, ...changes } : p))
     try {
-      for (const patient of patients.filter(p => p.status === 'Queued' || p.status === 'Stopped')) {
+      for (const patient of patients.filter(p => p.status === 'Queued' || p.status === 'Stopped' || (p.status === 'Failed' && p.retryable))) {
         if (stopped.current) break
         controller.current = new AbortController()
         update(patient.id, { status: 'Running', progress: 0, error: null })
@@ -107,7 +107,7 @@ export default function BatchUpload({ apiBase, taskId, maxFiles, enableResearch 
         } catch (e) {
           update(patient.id, stopped.current
             ? { status: 'Stopped', error: null }
-            : { status: 'Failed', error: e.message })
+            : { status: 'Failed', error: e.message, retryable: true })
         }
       }
     } finally {
@@ -128,7 +128,7 @@ export default function BatchUpload({ apiBase, taskId, maxFiles, enableResearch 
   const detail = patients.find(p => p.id === selected)
   const completed = patients.filter(p => p.status === 'Complete').length
   const hasClinical = patients.some(p => p.clinical)
-  const pending = patients.some(p => p.status === 'Queued' || p.status === 'Stopped')
+  const pending = patients.some(p => p.status === 'Queued' || p.status === 'Stopped' || (p.status === 'Failed' && p.retryable))
   const button = 'rounded-xl border border-line px-4 py-2.5 text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed'
 
   return (
