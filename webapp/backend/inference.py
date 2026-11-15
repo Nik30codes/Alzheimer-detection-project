@@ -48,6 +48,13 @@ class InvalidInput(Exception):
     """Raised when the upload is not usable. Message is shown to the user verbatim."""
 
 
+def _enable_cam_features(_module, _inputs, output):
+    # Start the explanation graph here, rather than retaining the entire backbone.
+    # Grad-CAM needs d(class score)/d(target features), not parameter gradients.
+    if torch.is_grad_enabled():
+        output.requires_grad_(True)
+
+
 def _build(arch, n_out):
     if arch == "custom_cnn":
         return SimpleCNN(num_classes=n_out, in_channels=1), False
@@ -81,8 +88,10 @@ def _load_task_model(task_id):
         raise FileNotFoundError(path)
     model, rgb = _build(task["arch"], len(task["classes"]))
     model.load_state_dict(torch.load(path, map_location=DEVICE))
-    model.to(DEVICE).eval()
+    model.to(DEVICE).eval().requires_grad_(False)
     target = model.features[-1] if hasattr(model, "features") else None
+    if target is not None:
+        target.register_forward_hook(_enable_cam_features)
     _LOADED[task_id] = {"model": model, "rgb": rgb,
                         "lock": threading.RLock(),
                         "cam": GradCAM(model, target) if target is not None else None}

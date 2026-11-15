@@ -71,7 +71,7 @@ MULTI_SLICE_NOTE = (
     "slice."
 )
 
-app = FastAPI(title=BRAND, version="1.0",
+app = FastAPI(title=BRAND, version="1.0.1",
               description="Alzheimer's classification from structural MRI. "
                           "Research demonstration; not a medical device.")
 

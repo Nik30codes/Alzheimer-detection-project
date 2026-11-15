@@ -75,6 +75,22 @@ class InferenceRegressionTests(unittest.TestCase):
         self.assertIn("more than one subject", event["error"])
         self.assertNotIn("result", event)
 
+    def test_feature_only_gradcam_matches_full_backpropagation(self):
+        state = inference.load_task_model("ad_vs_cn")
+        reference, _ = inference._build("mobilenetv2", 2)
+        reference.load_state_dict(state["model"].state_dict())
+        reference.to(inference.DEVICE).eval()
+        reference_cam = inference.GradCAM(reference, reference.features[-1])
+        for raw in [self.cn, self.ad]:
+            image, _ = inference.decode_image(raw, "slice.png")
+            image = inference.harmonise(image)
+            _, _, _, x = inference.predict(image, "ad_vs_cn")
+            for class_index in [0, 1]:
+                expected, _, _ = reference_cam(x, class_idx=class_index)
+                actual, _, _ = state["cam"](x, class_idx=class_index)
+                np.testing.assert_allclose(actual, expected, rtol=1e-5, atol=1e-6)
+        self.assertTrue(all(p.grad is None for p in state["model"].parameters()))
+
     def test_partial_upload_reports_single_accepted_slice(self):
         result = analyse([(self.cn, "cn.png"), (b"invalid", "bad.png")])["result"]
         self.assertEqual(result["n_slices_used"], 1)
